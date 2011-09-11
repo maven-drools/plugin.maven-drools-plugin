@@ -43,7 +43,6 @@ public class CanCompileEmptyFilesetTest extends MavenVerifierTest {
   @Test
   @ExecuteGoals("compile")
   public void testPackageFileContainsAllTheExpectedRules() throws Exception {
-    verifier.executeGoal(WellKnownNames.GOAL_COMPILE);
     verifier.verifyErrorFreeLog();
     verifier.assertFilePresent(EXPECTED_OUTPUT_FILE);
 

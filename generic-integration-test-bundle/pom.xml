@@ -36,8 +36,43 @@
     <developerConnection>scm:git:git@github.com:maven-drools/it-artifacts.it-resource-bundle.git</developerConnection>
   </scm>
 
+  <properties>
+    <repository.regular>${env.HOME}/.m2/repository</repository.regular>
+    <repository.integrationtests>${project.basedir}/../target/it-repository</repository.integrationtests>
+    <repository.deploymenttests>file://${project.basedir}/../target/deployment-repository</repository.deploymenttests>
+
+    <pluginUnderTest.groupId>de.lightful.maven.plugins</pluginUnderTest.groupId>
+    <pluginUnderTest.artifactId>maven-drools-plugin</pluginUnderTest.artifactId>
+    <pluginUnderTest.version>${project.parent.version}</pluginUnderTest.version>
+
+  </properties>
+
   <build>
+
     <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-enforcer-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>enforce-sane-build</id>
+            <phase>validate</phase>
+            <goals>
+              <goal>enforce</goal>
+            </goals>
+            <configuration>
+              <rules>
+                <requireProperty>
+                  <property>drools.target</property>
+                  <message>Property drools.target must be defined (select a profile!)</message>
+                </requireProperty>
+              </rules>
+            </configuration>
+
+          </execution>
+        </executions>
+      </plugin>
+
       <plugin>
         <artifactId>maven-remote-resources-plugin</artifactId>
         <executions>
@@ -57,20 +92,141 @@
         </executions>
       </plugin>
 
+      <!--<plugin>-->
+      <!--<groupId>org.apache.maven.plugins</groupId>-->
+      <!--<artifactId>maven-jar-plugin</artifactId>-->
+      <!--<executions>-->
+      <!--<execution>-->
+      <!--<phase>package</phase>-->
+      <!--<goals>-->
+      <!--<goal>test-jar</goal>-->
+      <!--</goals>-->
+      <!--</execution>-->
+      <!--</executions>-->
+      <!--</plugin>-->
+
+      <!--<plugin>-->
+      <!--<groupId>org.apache.maven.plugins</groupId>-->
+      <!--<artifactId>maven-surefire-plugin</artifactId>-->
+      <!--<version>2.9</version>-->
+      <!--<executions>-->
+      <!--<execution>-->
+      <!--<id>integration-tests</id>-->
+      <!--<phase>integration-test</phase>-->
+      <!--<goals>-->
+      <!--<goal>test</goal>-->
+      <!--</goals>-->
+      <!--<configuration>-->
+      <!--<includes>-->
+      <!--<include>**/integrationtests/*Test.java</include>-->
+      <!--</includes>-->
+      <!--<systemProperties>-->
+      <!--<localRepository>${repository.integrationtests}</localRepository>-->
+      <!--</systemProperties>-->
+      <!--<systemPropertyVariables>-->
+      <!--<project.version>${project.version}</project.version>-->
+      <!--<repository.integrationtests>${repository.integrationtests}</repository.integrationtests>-->
+      <!--<repository.deploymenttests>${repository.deploymenttests}</repository.deploymenttests>-->
+      <!--</systemPropertyVariables>-->
+      <!--<failIfNoTests>true</failIfNoTests>-->
+      <!--</configuration>-->
+      <!--</execution>-->
+      <!--</executions>-->
+      <!--&lt;!&ndash;<dependencies>&ndash;&gt;-->
+      <!--&lt;!&ndash;<dependency>&ndash;&gt;-->
+      <!--&lt;!&ndash;<groupId>org.apache.maven.surefire</groupId>&ndash;&gt;-->
+      <!--&lt;!&ndash;<artifactId>surefire-testng</artifactId>&ndash;&gt;-->
+      <!--&lt;!&ndash;<version>2.9</version>&ndash;&gt;-->
+      <!--&lt;!&ndash;</dependency>&ndash;&gt;-->
+      <!--&lt;!&ndash;</dependencies>&ndash;&gt;-->
+      <!--</plugin>-->
+
       <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-jar-plugin</artifactId>
+        <artifactId>maven-surefire-plugin</artifactId>
+
         <executions>
           <execution>
-            <phase>package</phase>
+            <id>default-test</id>
+            <phase>test</phase>
             <goals>
-              <goal>test-jar</goal>
+              <goal>test</goal>
             </goals>
+            <configuration>
+              <excludes>
+                <exclude>**/integrationtests/*Test.java</exclude>
+              </excludes>
+            </configuration>
+          </execution>
+          <execution>
+            <id>integration-tests</id>
+            <phase>integration-test</phase>
+            <goals>
+              <goal>test</goal>
+            </goals>
+            <configuration>
+              <includes>
+                <include>**/integrationtests/*Test.java</include>
+              </includes>
+              <systemProperties>
+                <localRepository>${repository.integrationtests}</localRepository>
+              </systemProperties>
+              <systemPropertyVariables>
+                <project.version>${project.version}</project.version>
+                <repository.integrationtests>${repository.integrationtests}</repository.integrationtests>
+                <repository.deploymenttests>${repository.deploymenttests}</repository.deploymenttests>
+              </systemPropertyVariables>
+              <failIfNoTests>true</failIfNoTests>
+            </configuration>
           </execution>
         </executions>
       </plugin>
 
+
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-resources-plugin</artifactId>
+        <configuration>
+          <encoding>UTF-8</encoding>
+          <useDefaultDelimiters>true</useDefaultDelimiters>
+          <outputDirectory>${project.build.outputDirectory}</outputDirectory>
+        </configuration>
+        <executions>
+          <execution>
+            <id>resources</id>
+            <goals>
+              <goal>resources</goal>
+            </goals>
+            <phase>process-resources</phase>
+          </execution>
+
+          <execution>
+            <id>test-resources</id>
+            <goals>
+              <goal>testResources</goal>
+            </goals>
+            <phase>process-test-resources</phase>
+            <configuration>
+              <escapeString>\</escapeString>
+              <outputDirectory>${project.build.testOutputDirectory}</outputDirectory>
+            </configuration>
+          </execution>
+
+        </executions>
+      </plugin>
+
     </plugins>
+
+    <testResources>
+      <testResource>
+        <directory>${project.basedir}/src/test/resources/integrationtests</directory>
+        <filtering>true</filtering>
+      </testResource>
+      <testResource>
+        <directory>${project.basedir}/src/test/resources/testng-properties</directory>
+        <filtering>true</filtering>
+        <targetPath>${project.basedir}</targetPath>
+      </testResource>
+    </testResources>
 
   </build>
 
@@ -79,7 +235,7 @@
       <dependency>
         <groupId>de.lightful.maven.drools.plugin.poms</groupId>
         <artifactId>external-dependencies</artifactId>
-        <version>0.2.0-SNAPSHOT</version>
+        <version>0.5.1</version>
         <type>pom</type>
         <scope>import</scope>
       </dependency>
@@ -92,6 +248,7 @@
       <artifactId>maven-drools-plugin</artifactId>
       <version>${project.version}</version>
       <type>maven-plugin</type>
+      <scope>test</scope>
     </dependency>
 
     <dependency>
@@ -106,7 +263,6 @@
       <version>0.1.0</version>
       <scope>test</scope>
     </dependency>
-
     <dependency>
       <groupId>de.lightful.maven.drools.plugin</groupId>
       <artifactId>knowledge-io</artifactId>
@@ -116,13 +272,14 @@
     <dependency>
       <groupId>de.lightful.maven.drools.plugin.test-support</groupId>
       <artifactId>maven-verifier-testng</artifactId>
-      <version>0.1.3</version>
+      <version>0.1.5</version>
       <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>org.testng</groupId>
       <artifactId>testng</artifactId>
       <version>6.2</version>
+      <!-- the version here MUST exactly comply to the version used in maven-verifier-testng -->
       <scope>test</scope>
     </dependency>
     <dependency>
@@ -133,7 +290,6 @@
     <dependency>
       <groupId>org.apache.maven.shared</groupId>
       <artifactId>maven-verifier</artifactId>
-      <version>1.3</version>
       <scope>test</scope>
     </dependency>
     <!--<dependency>-->
@@ -151,15 +307,29 @@
     <dependency>
       <groupId>javax.inject</groupId>
       <artifactId>javax.inject</artifactId>
-      <version>1</version>
       <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>org.apache.maven.plugin-testing</groupId>
       <artifactId>maven-plugin-testing-harness</artifactId>
-      <version>2.0-alpha-1</version>
       <scope>test</scope>
     </dependency>
   </dependencies>
+
+  <profiles>
+    <profile>
+      <id>drools.target=5.1.1</id>
+      <properties>
+        <drools.target>5.1.1</drools.target>
+      </properties>
+    </profile>
+    <profile>
+      <id>drools.target=5.2.0.Final</id>
+      <properties>
+        <drools.target>5.2.0.Final</drools.target>
+      </properties>
+    </profile>
+
+  </profiles>
 
 </project>
