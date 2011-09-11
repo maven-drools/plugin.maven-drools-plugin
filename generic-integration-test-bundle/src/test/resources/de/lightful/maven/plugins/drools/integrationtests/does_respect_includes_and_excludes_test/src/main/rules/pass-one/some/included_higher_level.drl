@@ -1,0 +1,6 @@
+package included_higher_level;
+
+rule "included.higher.level"
+  when
+  then
+end

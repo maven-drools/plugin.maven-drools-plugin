@@ -1,0 +1,13 @@
+package rules;
+
+dialect "mvel"
+
+import model.Person;
+import model.Age;
+
+rule "check minimum age"
+  when
+    Age( $person: person, age < 18 )
+  then
+    insertLogical("TOO YOUNG: " + $person.name )
+end

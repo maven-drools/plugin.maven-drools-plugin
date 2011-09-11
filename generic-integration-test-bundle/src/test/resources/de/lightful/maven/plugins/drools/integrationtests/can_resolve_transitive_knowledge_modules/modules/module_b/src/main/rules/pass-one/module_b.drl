@@ -1,0 +1,30 @@
+package module_b;
+
+dialect "java"
+
+import model.vehicle.*;
+import com.example.model.location.Country;
+import com.example.model.location.City;
+
+declare type_b
+  value: int
+end
+
+rule "Accept only vehicles made by Porsche"
+  when
+    $manufacturer: Manufacturer( name != "Porsche" )
+    Vehicle( manufacturer == $manufacturer )
+  then
+    insertLogical("DISLIKE-NON-PORSCHES");
+end
+
+rule "There must be at least one city in each country"
+  when
+    not( forall(
+      $country: Country()
+      City( country == $country )
+    ))
+  then
+    insertLogical("COUNTRY-WITHOUT-CITIES");
+end
+

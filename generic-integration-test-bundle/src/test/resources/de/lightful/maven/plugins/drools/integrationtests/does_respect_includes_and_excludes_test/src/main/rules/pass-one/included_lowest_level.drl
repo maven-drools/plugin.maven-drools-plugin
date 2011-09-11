@@ -1,0 +1,6 @@
+package included_lowest_level;
+
+rule "included.lowest.level"
+  when
+  then
+end

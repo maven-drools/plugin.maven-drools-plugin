@@ -1,0 +1,14 @@
+package rules.test;
+
+import com.example.model.person.Person;
+import com.example.model.person.AgeOfPerson;
+import com.example.model.person.LikesToEat;   # <-- does not exist
+
+rule "Check if Peter is at least 18 years old"
+  when
+    $person: Person( name == "PETER" )
+    AgeOfPerson( who == $person, age < 1 )
+    LikesToEat( who == $person, what == "HONEY")
+  then
+    insertLogical("Peter is too young to eat honey!");
+end

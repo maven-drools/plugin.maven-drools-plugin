@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ Copyright (c) 2009-2011 Ansgar Konermann
+  ~
+  ~ This file is part of the Maven 3 Drools Plugin.
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~     http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  -->
+<component-set>
+
+  <components>
+    <component>
+      <role>org.apache.maven.lifecycle.mapping.LifecycleMapping</role>
+      <role-hint>knowledge-module</role-hint>
+      <implementation>org.apache.maven.lifecycle.mapping.DefaultLifecycleMapping</implementation>
+      <configuration>
+        <lifecycles>
+          <lifecycle>
+            <id>default</id>
+            <phases>
+              <compile>de.lightful.maven.plugins:maven-drools-plugin:compile</compile>
+              <test-compile>org.apache.maven.plugins:maven-compiler-plugin:testCompile</test-compile>
+              <install>org.apache.maven.plugins:maven-install-plugin:install</install>
+              <deploy>org.apache.maven.plugins:maven-deploy-plugin:deploy</deploy>
+            </phases>
+          </lifecycle>
+        </lifecycles>
+      </configuration>
+    </component>
+
+    <component>
+      <role>org.apache.maven.artifact.handler.ArtifactHandler</role>
+      <role-hint>knowledge-module</role-hint>
+      <implementation>org.apache.maven.artifact.handler.DefaultArtifactHandler</implementation>
+      <instantiation-strategy>keep-alive</instantiation-strategy>
+      <configuration>
+        <!--the type used when specifying dependencies etc.-->
+        <type>knowledge-module</type>
+
+        <!--the extension used by Maven in the repository-->
+        <extension>dkm</extension>
+
+        <language>drools</language>
+        <includesDependencies>false</includesDependencies>
+        <addedToClasspath>false</addedToClasspath>
+      </configuration>
+    </component>
+
+    <component>
+      <role>de.lightful.maven.plugins.drools.impl.ResourceTypeDetector</role>
+      <implementation>de.lightful.maven.plugins.drools.impl.ResourceTypeDetector</implementation>
+    </component>
+
+    <component>
+      <role>de.lightful.maven.plugins.drools.impl.config.ConfigurationValidator</role>
+      <implementation>de.lightful.maven.plugins.drools.impl.config.ConfigurationValidator</implementation>
+    </component>
+
+    <component>
+      <role>de.lightful.maven.plugins.drools.impl.OutputFileWriter</role>
+      <implementation>de.lightful.maven.plugins.drools.impl.OutputFileWriter</implementation>
+      <requirements>
+        <requirement>
+          <role>de.lightful.maven.plugins.drools.knowledgeio.LogStream</role>
+          <role-hint>debug</role-hint>
+          <field-name>debug</field-name>
+        </requirement>
+        <requirement>
+          <role>de.lightful.maven.plugins.drools.knowledgeio.LogStream</role>
+          <role-hint>info</role-hint>
+          <field-name>info</field-name>
+        </requirement>
+        <requirement>
+          <role>de.lightful.maven.plugins.drools.knowledgeio.LogStream</role>
+          <role-hint>warn</role-hint>
+          <field-name>warn</field-name>
+        </requirement>
+        <requirement>
+          <role>de.lightful.maven.plugins.drools.knowledgeio.LogStream</role>
+          <role-hint>error</role-hint>
+          <field-name>error</field-name>
+        </requirement>
+      </requirements>
+    </component>
+
+    <component>
+      <role>de.lightful.maven.plugins.drools.impl.logging.PluginLogger</role>
+      <implementation>de.lightful.maven.plugins.drools.impl.logging.PluginLogger</implementation>
+      <requirements>
+        <requirement>
+          <role>de.lightful.maven.plugins.drools.knowledgeio.LogStream</role>
+          <role-hint>debug</role-hint>
+          <field-name>debug</field-name>
+        </requirement>
+        <requirement>
+          <role>de.lightful.maven.plugins.drools.knowledgeio.LogStream</role>
+          <role-hint>info</role-hint>
+          <field-name>info</field-name>
+        </requirement>
+        <requirement>
+          <role>de.lightful.maven.plugins.drools.knowledgeio.LogStream</role>
+          <role-hint>warn</role-hint>
+          <field-name>warn</field-name>
+        </requirement>
+        <requirement>
+          <role>de.lightful.maven.plugins.drools.knowledgeio.LogStream</role>
+          <role-hint>error</role-hint>
+          <field-name>error</field-name>
+        </requirement>
+      </requirements>
+    </component>
+
+    <component>
+      <role>de.lightful.maven.plugins.drools.impl.dependencies.DependencyLoader</role>
+      <implementation>de.lightful.maven.plugins.drools.impl.dependencies.DependencyLoader</implementation>
+      <requirements>
+        <requirement>
+          <role>de.lightful.maven.plugins.drools.knowledgeio.LogStream</role>
+          <role-hint>debug</role-hint>
+          <field-name>debug</field-name>
+        </requirement>
+        <requirement>
+          <role>de.lightful.maven.plugins.drools.knowledgeio.LogStream</role>
+          <role-hint>info</role-hint>
+          <field-name>info</field-name>
+        </requirement>
+        <requirement>
+          <role>de.lightful.maven.plugins.drools.knowledgeio.LogStream</role>
+          <role-hint>warn</role-hint>
+          <field-name>warn</field-name>
+        </requirement>
+        <requirement>
+          <role>de.lightful.maven.plugins.drools.knowledgeio.LogStream</role>
+          <role-hint>error</role-hint>
+          <field-name>error</field-name>
+        </requirement>
+        <requirement>
+          <role>org.apache.maven.artifact.handler.manager.ArtifactHandlerManager</role>
+        </requirement>
+        <requirement>
+          <role>org.sonatype.aether.RepositorySystem</role>
+        </requirement>
+      </requirements>
+    </component>
+
+    <component>
+      <role>de.lightful.maven.plugins.drools.knowledgeio.LogStream</role>
+      <role-hint>debug</role-hint>
+      <implementation>de.lightful.maven.plugins.drools.impl.logging.MavenDebugLogStream</implementation>
+    </component>
+
+    <component>
+      <role>de.lightful.maven.plugins.drools.knowledgeio.LogStream</role>
+      <role-hint>info</role-hint>
+      <implementation>de.lightful.maven.plugins.drools.impl.logging.MavenInfoLogStream</implementation>
+    </component>
+
+    <component>
+      <role>de.lightful.maven.plugins.drools.knowledgeio.LogStream</role>
+      <role-hint>warn</role-hint>
+      <implementation>de.lightful.maven.plugins.drools.impl.logging.MavenWarnLogStream</implementation>
+    </component>
+
+    <component>
+      <role>de.lightful.maven.plugins.drools.knowledgeio.LogStream</role>
+      <role-hint>error</role-hint>
+      <implementation>de.lightful.maven.plugins.drools.impl.logging.MavenErrorLogStream</implementation>
+    </component>
+
+  </components>
+
+</component-set>
+

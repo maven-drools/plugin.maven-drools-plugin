@@ -1,0 +1,9 @@
+package test;
+
+dialect "java"
+
+rule "test rule"
+  when
+  then
+    insertLogical(new Integer(4711));
+end

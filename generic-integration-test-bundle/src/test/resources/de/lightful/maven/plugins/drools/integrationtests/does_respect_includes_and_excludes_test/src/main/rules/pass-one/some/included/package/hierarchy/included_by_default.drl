@@ -1,0 +1,6 @@
+package included_by_default;
+
+rule "included.by.default"
+  when
+  then
+end

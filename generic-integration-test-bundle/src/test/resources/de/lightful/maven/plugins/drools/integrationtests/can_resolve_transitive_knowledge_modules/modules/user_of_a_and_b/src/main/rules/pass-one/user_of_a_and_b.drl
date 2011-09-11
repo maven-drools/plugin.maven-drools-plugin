@@ -1,0 +1,20 @@
+package user_of_a_and_b;
+
+import module_a.*;
+import module_b.*;
+
+dialect "java"
+
+rule "Use data type from A"
+  when
+    type_a()
+  then
+    insertLogical("USE_TYPE_A");
+end
+
+rule "Use data type from B"
+  when
+    type_b()
+  then
+    insertLogical("USE_TYPE_B");
+end

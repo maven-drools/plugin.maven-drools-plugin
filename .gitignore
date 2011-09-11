@@ -1,0 +1,10 @@
+*.iws
+*.iml
+*.ipr
+.idea/workspace.xml
+.idea/misc.xml
+.idea/libraries/*
+.idea/dictionaries/*
+target/**/*
+target
+s101plugin.state

@@ -1,0 +1,1 @@
+package rules.pkg32.test; rule "test rule 32" when then end

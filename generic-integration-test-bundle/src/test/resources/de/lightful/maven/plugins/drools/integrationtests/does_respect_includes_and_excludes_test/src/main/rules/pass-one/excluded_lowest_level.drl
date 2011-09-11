@@ -1,0 +1,6 @@
+package excluded_lowest_level;
+
+rule "excluded.lowest.level"
+  when
+  then
+end

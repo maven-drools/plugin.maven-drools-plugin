@@ -1,0 +1,20 @@
+package rules;
+
+import model.fruit.*;
+import model.vehicle.*;
+
+rule "Accept only heavy melons"
+  when
+    $fruit: Fruit( name == "MELON" )
+    WeightOfFruit( fruit == $fruit, weight < 2 )
+  then
+    insertLogical( "TOO_LIGHT" );
+end
+
+rule "Dislike cars of manufacturer 'SloBuCars'"
+  when
+    $manufacturer: Manufacturer( name == "SloBuCars" )
+    Vehicle( manufacturer == $manufacturer )
+  then
+    insertLogical( "NO_SLOW_BULKY_CARS_PLEASE" );
+end

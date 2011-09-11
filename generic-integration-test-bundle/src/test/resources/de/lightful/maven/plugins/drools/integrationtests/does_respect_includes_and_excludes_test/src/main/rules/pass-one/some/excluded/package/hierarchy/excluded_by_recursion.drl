@@ -1,0 +1,6 @@
+package excluded_by_recursion;
+
+rule "excluded.by.recursion"
+  when
+  then
+end

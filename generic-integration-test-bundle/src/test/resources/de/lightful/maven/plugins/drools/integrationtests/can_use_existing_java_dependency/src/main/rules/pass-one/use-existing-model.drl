@@ -1,0 +1,25 @@
+package rules.test;
+
+import com.example.model.person.Person;
+import com.example.model.person.AgeOfPerson;
+
+import com.example.model.location.*;
+
+
+rule "Check if Peter is at least 18 years old"
+  when
+    $person: Person( name == "PETER" )
+    AgeOfPerson( who == $person, age < 18 )
+  then
+    insertLogical("Peter is too young!");
+end
+
+rule "Cities on different continents have huge distance"
+  when
+    $cityOne: City( $countryOne: country )
+    $cityTwo: City( $countryTwo: country )
+    Country( this == $countryOne, $continentOne: continent )
+    Country( this == $countryTwo, $continentTwo: continent != $continentOne)
+  then
+    insertLogical(new Distance($cityOne, $cityTwo, 1000));
+end

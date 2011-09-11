@@ -1,0 +1,6 @@
+package excluded_by_declaration;
+
+rule "excluded.by.declaration"
+  when
+  then
+end

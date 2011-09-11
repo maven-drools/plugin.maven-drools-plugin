@@ -1,0 +1,6 @@
+package included_by_declaration;
+
+rule "included.by.declaration"
+  when
+  then
+end

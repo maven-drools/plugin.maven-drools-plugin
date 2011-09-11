@@ -1,0 +1,34 @@
+package module_a;
+
+import model.fruit.*;
+import com.example.model.person.*;
+
+dialect "java"
+
+declare type_a
+  value: int
+end
+
+rule "use a fruit type"
+  when
+    Fruit( name == "APPLE" )
+  then
+    insertLogical("USING_FRUIT");
+end
+
+rule "use weight of fruit"
+  when
+    $banana: Fruit( name == "BANANA" )
+    WeightOfFruit( fruit == $banana, weight > 300)
+  then
+    insertLogical("USING_HEAVY_BANANA");
+end
+
+rule "use person"
+  when
+    $peter: Person( name == "PETER" )
+    AgeOfPerson( who == $peter, age < 18 )
+  then
+    insertLogical("PETER_IS_TOO_YOUNG");
+end
+

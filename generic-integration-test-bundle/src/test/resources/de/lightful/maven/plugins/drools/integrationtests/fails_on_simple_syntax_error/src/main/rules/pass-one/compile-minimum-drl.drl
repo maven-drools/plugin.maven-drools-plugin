@@ -1,0 +1,10 @@
+package test;
+
+dialect "java"
+
+rule "test rule"
+  when
+    >>>> !this! !i!s! !!not!! !v!a!l!i!d! d:r:o:o:l:s s§y§n§t§a§x <<<<
+  then
+    insertLogical(new Integer(4711));
+end
