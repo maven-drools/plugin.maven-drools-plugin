@@ -48,6 +48,7 @@ public class CanUseExistingDroolsPackageTest extends MavenVerifierTest {
   private static final String EXPECTED_OUTPUT_FILE = "target/plugintest.artifact-1.0.0" + "." + WellKnownNames.FILE_EXTENSION_DROOLS_KNOWLEDGE_MODULE;
   private static final String EXPECTED_RULE_NAME = "Accept only heavy melons";
   private static final String EXPECTED_PACKAGE_NAME = "rules";
+  private static final String EXISTING_DROOLS_KNOWLEDGE_MODULES_GROUPID = "de.lightful.maven.drools.plugin.itartifacts";
 
   @Inject
   private Verifier verifier;
@@ -75,12 +76,12 @@ public class CanUseExistingDroolsPackageTest extends MavenVerifierTest {
   @Test
   @DefaultSettingsFile
   @ExecuteGoals("compile")
-  @Parameters("project.version")
-  public void testGeneratedRuleFiresForLightMelon(String projectVersion) throws ClassNotFoundException, IOException, IllegalAccessException, InstantiationException {
-    final String fruitsModelKnowledgePackage = verifier.getArtifactPath("de.lightful.maven.plugins.drools", "drools-fruit-types", projectVersion, WellKnownNames.FILE_EXTENSION_DROOLS_KNOWLEDGE_MODULE);
+  @Parameters(value = {"dependency.drools-fruit-types.version", "dependency.drools-vehicle-types.version"})
+  public void testGeneratedRuleFiresForLightMelon(String fruitTypesVersion, String vehicleTypesVersion) throws ClassNotFoundException, IOException, IllegalAccessException, InstantiationException {
+    final String fruitsModelKnowledgePackage = verifier.getArtifactPath(EXISTING_DROOLS_KNOWLEDGE_MODULES_GROUPID, "drools-fruit-types", fruitTypesVersion, WellKnownNames.FILE_EXTENSION_DROOLS_KNOWLEDGE_MODULE);
     KnowledgePackageFile fruitsModelKnowledgeFile = new KnowledgePackageFile(new File(fruitsModelKnowledgePackage));
     final Collection<KnowledgePackage> fruitsModelKnowledgePackages = fruitsModelKnowledgeFile.getKnowledgePackages();
-    final String vehiclesModelKnowledgePackage = verifier.getArtifactPath("de.lightful.maven.plugins.drools", "drools-vehicle-types", projectVersion, WellKnownNames.FILE_EXTENSION_DROOLS_KNOWLEDGE_MODULE);
+    final String vehiclesModelKnowledgePackage = verifier.getArtifactPath(EXISTING_DROOLS_KNOWLEDGE_MODULES_GROUPID, "drools-vehicle-types", vehicleTypesVersion, WellKnownNames.FILE_EXTENSION_DROOLS_KNOWLEDGE_MODULE);
     KnowledgePackageFile vehiclesModelKnowledgeFile = new KnowledgePackageFile(new File(vehiclesModelKnowledgePackage));
     final Collection<KnowledgePackage> vehiclesModelKnowledgePackages = vehiclesModelKnowledgeFile.getKnowledgePackages();
 

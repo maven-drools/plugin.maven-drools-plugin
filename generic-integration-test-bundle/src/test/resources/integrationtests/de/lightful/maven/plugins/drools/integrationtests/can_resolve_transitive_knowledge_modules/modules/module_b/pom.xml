@@ -16,8 +16,15 @@
   ~ limitations under the License.
   -->
 <project xmlns="http://maven.apache.org/POM/4.0.0">
-
   <modelVersion>4.0.0</modelVersion>
+
+  <parent>
+    <groupId>de.lightful.maven.drools</groupId>
+    <artifactId>plugintest.artifact.master</artifactId>
+    <version>1.0.0</version>
+    <relativePath>../../pom.xml</relativePath>
+  </parent>
+
   <groupId>de.lightful.maven.drools</groupId>
   <artifactId>plugintest.artifact.module_b</artifactId>
   <version>1.0.0</version>
@@ -25,15 +32,13 @@
 
   <dependencies>
     <dependency>
-      <groupId>de.lightful.maven.drools</groupId>
+      <groupId>de.lightful.maven.drools.plugin.itartifacts</groupId>
       <artifactId>drools-vehicle-types</artifactId>
-      <version>${project.version}</version>
       <type>knowledge-module</type>
     </dependency>
     <dependency>
-      <groupId>de.lightful.maven.drools</groupId>
+      <groupId>de.lightful.maven.drools.plugin.itartifacts</groupId>
       <artifactId>cities-fact-model</artifactId>
-      <version>${project.version}</version>
     </dependency>
   </dependencies>
 

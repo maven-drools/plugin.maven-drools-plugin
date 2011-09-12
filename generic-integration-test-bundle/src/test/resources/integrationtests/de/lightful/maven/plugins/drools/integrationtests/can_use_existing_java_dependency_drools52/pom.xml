@@ -32,14 +32,12 @@
 
   <dependencies>
     <dependency>
-      <groupId>de.lightful.maven.drools</groupId>
+      <groupId>de.lightful.maven.drools.plugin.itartifacts</groupId>
       <artifactId>person-fact-model</artifactId>
-      <version>${project.version}</version>
     </dependency>
     <dependency>
-      <groupId>de.lightful.maven.drools</groupId>
+      <groupId>de.lightful.maven.drools.plugin.itartifacts</groupId>
       <artifactId>cities-fact-model</artifactId>
-      <version>${project.version}</version>
     </dependency>
   </dependencies>
 

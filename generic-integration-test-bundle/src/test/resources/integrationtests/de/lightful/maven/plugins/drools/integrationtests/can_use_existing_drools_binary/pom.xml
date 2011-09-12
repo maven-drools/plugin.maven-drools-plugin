@@ -32,15 +32,13 @@
 
   <dependencies>
     <dependency>
-      <groupId>de.lightful.maven.drools</groupId>
+      <groupId>de.lightful.maven.drools.plugin.itartifacts</groupId>
       <artifactId>drools-fruit-types</artifactId>
-      <version>${project.version}</version>
       <type>knowledge-module</type>
     </dependency>
     <dependency>
-      <groupId>de.lightful.maven.drools</groupId>
+      <groupId>de.lightful.maven.drools.plugin.itartifacts</groupId>
       <artifactId>drools-vehicle-types</artifactId>
-      <version>${project.version}</version>
       <type>knowledge-module</type>
     </dependency>
   </dependencies>
