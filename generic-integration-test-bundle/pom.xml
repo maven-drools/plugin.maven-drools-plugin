@@ -44,7 +44,6 @@
     <pluginUnderTest.groupId>de.lightful.maven.plugins</pluginUnderTest.groupId>
     <pluginUnderTest.artifactId>maven-drools-plugin</pluginUnderTest.artifactId>
     <pluginUnderTest.version>${project.parent.version}</pluginUnderTest.version>
-
   </properties>
 
   <build>
@@ -81,69 +80,45 @@
             <goals>
               <goal>bundle</goal>
             </goals>
+            <phase>generate-resources</phase>
             <configuration>
-              <resourcesDirectory>src/test/resources</resourcesDirectory>
+              <resourcesDirectory>src/main/resources/integrationtests</resourcesDirectory>
               <includes>
                 <include>**/*.xml</include>
                 <include>**/*.drl</include>
+                <include>**/README.TXT</include>
+              </includes>
+              <sourceEncoding>UTF-8</sourceEncoding>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-jar-plugin</artifactId>
+        <executions>
+          <execution>
+            <phase>package</phase>
+            <goals>
+              <goal>test-jar</goal>
+            </goals>
+            <configuration>
+              <includes>
+                <include>**/*.class</include>
               </includes>
             </configuration>
           </execution>
         </executions>
       </plugin>
 
-      <!--<plugin>-->
-      <!--<groupId>org.apache.maven.plugins</groupId>-->
-      <!--<artifactId>maven-jar-plugin</artifactId>-->
-      <!--<executions>-->
-      <!--<execution>-->
-      <!--<phase>package</phase>-->
-      <!--<goals>-->
-      <!--<goal>test-jar</goal>-->
-      <!--</goals>-->
-      <!--</execution>-->
-      <!--</executions>-->
-      <!--</plugin>-->
-
-      <!--<plugin>-->
-      <!--<groupId>org.apache.maven.plugins</groupId>-->
-      <!--<artifactId>maven-surefire-plugin</artifactId>-->
-      <!--<version>2.9</version>-->
-      <!--<executions>-->
-      <!--<execution>-->
-      <!--<id>integration-tests</id>-->
-      <!--<phase>integration-test</phase>-->
-      <!--<goals>-->
-      <!--<goal>test</goal>-->
-      <!--</goals>-->
-      <!--<configuration>-->
-      <!--<includes>-->
-      <!--<include>**/integrationtests/*Test.java</include>-->
-      <!--</includes>-->
-      <!--<systemProperties>-->
-      <!--<localRepository>${repository.integrationtests}</localRepository>-->
-      <!--</systemProperties>-->
-      <!--<systemPropertyVariables>-->
-      <!--<project.version>${project.version}</project.version>-->
-      <!--<repository.integrationtests>${repository.integrationtests}</repository.integrationtests>-->
-      <!--<repository.deploymenttests>${repository.deploymenttests}</repository.deploymenttests>-->
-      <!--</systemPropertyVariables>-->
-      <!--<failIfNoTests>true</failIfNoTests>-->
-      <!--</configuration>-->
-      <!--</execution>-->
-      <!--</executions>-->
-      <!--&lt;!&ndash;<dependencies>&ndash;&gt;-->
-      <!--&lt;!&ndash;<dependency>&ndash;&gt;-->
-      <!--&lt;!&ndash;<groupId>org.apache.maven.surefire</groupId>&ndash;&gt;-->
-      <!--&lt;!&ndash;<artifactId>surefire-testng</artifactId>&ndash;&gt;-->
-      <!--&lt;!&ndash;<version>2.9</version>&ndash;&gt;-->
-      <!--&lt;!&ndash;</dependency>&ndash;&gt;-->
-      <!--&lt;!&ndash;</dependencies>&ndash;&gt;-->
-      <!--</plugin>-->
-
       <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-surefire-plugin</artifactId>
-
+        <version>2.9</version>
+        <configuration>
+          <skip>true</skip>
+        </configuration>
         <executions>
           <execution>
             <id>default-test</id>
@@ -172,6 +147,7 @@
               </systemProperties>
               <systemPropertyVariables>
                 <project.version>${project.version}</project.version>
+                <maven.test.tmpdir>${project.build.directory}/maven-test-tmp</maven.test.tmpdir>
                 <repository.integrationtests>${repository.integrationtests}</repository.integrationtests>
                 <repository.deploymenttests>${repository.deploymenttests}</repository.deploymenttests>
                 <dependency.drools-fruit-types.version>${dependency.drools-fruit-types.version}</dependency.drools-fruit-types.version>
@@ -190,17 +166,10 @@
         <configuration>
           <encoding>UTF-8</encoding>
           <useDefaultDelimiters>true</useDefaultDelimiters>
+          <escapeString>\</escapeString>
           <outputDirectory>${project.build.outputDirectory}</outputDirectory>
         </configuration>
         <executions>
-          <execution>
-            <id>resources</id>
-            <goals>
-              <goal>resources</goal>
-            </goals>
-            <phase>process-resources</phase>
-          </execution>
-
           <execution>
             <id>test-resources</id>
             <goals>
@@ -208,21 +177,24 @@
             </goals>
             <phase>process-test-resources</phase>
             <configuration>
+              <encoding>UTF-8</encoding>
               <escapeString>\</escapeString>
               <outputDirectory>${project.build.testOutputDirectory}</outputDirectory>
             </configuration>
           </execution>
-
         </executions>
       </plugin>
 
     </plugins>
 
-    <testResources>
-      <testResource>
-        <directory>${project.basedir}/src/test/resources/integrationtests</directory>
+
+    <resources>
+      <resource>
+        <directory>${project.basedir}/src/main/resources/integrationtests</directory>
         <filtering>true</filtering>
-      </testResource>
+      </resource>
+    </resources>
+    <testResources>
       <testResource>
         <directory>${project.basedir}/src/test/resources/testng-properties</directory>
         <filtering>true</filtering>
