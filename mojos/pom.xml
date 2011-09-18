@@ -91,12 +91,6 @@
       <version>${dependency.maven.version}</version>
     </dependency>
 
-    <dependency>
-      <groupId>de.lightful.maven.drools.plugin</groupId>
-      <artifactId>knowledge-io</artifactId>
-      <version>0.1.0</version>
-    </dependency>
-
     <!-- Utilities: -->
     <dependency><!-- for Arrays.format() -->
       <groupId>org.easytesting</groupId>
@@ -159,14 +153,10 @@
         </executions>
       </plugin>
 
-      <plugin>
-        <artifactId>maven-invoker-plugin</artifactId>
-      </plugin>
-
-      <plugin>
-        <artifactId>maven-archetype-plugin</artifactId>
-        <version>2.0</version>
-      </plugin>
+      <!--<plugin>-->
+      <!--<artifactId>maven-archetype-plugin</artifactId>-->
+      <!--<version>2.0</version>-->
+      <!--</plugin>-->
 
     </plugins>
 
