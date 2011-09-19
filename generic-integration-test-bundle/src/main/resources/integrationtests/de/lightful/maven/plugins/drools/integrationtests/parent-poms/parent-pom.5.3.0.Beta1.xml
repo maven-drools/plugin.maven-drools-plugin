@@ -24,11 +24,20 @@
           <version>${pluginUnderTest.version}</version>
           <extensions>true</extensions>
           <dependencies>
-            <!-- by default, we compile *.drl files using Drools 5.1.1 -->
+            <dependency>
+              <groupId>org.drools</groupId>
+              <artifactId>knowledge-api</artifactId>
+              <version>[5.3.0.Beta1]</version>
+            </dependency>
+            <dependency>
+              <groupId>org.drools</groupId>
+              <artifactId>drools-core</artifactId>
+              <version>[5.3.0.Beta1]</version>
+            </dependency>
             <dependency>
               <groupId>org.drools</groupId>
               <artifactId>drools-compiler</artifactId>
-              <version>[5.1.1]</version>
+              <version>[5.3.0.Beta1]</version>
             </dependency>
           </dependencies>
         </plugin>

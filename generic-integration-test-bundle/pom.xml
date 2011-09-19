@@ -191,7 +191,7 @@
     <resources>
       <resource>
         <directory>${project.basedir}/src/main/resources/integrationtests</directory>
-        <filtering>true</filtering>
+        <filtering>false</filtering>
       </resource>
     </resources>
     <testResources>
@@ -240,7 +240,7 @@
     <dependency>
       <groupId>de.lightful.maven.drools.plugin</groupId>
       <artifactId>knowledge-io</artifactId>
-      <version>0.1.0</version>
+      <version>0.1.3</version>
       <scope>test</scope>
     </dependency>
     <dependency>

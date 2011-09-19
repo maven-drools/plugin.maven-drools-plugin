@@ -28,7 +28,7 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
 @Retention(RUNTIME)
 @Target({TYPE, METHOD})
-@SettingsFile("/de/lightful/maven/plugins/drools/integrationtests/integration-settings.xml")
+@SettingsFile("integration-settings.xml")
 public @interface DefaultSettingsFile {
 
 }
