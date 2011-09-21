@@ -318,7 +318,32 @@
           <scope>test</scope>
         </dependency>
       </dependencies>
-
+    </profile>
+    <profile>
+      <id>drools.target=5.3.0.Beta1</id>
+      <properties>
+        <drools.target>5.3.0.Beta1</drools.target>
+      </properties>
+      <dependencies>
+        <dependency>
+          <groupId>org.drools</groupId>
+          <artifactId>knowledge-api</artifactId>
+          <version>[${drools.target}]</version>
+          <scope>test</scope>
+        </dependency>
+        <dependency>
+          <groupId>org.drools</groupId>
+          <artifactId>drools-core</artifactId>
+          <version>[${drools.target}]</version>
+          <scope>test</scope>
+        </dependency>
+        <dependency>
+          <groupId>org.drools</groupId>
+          <artifactId>drools-compiler</artifactId>
+          <version>[${drools.target}]</version>
+          <scope>test</scope>
+        </dependency>
+      </dependencies>
     </profile>
 
   </profiles>
