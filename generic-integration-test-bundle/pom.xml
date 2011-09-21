@@ -67,31 +67,13 @@
                 </requireProperty>
               </rules>
             </configuration>
-
           </execution>
         </executions>
       </plugin>
 
       <plugin>
-        <artifactId>maven-remote-resources-plugin</artifactId>
-        <executions>
-          <execution>
-            <id>bundle-it-resources</id>
-            <goals>
-              <goal>bundle</goal>
-            </goals>
-            <phase>generate-resources</phase>
-            <configuration>
-              <resourcesDirectory>src/main/resources/integrationtests</resourcesDirectory>
-              <includes>
-                <include>**/*.xml</include>
-                <include>**/*.drl</include>
-                <include>**/README.TXT</include>
-              </includes>
-              <sourceEncoding>UTF-8</sourceEncoding>
-            </configuration>
-          </execution>
-        </executions>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
       </plugin>
 
       <plugin>
@@ -159,7 +141,6 @@
         </executions>
       </plugin>
 
-
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-resources-plugin</artifactId>
@@ -167,19 +148,24 @@
           <encoding>UTF-8</encoding>
           <useDefaultDelimiters>true</useDefaultDelimiters>
           <escapeString>\</escapeString>
-          <outputDirectory>${project.build.outputDirectory}</outputDirectory>
         </configuration>
+      </plugin>
+
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-assembly-plugin</artifactId>
+        <version>2.2.1</version>
         <executions>
           <execution>
-            <id>test-resources</id>
+            <id>assemble-test-resources</id>
+            <phase>package</phase>
             <goals>
-              <goal>testResources</goal>
+              <goal>single</goal>
             </goals>
-            <phase>process-test-resources</phase>
             <configuration>
-              <encoding>UTF-8</encoding>
-              <escapeString>\</escapeString>
-              <outputDirectory>${project.build.testOutputDirectory}</outputDirectory>
+              <descriptors>
+                <descriptor>src/main/assemblies/test-resources.xml</descriptor>
+              </descriptors>
             </configuration>
           </execution>
         </executions>
@@ -187,21 +173,17 @@
 
     </plugins>
 
-
-    <resources>
-      <resource>
-        <directory>${project.basedir}/src/main/resources/integrationtests</directory>
-        <filtering>false</filtering>
-      </resource>
-    </resources>
     <testResources>
+      <testResource>
+        <directory>${project.basedir}/src/test/resources/integrationtests</directory>
+        <filtering>true</filtering>
+      </testResource>
       <testResource>
         <directory>${project.basedir}/src/test/resources/testng-properties</directory>
         <filtering>true</filtering>
         <targetPath>${project.basedir}</targetPath>
       </testResource>
     </testResources>
-
   </build>
 
   <dependencyManagement>
@@ -225,12 +207,7 @@
       <scope>test</scope>
     </dependency>
 
-    <dependency>
-      <groupId>org.drools</groupId>
-      <artifactId>drools-core</artifactId>
-      <version>5.1.1</version>
-      <scope>test</scope>
-    </dependency>
+
     <dependency>
       <groupId>de.lightful.maven.drools.plugin</groupId>
       <artifactId>artifact-naming</artifactId>
@@ -295,12 +272,53 @@
       <properties>
         <drools.target>5.1.1</drools.target>
       </properties>
+      <dependencies>
+        <dependency>
+          <groupId>org.drools</groupId>
+          <artifactId>drools-api</artifactId>
+          <version>[${drools.target}]</version>
+          <scope>test</scope>
+        </dependency>
+        <dependency>
+          <groupId>org.drools</groupId>
+          <artifactId>drools-core</artifactId>
+          <version>[${drools.target}]</version>
+          <scope>test</scope>
+        </dependency>
+        <dependency>
+          <groupId>org.drools</groupId>
+          <artifactId>drools-compiler</artifactId>
+          <version>[${drools.target}]</version>
+          <scope>test</scope>
+        </dependency>
+      </dependencies>
     </profile>
     <profile>
       <id>drools.target=5.2.0.Final</id>
       <properties>
         <drools.target>5.2.0.Final</drools.target>
       </properties>
+      <dependencies>
+        <dependency>
+          <groupId>org.drools</groupId>
+          <artifactId>knowledge-api</artifactId>
+          <version>[${drools.target}]</version>
+          <scope>test</scope>
+        </dependency>
+        <dependency>
+          <groupId>org.drools</groupId>
+          <artifactId>drools-core</artifactId>
+          <version>[${drools.target}]</version>
+          <scope>test</scope>
+        </dependency>
+        <dependency>
+          <groupId>org.drools</groupId>
+          <artifactId>drools-compiler</artifactId>
+          <version>[${drools.target}]</version>
+          <scope>test</scope>
+        </dependency>
+      </dependencies>
+
     </profile>
 
   </profiles>
