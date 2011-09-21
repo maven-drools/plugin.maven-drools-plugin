@@ -128,25 +128,6 @@
       </plugin>
 
       <plugin>
-        <artifactId>maven-remote-resources-plugin</artifactId>
-        <executions>
-          <execution>
-            <id>bundle-it-resources</id>
-            <goals>
-              <goal>process</goal>
-            </goals>
-            <phase>generate-test-resources</phase>
-            <configuration>
-              <resourceBundles>
-                <resourceBundle>de.lightful.maven.drools.plugin:generic-integration-test-bundle:${integrationtests.bundle.version}</resourceBundle>
-              </resourceBundles>
-              <outputDirectory>${project.build.directory}/integrationtest-resources</outputDirectory>
-            </configuration>
-          </execution>
-        </executions>
-      </plugin>
-
-      <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-dependency-plugin</artifactId>
         <version>2.3</version>
@@ -167,6 +148,28 @@
                 </artifactItem>
               </artifactItems>
               <outputDirectory>${project.build.directory}/test-classes</outputDirectory>
+              <overWriteIfNewer>true</overWriteIfNewer>
+              <overWriteReleases>true</overWriteReleases>
+              <overWriteSnapshots>true</overWriteSnapshots>
+            </configuration>
+          </execution>
+          <execution>
+            <id>extract-test-resources</id>
+            <phase>generate-resources</phase>
+            <goals>
+              <goal>unpack</goal>
+            </goals>
+            <configuration>
+              <artifactItems>
+                <artifactItem>
+                  <groupId>de.lightful.maven.drools.plugin</groupId>
+                  <artifactId>generic-integration-test-bundle</artifactId>
+                  <version>${integrationtests.bundle.version}</version>
+                  <classifier>test-resources</classifier>
+                  <type>zip</type>
+                </artifactItem>
+              </artifactItems>
+              <outputDirectory>${project.build.directory}/integrationtest-resources</outputDirectory>
               <overWriteIfNewer>true</overWriteIfNewer>
               <overWriteReleases>true</overWriteReleases>
               <overWriteSnapshots>true</overWriteSnapshots>
@@ -202,14 +205,15 @@
       <groupId>de.lightful.maven.drools.plugin</groupId>
       <artifactId>generic-integration-test-bundle</artifactId>
       <version>${integrationtests.bundle.version}</version>
+      <type>test-jar</type>
       <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>de.lightful.maven.drools.plugin</groupId>
       <artifactId>generic-integration-test-bundle</artifactId>
       <version>${integrationtests.bundle.version}</version>
-      <type>test-jar</type>
-      <scope>test</scope>
+      <classifier>test-resources</classifier>
+      <type>zip</type>
     </dependency>
     <dependency>
       <groupId>de.lightful.maven.plugins</groupId>
