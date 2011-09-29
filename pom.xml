@@ -23,7 +23,7 @@
   <parent>
     <groupId>de.lightful.poms</groupId>
     <artifactId>standard-plugins</artifactId>
-    <version>10</version>
+    <version>11</version>
   </parent>
 
   <groupId>de.lightful.maven.drools.plugin</groupId>
