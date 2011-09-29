@@ -1,0 +1,1 @@
+package rules.pkg8.test; rule "test rule 8" when then end

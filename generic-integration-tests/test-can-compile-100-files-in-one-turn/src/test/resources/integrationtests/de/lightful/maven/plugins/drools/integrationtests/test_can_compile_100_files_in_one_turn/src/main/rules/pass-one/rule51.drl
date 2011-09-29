@@ -1,0 +1,1 @@
+package rules.pkg51.test; rule "test rule 51" when then end

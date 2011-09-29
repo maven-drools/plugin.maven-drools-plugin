@@ -1,0 +1,334 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ Copyright (c) 2009-2011 Ansgar Konermann
+  ~
+  ~ This file is part of the Maven 3 Drools Plugin.
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~     http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  -->
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <parent>
+    <groupId>de.lightful.maven.drools.plugin</groupId>
+    <artifactId>generic-integration-tests-parent</artifactId>
+    <version>0.2.0-SNAPSHOT</version>
+  </parent>
+
+  <groupId>de.lightful.maven.drools.plugin.integrationtests.generic</groupId>
+  <artifactId>test-can-compile-100-files-in-one-turn</artifactId>
+  <packaging>pom</packaging>
+
+  <name>Maven Drools Support :: Plugin :: Integration Tests :: Can compile 100 files in one turn</name>
+
+  <properties>
+    <repository.regular>${env.HOME}/.m2/repository</repository.regular>
+    <repository.integrationtests>${project.basedir}/../target/it-repository</repository.integrationtests>
+    <repository.deploymenttests>file://${project.basedir}/../target/deployment-repository</repository.deploymenttests>
+
+    <pluginUnderTest.groupId>de.lightful.maven.plugins</pluginUnderTest.groupId>
+    <pluginUnderTest.artifactId>maven-drools-plugin</pluginUnderTest.artifactId>
+    <pluginUnderTest.version>${project.parent.version}</pluginUnderTest.version>
+  </properties>
+
+  <build>
+
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-enforcer-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>enforce-sane-build</id>
+            <phase>validate</phase>
+            <goals>
+              <goal>enforce</goal>
+            </goals>
+            <configuration>
+              <rules>
+                <requireProperty>
+                  <property>drools.target</property>
+                  <message>Property drools.target must be defined (select a profile!)</message>
+                </requireProperty>
+              </rules>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+      </plugin>
+
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-jar-plugin</artifactId>
+        <executions>
+          <execution>
+            <phase>package</phase>
+            <goals>
+              <goal>test-jar</goal>
+            </goals>
+            <configuration>
+              <includes>
+                <include>**/*.class</include>
+              </includes>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <version>2.9</version>
+        <configuration>
+          <skip>true</skip>
+        </configuration>
+        <executions>
+          <execution>
+            <id>default-test</id>
+            <phase>test</phase>
+            <goals>
+              <goal>test</goal>
+            </goals>
+            <configuration>
+              <excludes>
+                <exclude>**/integrationtests/*Test.java</exclude>
+              </excludes>
+            </configuration>
+          </execution>
+          <execution>
+            <id>integration-tests</id>
+            <phase>integration-test</phase>
+            <goals>
+              <goal>test</goal>
+            </goals>
+            <configuration>
+              <includes>
+                <include>**/integrationtests/*Test.java</include>
+              </includes>
+              <systemProperties>
+                <localRepository>${repository.integrationtests}</localRepository>
+              </systemProperties>
+              <systemPropertyVariables>
+                <project.version>${project.version}</project.version>
+                <maven.test.tmpdir>${project.build.directory}/maven-test-tmp</maven.test.tmpdir>
+                <repository.integrationtests>${repository.integrationtests}</repository.integrationtests>
+                <repository.deploymenttests>${repository.deploymenttests}</repository.deploymenttests>
+                <dependency.drools-fruit-types.version>${dependency.drools-fruit-types.version}</dependency.drools-fruit-types.version>
+                <dependency.drools-vehicle-types.version>${dependency.drools-vehicle-types.version}</dependency.drools-vehicle-types.version>
+              </systemPropertyVariables>
+              <failIfNoTests>true</failIfNoTests>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-resources-plugin</artifactId>
+        <configuration>
+          <encoding>UTF-8</encoding>
+          <useDefaultDelimiters>true</useDefaultDelimiters>
+          <escapeString>\</escapeString>
+        </configuration>
+      </plugin>
+
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-assembly-plugin</artifactId>
+        <version>2.2.1</version>
+        <executions>
+          <execution>
+            <id>assemble-test-resources</id>
+            <phase>package</phase>
+            <goals>
+              <goal>single</goal>
+            </goals>
+            <configuration>
+              <descriptors>
+                <descriptor>src/main/assemblies/test-resources.xml</descriptor>
+              </descriptors>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+
+    </plugins>
+
+    <testResources>
+      <testResource>
+        <directory>${project.basedir}/src/test/resources/integrationtests</directory>
+        <filtering>true</filtering>
+      </testResource>
+      <testResource>
+        <directory>${project.basedir}/src/test/resources/testng-properties</directory>
+        <filtering>true</filtering>
+        <targetPath>${project.basedir}</targetPath>
+      </testResource>
+    </testResources>
+  </build>
+
+  <dependencyManagement>
+    <dependencies>
+      <dependency>
+        <groupId>de.lightful.maven.drools.plugin.poms</groupId>
+        <artifactId>external-dependencies</artifactId>
+        <version>0.5.1</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
+
+  <dependencies>
+    <dependency>
+      <groupId>de.lightful.maven.plugins</groupId>
+      <artifactId>maven-drools-plugin</artifactId>
+      <version>${project.version}</version>
+      <type>maven-plugin</type>
+      <scope>test</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>de.lightful.maven.drools.plugin</groupId>
+      <artifactId>artifact-naming</artifactId>
+      <version>0.1.0</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>de.lightful.maven.drools.plugin</groupId>
+      <artifactId>knowledge-io</artifactId>
+      <version>0.1.3</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>de.lightful.maven.drools.plugin.test-support</groupId>
+      <artifactId>maven-verifier-testng</artifactId>
+      <version>0.1.5</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.testng</groupId>
+      <artifactId>testng</artifactId>
+      <!-- the version here MUST exactly comply to the version used in maven-verifier-testng -->
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.easytesting</groupId>
+      <artifactId>fest-assert</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.maven.shared</groupId>
+      <artifactId>maven-verifier</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>javax.inject</groupId>
+      <artifactId>javax.inject</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.maven.plugin-testing</groupId>
+      <artifactId>maven-plugin-testing-harness</artifactId>
+      <scope>test</scope>
+    </dependency>
+  </dependencies>
+
+  <profiles>
+    <profile>
+      <id>drools.target=5.1.1</id>
+      <properties>
+        <drools.target>5.1.1</drools.target>
+      </properties>
+      <dependencies>
+        <dependency>
+          <groupId>org.drools</groupId>
+          <artifactId>drools-api</artifactId>
+          <version>[${drools.target}]</version>
+          <scope>test</scope>
+        </dependency>
+        <dependency>
+          <groupId>org.drools</groupId>
+          <artifactId>drools-core</artifactId>
+          <version>[${drools.target}]</version>
+          <scope>test</scope>
+        </dependency>
+        <dependency>
+          <groupId>org.drools</groupId>
+          <artifactId>drools-compiler</artifactId>
+          <version>[${drools.target}]</version>
+          <scope>test</scope>
+        </dependency>
+      </dependencies>
+    </profile>
+    <profile>
+      <id>drools.target=5.2.0.Final</id>
+      <properties>
+        <drools.target>5.2.0.Final</drools.target>
+      </properties>
+      <dependencies>
+        <dependency>
+          <groupId>org.drools</groupId>
+          <artifactId>knowledge-api</artifactId>
+          <version>[${drools.target}]</version>
+          <scope>test</scope>
+        </dependency>
+        <dependency>
+          <groupId>org.drools</groupId>
+          <artifactId>drools-core</artifactId>
+          <version>[${drools.target}]</version>
+          <scope>test</scope>
+        </dependency>
+        <dependency>
+          <groupId>org.drools</groupId>
+          <artifactId>drools-compiler</artifactId>
+          <version>[${drools.target}]</version>
+          <scope>test</scope>
+        </dependency>
+      </dependencies>
+    </profile>
+    <profile>
+      <id>drools.target=5.3.0.Beta1</id>
+      <properties>
+        <drools.target>5.3.0.Beta1</drools.target>
+      </properties>
+      <dependencies>
+        <dependency>
+          <groupId>org.drools</groupId>
+          <artifactId>knowledge-api</artifactId>
+          <version>[${drools.target}]</version>
+          <scope>test</scope>
+        </dependency>
+        <dependency>
+          <groupId>org.drools</groupId>
+          <artifactId>drools-core</artifactId>
+          <version>[${drools.target}]</version>
+          <scope>test</scope>
+        </dependency>
+        <dependency>
+          <groupId>org.drools</groupId>
+          <artifactId>drools-compiler</artifactId>
+          <version>[${drools.target}]</version>
+          <scope>test</scope>
+        </dependency>
+      </dependencies>
+    </profile>
+
+  </profiles>
+
+</project>
