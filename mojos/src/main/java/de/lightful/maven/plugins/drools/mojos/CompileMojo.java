@@ -109,6 +109,7 @@ public class CompileMojo extends AbstractMojo {
     configurationValidator.validateConfiguration(passes);
     logger.dumpPassesConfiguration(passes);
 
+    logger.dumpDroolsRuntimeInfo(KnowledgeBuilder.class);
     runAllPasses();
     outputFileWriter.writeOutputFile(knowledgeBuilder.getKnowledgePackages(), logger, project);
   }

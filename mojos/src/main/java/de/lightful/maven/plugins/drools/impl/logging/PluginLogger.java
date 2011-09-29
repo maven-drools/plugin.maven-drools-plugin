@@ -115,4 +115,9 @@ public class PluginLogger {
       error.nl();
     }
   }
+
+  public void dumpDroolsRuntimeInfo(Class<?> knowledgeBuilderClass) {
+    final Package runtimePackage = knowledgeBuilderClass.getPackage();
+    info().write("Using Drools Runtime version " + runtimePackage.getImplementationVersion()).nl();
+  }
 }

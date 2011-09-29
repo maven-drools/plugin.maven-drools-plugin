@@ -52,6 +52,11 @@ public class OutputFileWriter {
 
     final String absoluteOutputFileName = outputFile.getAbsolutePath();
     logger.info().write("Writing " + knowledgePackages.size() + " knowledge packages into output file " + absoluteOutputFileName).nl();
+    int counter = 1;
+    for (KnowledgePackage knowledgePackage : knowledgePackages) {
+      logger.info().write("  Package #" + counter + ": " + knowledgePackage.getName() + " (" + knowledgePackage.getRules().size() + " rules)").nl();
+      counter++;
+    }
 
     ensureTargetDirectoryExists(buildDirectory);
     prepareOutputFileForWriting(outputFile, absoluteOutputFileName);
