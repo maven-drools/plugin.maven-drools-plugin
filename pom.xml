@@ -54,7 +54,7 @@
 
   <modules>
     <module>mojos</module>
-    <module>generic-integration-tests</module>
+    <module>reusable-integration-tests</module>
     <module>generic-integration-test-bundle</module>
     <module>integration-tests</module>
   </modules>

@@ -21,56 +21,27 @@
   <modelVersion>4.0.0</modelVersion>
 
   <parent>
-    <groupId>de.lightful.maven.drools.plugin</groupId>
-    <artifactId>plugin-project</artifactId>
-    <version>0.2.0-SNAPSHOT</version>
+    <groupId>de.lightful.poms</groupId>
+    <artifactId>standard-plugins</artifactId>
+    <version>11</version>
   </parent>
 
   <groupId>de.lightful.maven.drools.plugin.integrationtests.generic</groupId>
-  <artifactId>common-test-infrastructure</artifactId>
+  <artifactId>parent-pom-for-test</artifactId>
+  <version>0.2.0-SNAPSHOT</version>
   <packaging>pom</packaging>
 
-  <name>Maven Drools Support :: Plugin :: Generic Integration Tests :: Common Infrastructure</name>
+  <name>Maven Drools Support :: Plugin :: Reusable Integration Tests :: Parent POM For Individual Test</name>
 
   <properties>
     <repository.regular>${env.HOME}/.m2/repository</repository.regular>
-    <repository.integrationtests>${project.basedir}/../target/it-repository</repository.integrationtests>
-    <repository.deploymenttests>file://${project.basedir}/../target/deployment-repository</repository.deploymenttests>
+    <repository.integrationtests>${project.basedir}/../../target/it-repository</repository.integrationtests>
+    <repository.deploymenttests>file://${project.basedir}/../../target/deployment-repository</repository.deploymenttests>
 
     <pluginUnderTest.groupId>de.lightful.maven.plugins</pluginUnderTest.groupId>
     <pluginUnderTest.artifactId>maven-drools-plugin</pluginUnderTest.artifactId>
     <pluginUnderTest.version>${project.parent.version}</pluginUnderTest.version>
   </properties>
-
-  <build>
-    <plugins>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-compiler-plugin</artifactId>
-      </plugin>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-resources-plugin</artifactId>
-        <configuration>
-          <encoding>UTF-8</encoding>
-          <useDefaultDelimiters>true</useDefaultDelimiters>
-          <escapeString>\</escapeString>
-        </configuration>
-      </plugin>
-    </plugins>
-
-    <resources>
-      <resource>
-        <directory>${project.basedir}/src/main/resources/integrationtests</directory>
-        <filtering>true</filtering>
-      </resource>
-      <resource>
-        <directory>${project.basedir}/src/main/resources/testng-properties</directory>
-        <filtering>true</filtering>
-        <targetPath>${project.basedir}</targetPath>
-      </resource>
-    </resources>
-  </build>
 
   <dependencyManagement>
     <dependencies>
@@ -86,14 +57,11 @@
 
   <dependencies>
     <dependency>
-      <groupId>de.lightful.maven.plugins</groupId>
-      <artifactId>maven-drools-plugin</artifactId>
+      <groupId>de.lightful.maven.drools.plugin.integrationtests.generic</groupId>
+      <artifactId>common-test-infrastructure</artifactId>
       <version>${project.version}</version>
-      <type>maven-plugin</type>
       <scope>test</scope>
     </dependency>
-
-
     <dependency>
       <groupId>de.lightful.maven.drools.plugin</groupId>
       <artifactId>artifact-naming</artifactId>
@@ -194,9 +162,9 @@
       </dependencies>
     </profile>
     <profile>
-      <id>drools.target=5.3.0.Beta1</id>
+      <id>drools.target=5.3.0.CR1</id>
       <properties>
-        <drools.target>5.3.0.Beta1</drools.target>
+        <drools.target>5.3.0.CR1</drools.target>
       </properties>
       <dependencies>
         <dependency>
@@ -219,7 +187,6 @@
         </dependency>
       </dependencies>
     </profile>
-
   </profiles>
 
 </project>
