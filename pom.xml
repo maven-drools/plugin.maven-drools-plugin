@@ -53,6 +53,8 @@
   </dependencyManagement>
 
   <modules>
+    <module>internal-dependencies</module>
+    <module>maven-settings</module>
     <module>mojos</module>
     <module>reusable-integration-tests</module>
     <module>generic-integration-test-bundle</module>
