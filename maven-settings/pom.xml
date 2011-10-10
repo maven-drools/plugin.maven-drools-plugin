@@ -42,14 +42,14 @@
       <dependency>
         <groupId>de.lightful.maven.drools.plugin.poms</groupId>
         <artifactId>external-dependencies</artifactId>
-        <version>0.5.1</version>
+        <version>0.5.2</version>
         <type>pom</type>
         <scope>import</scope>
       </dependency>
       <dependency>
-        <groupId>de.lightful.maven.drools.plugin</groupId>
+        <groupId>de.lightful.maven.drools.plugin.poms</groupId>
         <artifactId>internal-dependencies</artifactId>
-        <version>0.2.0-SNAPSHOT</version>
+        <version>0.2.1</version>
         <type>pom</type>
         <scope>import</scope>
       </dependency>
