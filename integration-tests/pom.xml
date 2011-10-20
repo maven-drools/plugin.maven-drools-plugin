@@ -34,9 +34,8 @@
   <name>Maven Drools Support :: Plugin :: All Integration Tests</name>
 
   <properties>
-    <!--<repository.regular>${env.HOME}/.m2/repository</repository.regular>-->
-    <repository.integrationtests>${project.basedir}/../target/it-repository</repository.integrationtests>
-    <!--<repository.deploymenttests>file://${project.basedir}/../../target/deployment-repository</repository.deploymenttests>-->
+    <!-- (Conditional) TODO: load properties from integration-test-repository -->
+    <!-- Just in case you need to make this working again -->
 
     <!--<pluginUnderTest.groupId>de.lightful.maven.plugins</pluginUnderTest.groupId>-->
     <!--<pluginUnderTest.artifactId>maven-drools-plugin</pluginUnderTest.artifactId>-->
@@ -111,12 +110,12 @@
   <!--</goals>-->
   <!--<configuration>-->
   <!--<systemProperties>-->
-  <!--<localRepository>${repository.integrationtests}</localRepository>-->
+  <!--<localRepository>${repository.location.integrationtest}</localRepository>-->
   <!--</systemProperties>-->
   <!--<systemPropertyVariables>-->
   <!--<project.version>${project.version}</project.version>-->
-  <!--<repository.integrationtests>${repository.integrationtests}</repository.integrationtests>-->
-  <!--<repository.deploymenttests>${repository.deploymenttests}</repository.deploymenttests>-->
+  <!--<repository.location.integrationtest>${repository.location.integrationtest}</repository.location.integrationtest>-->
+  <!--<repository.url.deploymenttest>${repository.url.deploymenttest}</repository.url.deploymenttest>-->
   <!--<dependency.drools-fruit-types.version>${dependency.drools-fruit-types.version}</dependency.drools-fruit-types.version>-->
   <!--<dependency.drools-vehicle-types.version>${dependency.drools-vehicle-types.version}</dependency.drools-vehicle-types.version>-->
   <!--<maven.test.tmpdir>${project.build.directory}/maven-test-tmp</maven.test.tmpdir>-->

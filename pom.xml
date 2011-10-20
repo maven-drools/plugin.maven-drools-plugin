@@ -23,7 +23,7 @@
   <parent>
     <groupId>de.lightful.poms</groupId>
     <artifactId>standard-plugins</artifactId>
-    <version>11</version>
+    <version>12</version>
   </parent>
 
   <groupId>de.lightful.maven.drools.plugin</groupId>
@@ -31,13 +31,11 @@
   <version>0.2.0-SNAPSHOT</version>
   <packaging>pom</packaging>
 
-  <name>Maven Drools Support :: Plugin :: Project Aggregator</name>
+  <name>Maven Drools Support :: Plugin :: Maven Drools Plugin Project</name>
 
   <properties>
-    <dependency.maven.version>3.0.3</dependency.maven.version>
     <dependency.drools-fruit-types.version>0.0.17</dependency.drools-fruit-types.version>
     <dependency.drools-vehicle-types.version>0.0.17</dependency.drools-vehicle-types.version>
-    <repository.integrationtests>${project.basedir}/../target/it-repository</repository.integrationtests>
   </properties>
 
   <dependencyManagement>
@@ -53,33 +51,39 @@
   </dependencyManagement>
 
   <modules>
-    <module>internal-dependencies</module>
-    <module>maven-settings</module>
     <module>mojos</module>
-    <module>reusable-integration-tests</module>
-    <module>generic-integration-test-bundle</module>
-    <module>integration-tests</module>
+
+    <module>integration-test-repository</module>
+    <module>integration-test-assembly</module>
+    <module>maven-settings</module>
+    <module>integration-test-module-parent</module>
+    <module>integration-test-modules</module>
+    <module>integration-test-execution-poms</module>
+    <module>integration-test-executions</module>
+    <!--<module>integration-tests-flexible</module>-->
+    <!--<module>generic-integration-test-bundle</module>-->
+    <!--<module>integration-tests</module>-->
   </modules>
 
   <build>
     <plugins>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-invoker-plugin</artifactId>
-        <version>1.5</version>
-        <executions>
-          <execution>
-            <id>install-integration-test-artifacts</id>
-            <phase>pre-integration-test</phase>
-            <goals>
-              <goal>install</goal>
-            </goals>
-            <configuration>
-              <localRepositoryPath>${repository.integrationtests}</localRepositoryPath>
-            </configuration>
-          </execution>
-        </executions>
-      </plugin>
+      <!--<plugin>-->
+        <!--<groupId>org.apache.maven.plugins</groupId>-->
+        <!--<artifactId>maven-invoker-plugin</artifactId>-->
+        <!--<version>1.5</version>-->
+        <!--<executions>-->
+          <!--<execution>-->
+            <!--<id>install-integration-test-artifacts</id>-->
+            <!--<phase>pre-integration-test</phase>-->
+            <!--<goals>-->
+              <!--<goal>install</goal>-->
+            <!--</goals>-->
+            <!--<configuration>-->
+              <!--<localRepositoryPath>${repository.integrationtests}</localRepositoryPath>-->
+            <!--</configuration>-->
+          <!--</execution>-->
+        <!--</executions>-->
+      <!--</plugin>-->
 
       <plugin>
         <artifactId>maven-clean-plugin</artifactId>
@@ -96,7 +100,6 @@
               <failOnError>true</failOnError>
               <filesets>
                 <fileset>
-                  <!--<directory>${repository.integrationtests}</directory>-->
                   <directory>${project.build.outputDirectory}/it-repository</directory>
                 </fileset>
               </filesets>

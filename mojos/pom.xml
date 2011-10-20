@@ -20,14 +20,21 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
+  <!--<parent>-->
+  <!--<groupId>de.lightful.maven.drools.plugin</groupId>-->
+  <!--<artifactId>plugin-project</artifactId>-->
+  <!--<version>0.2.0-SNAPSHOT</version>-->
+  <!--</parent>-->
+
   <parent>
-    <groupId>de.lightful.maven.drools.plugin</groupId>
-    <artifactId>plugin-project</artifactId>
-    <version>0.2.0-SNAPSHOT</version>
+    <groupId>de.lightful.poms</groupId>
+    <artifactId>standard-plugins</artifactId>
+    <version>12</version>
   </parent>
 
   <groupId>de.lightful.maven.plugins</groupId>
   <artifactId>maven-drools-plugin</artifactId>
+  <version>0.2.0-SNAPSHOT</version>
   <packaging>maven-plugin</packaging>
 
   <name>Maven Drools Support :: Plugin :: MOJOs</name>
@@ -35,7 +42,27 @@
 
   <properties>
     <sonatype.aether.version>1.12</sonatype.aether.version>
+    <dependency.maven.version>3.0.3</dependency.maven.version>
   </properties>
+
+  <dependencyManagement>
+    <dependencies>
+      <dependency>
+        <groupId>de.lightful.maven.drools.plugin.poms</groupId>
+        <artifactId>external-dependencies</artifactId>
+        <version>0.5.2</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+      <dependency>
+        <groupId>de.lightful.maven.drools.plugin.poms</groupId>
+        <artifactId>internal-dependencies</artifactId>
+        <version>0.2.1</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
 
   <dependencies>
     <!-- Drools Dependencies: -->
@@ -108,6 +135,12 @@
       <artifactId>fest-assert</artifactId>
       <scope>compile</scope>
     </dependency>
+    <dependency>
+      <groupId>de.lightful.maven.drools.plugin</groupId>
+      <artifactId>integration-test-repository</artifactId>
+      <version>${project.version}</version>
+      <classifier>repoconfig</classifier>
+    </dependency>
   </dependencies>
 
   <build>
@@ -136,7 +169,7 @@
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-release-plugin</artifactId>
         <configuration>
-          <localRepoDirectory>${repository.integrationtests}</localRepoDirectory>
+          <localRepoDirectory>${repository.location.integrationtest}</localRepoDirectory>
         </configuration>
       </plugin>
 
@@ -152,14 +185,76 @@
           </execution>
         </executions>
       </plugin>
+
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-invoker-plugin</artifactId>
+        <version>1.5</version>
+        <executions>
+          <execution>
+            <id>install-integration-test-artifacts</id>
+            <phase>pre-integration-test</phase>
+            <goals>
+              <goal>install</goal>
+            </goals>
+            <configuration>
+              <localRepositoryPath>${repository.location.integrationtest}</localRepositoryPath>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-dependency-plugin</artifactId>
+        <version>2.3</version>
+        <executions>
+          <execution>
+            <id>retrieve-repository-configuration</id>
+            <phase>validate</phase>
+            <goals>
+              <goal>unpack</goal>
+            </goals>
+            <configuration>
+              <artifactItems>
+                <artifactItem>
+                  <groupId>de.lightful.maven.drools.plugin</groupId>
+                  <artifactId>integration-test-repository</artifactId>
+                  <classifier>repoconfig</classifier>
+                </artifactItem>
+              </artifactItems>
+              <excludes>**/META-INF</excludes>
+              <outputDirectory>${project.build.directory}/dependencies/resources</outputDirectory>
+              <overWriteIfNewer>true</overWriteIfNewer>
+              <overWriteSnapshots>true</overWriteSnapshots>
+              <overWriteReleases>true</overWriteReleases>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>properties-maven-plugin</artifactId>
+        <version>1.0-alpha-2</version>
+        <executions>
+          <execution>
+            <id>set-repository-properties</id>
+            <phase>generate-resources</phase>
+            <goals>
+              <goal>read-project-properties</goal>
+            </goals>
+            <configuration>
+              <files>
+                <file>${project.build.directory}/dependencies/resources/integrationtest.repository.properties</file>
+              </files>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+
     </plugins>
 
-    <testResources>
-      <testResource>
-        <directory>${project.basedir}/src/test/resources</directory>
-        <filtering>true</filtering>
-      </testResource>
-    </testResources>
   </build>
 
 </project>

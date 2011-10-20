@@ -34,10 +34,6 @@
   <name>Maven Drools Support :: Plugin :: All Integration Tests :: Parent for each Drools target</name>
 
   <properties>
-    <repository.regular>${env.HOME}/.m2/repository</repository.regular>
-    <repository.integrationtests>${project.basedir}/../../target/it-repository</repository.integrationtests>
-    <repository.deploymenttests>file://${project.basedir}/../../target/deployment-repository</repository.deploymenttests>
-
     <pluginUnderTest.groupId>de.lightful.maven.plugins</pluginUnderTest.groupId>
     <pluginUnderTest.artifactId>maven-drools-plugin</pluginUnderTest.artifactId>
     <pluginUnderTest.version>${project.parent.version}</pluginUnderTest.version>
@@ -83,12 +79,12 @@
               </goals>
               <configuration>
                 <systemProperties>
-                  <localRepository>${repository.integrationtests}</localRepository>
+                  <localRepository>${repository.location.integrationtest}</localRepository>
                 </systemProperties>
                 <systemPropertyVariables>
                   <project.version>${project.version}</project.version>
-                  <repository.integrationtests>${repository.integrationtests}</repository.integrationtests>
-                  <repository.deploymenttests>${repository.deploymenttests}</repository.deploymenttests>
+                  <repository.location.integrationtest>${repository.location.integrationtest}</repository.location.integrationtest>
+                  <repository.url.deploymenttest>${repository.url.deploymenttest}</repository.url.deploymenttest>
                   <dependency.drools-fruit-types.version>${dependency.drools-fruit-types.version}</dependency.drools-fruit-types.version>
                   <dependency.drools-vehicle-types.version>${dependency.drools-vehicle-types.version}</dependency.drools-vehicle-types.version>
                   <maven.test.tmpdir>${project.build.directory}/maven-test-tmp</maven.test.tmpdir>
@@ -201,6 +197,12 @@
   </dependencyManagement>
 
   <dependencies>
+    <dependency>
+      <groupId>de.lightful.maven.drools.plugin</groupId>
+      <artifactId>integration-test-repository</artifactId>
+      <version>${project.version}</version>
+      <classifier>repoconfig</classifier>
+    </dependency>
     <dependency>
       <groupId>de.lightful.maven.drools.plugin</groupId>
       <artifactId>generic-integration-test-bundle</artifactId>

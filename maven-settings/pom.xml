@@ -27,7 +27,7 @@
   <parent>
     <groupId>de.lightful.poms</groupId>
     <artifactId>standard-plugins</artifactId>
-    <version>11</version>
+    <version>12</version>
   </parent>
 
   <groupId>de.lightful.maven.drools.plugin.integration-testing</groupId>
@@ -61,6 +61,72 @@
       <groupId>de.lightful.maven.drools.plugin.test-support</groupId>
       <artifactId>maven-verifier-testng</artifactId>
     </dependency>
+    <dependency>
+      <groupId>de.lightful.maven.drools.plugin</groupId>
+      <artifactId>integration-test-repository</artifactId>
+      <classifier>repoconfig</classifier>
+      <version>${project.version}</version>
+    </dependency>
   </dependencies>
+
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-dependency-plugin</artifactId>
+        <version>2.3</version>
+        <executions>
+          <execution>
+            <id>retrieve-repository-configuration</id>
+            <phase>validate</phase>
+            <goals>
+              <goal>unpack</goal>
+            </goals>
+            <configuration>
+              <artifactItems>
+                <artifactItem>
+                  <groupId>de.lightful.maven.drools.plugin</groupId>
+                  <artifactId>integration-test-repository</artifactId>
+                  <classifier>repoconfig</classifier>
+                </artifactItem>
+              </artifactItems>
+              <excludes>**/META-INF</excludes>
+              <outputDirectory>${project.build.directory}/dependencies/resources</outputDirectory>
+              <overWriteIfNewer>true</overWriteIfNewer>
+              <overWriteSnapshots>true</overWriteSnapshots>
+              <overWriteReleases>true</overWriteReleases>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>properties-maven-plugin</artifactId>
+        <version>1.0-alpha-2</version>
+        <executions>
+          <execution>
+            <id>set-repository-properties</id>
+            <phase>generate-resources</phase>
+            <goals>
+              <goal>read-project-properties</goal>
+            </goals>
+            <configuration>
+              <files>
+                <file>${project.build.directory}/dependencies/resources/integrationtest.repository.properties</file>
+              </files>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+
+    <resources>
+      <resource>
+        <directory>${project.basedir}/src/main/resources</directory>
+        <filtering>true</filtering>
+      </resource>
+    </resources>
+  </build>
 
 </project>

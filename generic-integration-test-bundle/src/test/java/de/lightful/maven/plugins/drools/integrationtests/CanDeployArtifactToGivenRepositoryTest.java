@@ -41,7 +41,7 @@ public class CanDeployArtifactToGivenRepositoryTest extends MavenVerifierTest {
   private Verifier verifier;
 
   @Test
-  @Parameters("repository.deploymenttests")
+  @Parameters("repository.url.deploymenttest")
   @ExecuteGoals(WellKnownNames.GOAL_CLEAN)
   public void testFileGetsDeployedToExpectedLocation(String deploymentRepositoryUrl) throws Exception {
     verifier.executeGoal(WellKnownNames.GOAL_DEPLOY);

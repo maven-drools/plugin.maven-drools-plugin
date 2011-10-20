@@ -21,7 +21,7 @@
     <groupId>de.lightful.maven.plugins.plugintest.drools</groupId>
     <artifactId>plugintest.parent</artifactId>
     <version>1</version>
-    <relativePath>../parent-poms/parent-pom.${drools.target}.xml</relativePath>
+    <relativePath>../parent-poms/parent-pom.${drools.runtime.version}.xml</relativePath>
   </parent>
 
   <modelVersion>4.0.0</modelVersion>
@@ -43,28 +43,7 @@
           </passes>
         </configuration>
       </plugin>
-
-      <plugin>
-        <artifactId>maven-deploy-plugin</artifactId>
-        <version>2.5</version>
-      </plugin>
-
     </plugins>
   </build>
-
-  <distributionManagement>
-    <downloadUrl>${repository.url.deploymenttest}</downloadUrl>
-    <repository>
-      <id>release-repo-for-deployment-tests</id>
-      <name>Public Release Repository on lightful.de</name>
-      <url>${repository.url.deploymenttest}</url>
-      <layout>default</layout>
-    </repository>
-    <snapshotRepository>
-      <id>snapshot-repo-for-deployment-tests</id>
-      <url>${repository.url.deploymenttest}</url>
-      <layout>default</layout>
-    </snapshotRepository>
-  </distributionManagement>
 
 </project>
