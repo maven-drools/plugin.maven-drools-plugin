@@ -49,7 +49,7 @@
       <dependency>
         <groupId>de.lightful.maven.drools.plugin.poms</groupId>
         <artifactId>internal-dependencies</artifactId>
-        <version>0.2.1</version>
+        <version>0.2.2</version>
         <type>pom</type>
         <scope>import</scope>
       </dependency>
@@ -63,7 +63,7 @@
     </dependency>
     <dependency>
       <groupId>de.lightful.maven.drools.plugin</groupId>
-      <artifactId>integration-test-repository</artifactId>
+      <artifactId>integration-test-properties</artifactId>
       <classifier>repoconfig</classifier>
       <version>${project.version}</version>
     </dependency>
@@ -77,7 +77,7 @@
         <version>2.3</version>
         <executions>
           <execution>
-            <id>retrieve-repository-configuration</id>
+            <id>unpack-dynamic-dependencies</id>
             <phase>validate</phase>
             <goals>
               <goal>unpack</goal>
@@ -86,7 +86,7 @@
               <artifactItems>
                 <artifactItem>
                   <groupId>de.lightful.maven.drools.plugin</groupId>
-                  <artifactId>integration-test-repository</artifactId>
+                  <artifactId>integration-test-properties</artifactId>
                   <classifier>repoconfig</classifier>
                 </artifactItem>
               </artifactItems>
@@ -106,14 +106,14 @@
         <version>1.0-alpha-2</version>
         <executions>
           <execution>
-            <id>set-repository-properties</id>
+            <id>set-dynamic-properties</id>
             <phase>generate-resources</phase>
             <goals>
               <goal>read-project-properties</goal>
             </goals>
             <configuration>
               <files>
-                <file>${project.build.directory}/dependencies/resources/integrationtest.repository.properties</file>
+                <file>${project.build.directory}/dependencies/resources/integrationtest.properties</file>
               </files>
             </configuration>
           </execution>

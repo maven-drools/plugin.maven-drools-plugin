@@ -52,37 +52,31 @@
 
   <modules>
     <module>mojos</module>
-
-    <module>integration-test-repository</module>
-    <module>integration-test-assembly</module>
     <module>maven-settings</module>
-    <module>integration-test-module-parent</module>
-    <module>integration-test-modules</module>
-    <module>integration-test-execution-poms</module>
-    <module>integration-test-executions</module>
-    <!--<module>integration-tests-flexible</module>-->
-    <!--<module>generic-integration-test-bundle</module>-->
+    <module>integration-test-properties</module>
+    <module>integration-test-definitions</module>
+    <!--<module>integration-test-execution-poms</module>-->
     <!--<module>integration-tests</module>-->
   </modules>
 
   <build>
     <plugins>
       <!--<plugin>-->
-        <!--<groupId>org.apache.maven.plugins</groupId>-->
-        <!--<artifactId>maven-invoker-plugin</artifactId>-->
-        <!--<version>1.5</version>-->
-        <!--<executions>-->
-          <!--<execution>-->
-            <!--<id>install-integration-test-artifacts</id>-->
-            <!--<phase>pre-integration-test</phase>-->
-            <!--<goals>-->
-              <!--<goal>install</goal>-->
-            <!--</goals>-->
-            <!--<configuration>-->
-              <!--<localRepositoryPath>${repository.integrationtests}</localRepositoryPath>-->
-            <!--</configuration>-->
-          <!--</execution>-->
-        <!--</executions>-->
+      <!--<groupId>org.apache.maven.plugins</groupId>-->
+      <!--<artifactId>maven-invoker-plugin</artifactId>-->
+      <!--<version>1.5</version>-->
+      <!--<executions>-->
+      <!--<execution>-->
+      <!--<id>install-integration-test-artifacts</id>-->
+      <!--<phase>pre-integration-test</phase>-->
+      <!--<goals>-->
+      <!--<goal>install</goal>-->
+      <!--</goals>-->
+      <!--<configuration>-->
+      <!--<localRepositoryPath>${repository.integrationtests}</localRepositoryPath>-->
+      <!--</configuration>-->
+      <!--</execution>-->
+      <!--</executions>-->
       <!--</plugin>-->
 
       <plugin>

@@ -2,7 +2,7 @@
 <!--
   ~ Copyright (c) 2009-2011 Ansgar Konermann
   ~
-  ~ This file is part of the Maven 3 Drools Plugin.
+  ~ This file is part of the "Maven 3 Drools Support" Package.
   ~
   ~ Licensed under the Apache License, Version 2.0 (the "License");
   ~ you may not use this file except in compliance with the License.
@@ -37,8 +37,6 @@
     <pluginUnderTest.groupId>de.lightful.maven.plugins</pluginUnderTest.groupId>
     <pluginUnderTest.artifactId>maven-drools-plugin</pluginUnderTest.artifactId>
     <pluginUnderTest.version>${project.parent.version}</pluginUnderTest.version>
-
-    <integrationtests.bundle.version>${project.version}</integrationtests.bundle.version>
   </properties>
 
   <build>
@@ -138,9 +136,7 @@
               <artifactItems>
                 <artifactItem>
                   <groupId>de.lightful.maven.drools.plugin</groupId>
-                  <artifactId>generic-integration-test-bundle</artifactId>
-                  <version>${integrationtests.bundle.version}</version>
-                  <type>test-jar</type>
+                  <artifactId>integration-test-definitions</artifactId>
                 </artifactItem>
               </artifactItems>
               <outputDirectory>${project.build.directory}/test-classes</outputDirectory>
@@ -149,28 +145,28 @@
               <overWriteSnapshots>true</overWriteSnapshots>
             </configuration>
           </execution>
-          <execution>
-            <id>extract-test-resources</id>
-            <phase>generate-resources</phase>
-            <goals>
-              <goal>unpack</goal>
-            </goals>
-            <configuration>
-              <artifactItems>
-                <artifactItem>
-                  <groupId>de.lightful.maven.drools.plugin</groupId>
-                  <artifactId>generic-integration-test-bundle</artifactId>
-                  <version>${integrationtests.bundle.version}</version>
-                  <classifier>test-resources</classifier>
-                  <type>zip</type>
-                </artifactItem>
-              </artifactItems>
-              <outputDirectory>${project.build.directory}/integrationtest-resources</outputDirectory>
-              <overWriteIfNewer>true</overWriteIfNewer>
-              <overWriteReleases>true</overWriteReleases>
-              <overWriteSnapshots>true</overWriteSnapshots>
-            </configuration>
-          </execution>
+          <!--<execution>-->
+          <!--<id>extract-test-resources</id>-->
+          <!--<phase>generate-resources</phase>-->
+          <!--<goals>-->
+          <!--<goal>unpack</goal>-->
+          <!--</goals>-->
+          <!--<configuration>-->
+          <!--<artifactItems>-->
+          <!--<artifactItem>-->
+          <!--<groupId>de.lightful.maven.drools.plugin</groupId>-->
+          <!--<artifactId>integration-test-definitions</artifactId>-->
+          <!--<version>${integrationtests.bundle.version}</version>-->
+          <!--<classifier>test-resources</classifier>-->
+          <!--<type>zip</type>-->
+          <!--</artifactItem>-->
+          <!--</artifactItems>-->
+          <!--<outputDirectory>${project.build.directory}/integrationtest-resources</outputDirectory>-->
+          <!--<overWriteIfNewer>true</overWriteIfNewer>-->
+          <!--<overWriteReleases>true</overWriteReleases>-->
+          <!--<overWriteSnapshots>true</overWriteSnapshots>-->
+          <!--</configuration>-->
+          <!--</execution>-->
         </executions>
       </plugin>
     </plugins>
@@ -199,23 +195,21 @@
   <dependencies>
     <dependency>
       <groupId>de.lightful.maven.drools.plugin</groupId>
-      <artifactId>integration-test-repository</artifactId>
+      <artifactId>integration-test-properties</artifactId>
       <version>${project.version}</version>
       <classifier>repoconfig</classifier>
     </dependency>
     <dependency>
       <groupId>de.lightful.maven.drools.plugin</groupId>
-      <artifactId>generic-integration-test-bundle</artifactId>
-      <version>${integrationtests.bundle.version}</version>
+      <artifactId>integration-test-definitions</artifactId>
+      <version>${project.version}</version>
       <type>test-jar</type>
       <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>de.lightful.maven.drools.plugin</groupId>
-      <artifactId>generic-integration-test-bundle</artifactId>
-      <version>${integrationtests.bundle.version}</version>
-      <classifier>test-resources</classifier>
-      <type>zip</type>
+      <artifactId>integration-test-definitions</artifactId>
+      <version>${project.version}</version>
     </dependency>
     <dependency>
       <groupId>de.lightful.maven.plugins</groupId>
