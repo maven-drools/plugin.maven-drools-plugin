@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ Copyright (c) 2009-2011 Ansgar Konermann
+  ~
+  ~ This file is part of the "Maven 3 Drools Support" Package.
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~     http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  -->
+<project
+    xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+  <modelVersion>4.0.0</modelVersion>
+
+  <parent>
+    <groupId>de.lightful.poms</groupId>
+    <artifactId>standard-plugins</artifactId>
+    <version>12</version>
+  </parent>
+
+  <groupId>de.lightful.maven.plugin.integrationtests.execution</groupId>
+  <artifactId>target-drools-5.1.1</artifactId>
+  <version>0.2.0-SNAPSHOT</version>
+  <packaging>pom</packaging>
+
+  <name>Maven Drools Support :: Plugin :: Integration Test Execution :: Runtime Drools 5.1.1</name>
+
+  <dependencies>
+    <dependency>
+      <groupId>de.lightful.maven.drools.plugin</groupId>
+      <artifactId>integration-test-properties</artifactId>
+      <version>${project.version}</version>
+      <classifier>repoconfig</classifier>
+    </dependency>
+    <dependency>
+      <groupId>de.lightful.maven.drools.plugin.integration-testing</groupId>
+      <artifactId>integration-test-execution-poms</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>de.lightful.maven.drools.plugin.integrationtests.modules</groupId>
+      <artifactId>test-can-compile-100-files-in-one-turn</artifactId>
+      <classifier>tests</classifier>
+      <version>${project.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>de.lightful.maven.drools.plugin.integration-testing</groupId>
+      <artifactId>maven-settings</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+  </dependencies>
+
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-dependency-plugin</artifactId>
+        <version>2.3</version>
+        <executions>
+          <execution>
+            <id>retrieve-repository-configuration</id>
+            <phase>validate</phase>
+            <goals>
+              <goal>unpack</goal>
+            </goals>
+            <configuration>
+              <artifactItems>
+                <artifactItem>
+                  <groupId>de.lightful.maven.drools.plugin</groupId>
+                  <artifactId>integration-test-properties</artifactId>
+                  <classifier>repoconfig</classifier>
+                </artifactItem>
+              </artifactItems>
+              <excludes>META-INF/**</excludes>
+              <outputDirectory>${project.basedir}</outputDirectory>
+              <overWriteIfNewer>true</overWriteIfNewer>
+            </configuration>
+          </execution>
+
+          <execution>
+            <id>retrieve-maven-configuration-for-tests</id>
+            <phase>validate</phase>
+            <goals>
+              <goal>unpack</goal>
+            </goals>
+            <configuration>
+              <artifactItems>
+                <artifactItem>
+                  <groupId>de.lightful.maven.drools.plugin.integration-testing</groupId>
+                  <artifactId>integration-test-execution-poms</artifactId>
+                </artifactItem>
+                <artifactItem>
+                  <groupId>de.lightful.maven.drools.plugin.integration-testing</groupId>
+                  <artifactId>maven-settings</artifactId>
+                </artifactItem>
+              </artifactItems>
+              <excludes>META-INF/**</excludes>
+              <outputDirectory>${project.build.testOutputDirectory}</outputDirectory>
+            </configuration>
+          </execution>
+
+          <execution>
+            <id>retrieve-test-classes-and-resources</id>
+            <phase>test-compile</phase>
+            <goals>
+              <goal>unpack</goal>
+            </goals>
+            <configuration>
+              <artifactItems>
+                <artifactItem>
+                  <groupId>de.lightful.maven.drools.plugin.integrationtests.modules</groupId>
+                  <artifactId>test-can-compile-100-files-in-one-turn</artifactId>
+                  <classifier>tests</classifier>
+                </artifactItem>
+              </artifactItems>
+              <excludes>META-INF/**</excludes>
+              <outputDirectory>${project.build.testOutputDirectory}</outputDirectory>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>properties-maven-plugin</artifactId>
+        <version>1.0-alpha-2</version>
+        <executions>
+          <execution>
+            <id>set-repository-properties</id>
+            <phase>process-resources</phase>
+            <goals>
+              <goal>read-project-properties</goal>
+            </goals>
+            <configuration>
+              <files>
+                <file>${basedir}/integrationtest.repository.properties</file>
+              </files>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+
+      <plugin>
+        <artifactId>maven-antrun-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>dump-properties</id>
+            <phase>test</phase>
+            <goals>
+              <goal>run</goal>
+            </goals>
+            <configuration>
+              <tasks>
+                <echo>project.build.sourceEncoding = ${project.build.sourceEncoding}</echo>
+                <echo>repository.location.integrationtest = ${repository.location.integrationtest}</echo>
+                <echo>repository.url.deploymenttest = ${repository.url.deploymenttest}</echo>
+              </tasks>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <version>2.9</version>
+        <executions>
+          <execution>
+            <id>run-plugin-integration-tests</id>
+            <phase>integration-test</phase>
+            <goals>
+              <goal>test</goal>
+            </goals>
+            <configuration>
+              <systemProperties>
+                <localRepository>${repository.location.integrationtest}</localRepository>
+              </systemProperties>
+              <systemPropertyVariables>
+                <project.version>${project.version}</project.version>
+                <repository.location.integrationtest>${repository.location.integrationtest}</repository.location.integrationtest>
+                <repository.url.deploymenttest>${repository.url.deploymenttest}</repository.url.deploymenttest>
+                <dependency.drools-fruit-types.version>${dependency.drools-fruit-types.version}</dependency.drools-fruit-types.version>
+                <dependency.drools-vehicle-types.version>${dependency.drools-vehicle-types.version}</dependency.drools-vehicle-types.version>
+                <maven.test.tmpdir>${project.build.directory}/maven-test-tmp</maven.test.tmpdir>
+              </systemPropertyVariables>
+              <failIfNoTests>true</failIfNoTests>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+
+    </plugins>
+  </build>
+
+
+</project>
