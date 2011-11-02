@@ -41,6 +41,12 @@
   <build>
     <plugins>
       <plugin>
+        <artifactId>maven-resources-plugin</artifactId>
+        <configuration>
+          <escapeString>\</escapeString>
+        </configuration>
+      </plugin>
+      <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-enforcer-plugin</artifactId>
         <executions>
@@ -97,9 +103,6 @@
               <goal>test</goal>
             </goals>
             <configuration>
-              <includes>
-                <include>**/integrationtests/*Test.java</include>
-              </includes>
               <systemProperties>
                 <localRepository>${repository.location.integrationtest}</localRepository>
               </systemProperties>
@@ -160,7 +163,7 @@
                 </artifactItem>
               </artifactItems>
               <includes>**/*settings.xml</includes>
-              <outputDirectory>${project.build.directory}/test-resources</outputDirectory>
+              <outputDirectory>${project.build.directory}/test-classes</outputDirectory>
               <overWriteIfNewer>true</overWriteIfNewer>
               <overWriteReleases>true</overWriteReleases>
               <overWriteSnapshots>true</overWriteSnapshots>
@@ -230,13 +233,6 @@
       <type>maven-plugin</type>
       <scope>test</scope>
     </dependency>
-    <!--<dependency>-->
-    <!--<groupId>de.lightful.maven.plugins</groupId>-->
-    <!--<artifactId>maven-drools-plugin</artifactId>-->
-    <!--<version>${project.version}</version>-->
-    <!--<type>maven-plugin</type>-->
-    <!--<scope>test</scope>-->
-    <!--</dependency>-->
     <dependency>
       <groupId>de.lightful.maven.drools.plugin</groupId>
       <artifactId>integration-test-properties</artifactId>
