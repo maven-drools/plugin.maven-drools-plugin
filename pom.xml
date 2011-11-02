@@ -106,4 +106,9 @@
     </plugins>
   </build>
 
+  <scm>
+    <connection>scm:git:git@github.com:maven-drools/plugin.maven-drools-plugin.git</connection>
+    <developerConnection>scm:git:git@github.com:maven-drools/plugin.maven-drools-plugin.git</developerConnection>
+  </scm>
+
 </project>
