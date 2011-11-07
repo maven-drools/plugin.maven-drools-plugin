@@ -33,6 +33,10 @@
   <name>Maven Drools Support :: Plugin :: Integration Testing :: Test Definitions</name>
 
   <properties>
+    <dependency.drools-fruit-types.version>0.0.17</dependency.drools-fruit-types.version>
+    <dependency.drools-vehicle-types.version>0.0.17</dependency.drools-vehicle-types.version>
+    <dependency.person-fact-model.version>0.0.18</dependency.person-fact-model.version>
+    <dependency.cities-fact-model.version>0.0.18</dependency.cities-fact-model.version>
     <pluginUnderTest.groupId>de.lightful.maven.plugins</pluginUnderTest.groupId>
     <pluginUnderTest.artifactId>maven-drools-plugin</pluginUnderTest.artifactId>
     <pluginUnderTest.version>${project.version}</pluginUnderTest.version>
@@ -68,21 +72,6 @@
         </executions>
       </plugin>
 
-      <!-- TODO: re-enable when multiple executions of these tests should be run again -->
-      <!--<plugin>-->
-      <!--<groupId>org.apache.maven.plugins</groupId>-->
-      <!--<artifactId>maven-jar-plugin</artifactId>-->
-      <!--<executions>-->
-      <!--<execution>-->
-      <!--<id>package-test-jar</id>-->
-      <!--<phase>package</phase>-->
-      <!--<goals>-->
-      <!--<goal>test-jar</goal>-->
-      <!--</goals>-->
-      <!--</execution>-->
-      <!--</executions>-->
-      <!--</plugin>-->
-
       <plugin>
         <artifactId>maven-surefire-plugin</artifactId>
         <configuration>
@@ -103,6 +92,7 @@
               <goal>test</goal>
             </goals>
             <configuration>
+              <skip>true</skip>
               <systemProperties>
                 <localRepository>${repository.location.integrationtest}</localRepository>
               </systemProperties>
@@ -116,12 +106,17 @@
                 <pluginUnderTest.artifactId>${pluginUnderTest.artifactId}</pluginUnderTest.artifactId>
                 <pluginUnderTest.groupId>${pluginUnderTest.groupId}</pluginUnderTest.groupId>
                 <pluginUnderTest.version>${pluginUnderTest.version}</pluginUnderTest.version>
+                <dependency.drools-fruit-types.version>${dependency.drools-fruit-types.version}</dependency.drools-fruit-types.version>
+                <dependency.drools-vehicle-types.version>${dependency.drools-vehicle-types.version}</dependency.drools-vehicle-types.version>
+                <dependency.person-fact-model.version>${dependency.person-fact-model.version}</dependency.person-fact-model.version>
+                <dependency.cities-fact-model.version>${dependency.cities-fact-model.version}</dependency.cities-fact-model.version>
               </systemPropertyVariables>
               <failIfNoTests>true</failIfNoTests>
             </configuration>
           </execution>
         </executions>
       </plugin>
+
 
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
@@ -191,7 +186,28 @@
           </execution>
         </executions>
       </plugin>
+
+      <plugin>
+        <artifactId>maven-assembly-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>assemble-it-resources</id>
+            <phase>package</phase>
+            <goals>
+              <goal>single</goal>
+            </goals>
+            <configuration>
+              <descriptors>
+                <descriptor>src/main/resources/assemblies/it-resources.xml</descriptor>
+              </descriptors>
+            </configuration>
+          </execution>
+        </executions>
+
+      </plugin>
     </plugins>
+
+    <resources/>
 
     <testResources>
       <testResource>
@@ -204,7 +220,6 @@
       </testResource>
     </testResources>
   </build>
-
 
   <dependencyManagement>
     <dependencies>
@@ -232,6 +247,16 @@
       <version>${pluginUnderTest.version}</version>
       <type>maven-plugin</type>
       <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>de.lightful.maven.drools.plugin.itartifacts</groupId>
+      <artifactId>cities-fact-model</artifactId>
+      <version>${dependency.cities-fact-model.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>de.lightful.maven.drools.plugin.itartifacts</groupId>
+      <artifactId>person-fact-model</artifactId>
+      <version>${dependency.person-fact-model.version}</version>
     </dependency>
     <dependency>
       <groupId>de.lightful.maven.drools.plugin</groupId>

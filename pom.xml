@@ -55,7 +55,7 @@
     <module>maven-settings</module>
     <module>integration-test-properties</module>
     <module>integration-test-definitions</module>
-    <!--<module>integration-test-execution-poms</module>-->
+    <module>integration-test-executions</module>
     <!--<module>integration-tests</module>-->
   </modules>
 
