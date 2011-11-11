@@ -26,7 +26,7 @@
   <parent>
     <groupId>de.lightful.poms</groupId>
     <artifactId>standard-plugins</artifactId>
-    <version>28</version>
+    <version>29</version>
   </parent>
 
   <groupId>de.lightful.maven.plugin.integrationtests.execution</groupId>
@@ -39,7 +39,8 @@
   <modules>
     <module>common-execution-behaviour</module>
     <!--<module>target-drools-5.1.1</module>-->
-    <module>target-drools-5.2.0.Final</module>
+    <!--<module>target-drools-5.2.0.Final</module>-->
+    <module>target-drools-5.3.0.Final</module>
   </modules>
 
 </project>

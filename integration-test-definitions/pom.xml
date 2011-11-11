@@ -23,7 +23,7 @@
   <parent>
     <groupId>de.lightful.poms</groupId>
     <artifactId>standard-plugins</artifactId>
-    <version>28</version>
+    <version>29</version>
   </parent>
 
   <groupId>de.lightful.maven.drools.plugin</groupId>
@@ -368,9 +368,9 @@
       </dependencies>
     </profile>
     <profile>
-      <id>drools.runtime.version=5.3.0.Beta1</id>
+      <id>drools.runtime.version=5.3.0.Final</id>
       <properties>
-        <drools.runtime.version>5.3.0.Beta1</drools.runtime.version>
+        <drools.runtime.version>5.3.0.Final</drools.runtime.version>
       </properties>
       <dependencies>
         <dependency>

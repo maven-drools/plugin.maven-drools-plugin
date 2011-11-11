@@ -33,6 +33,10 @@ import java.util.Map;
 import static de.lightful.maven.drools.plugin.naming.WellKnownNames.FILE_EXTENSION_DROOLS_KNOWLEDGE_MODULE;
 import static org.fest.assertions.Assertions.assertThat;
 
+/**
+ * This test depends on Drools' ability to serialize and de-serialize knowledge packages with inter-dependencies. Not all drools
+ * versions support this. See issue <a href="https://issues.jboss.org/browse/JBRULES-3225">JBRULES-3225</a> for details.
+ */
 @Test
 @SettingsFile("integration-settings.xml")
 @VerifyUsingProject("can_execute_multiple_passes")

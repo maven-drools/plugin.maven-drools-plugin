@@ -70,15 +70,22 @@
       </plugin>
       <plugin>
         <artifactId>maven-surefire-plugin</artifactId>
-        <version>2.10</version>
         <executions>
           <execution>
             <id>integration-tests</id>
+            <goals>
+              <goal>test</goal>
+              <!-- IDEA needs this, see IDEA-76857 -->
+            </goals>
             <configuration>
               <excludes>
                 <exclude>**/*$*</exclude>
 
-                <!-- vvv depends on serialization/deserialization of knowledge package collections with inter-dependencies, which does not work in drools-5.2.0.Final -->
+                <!--
+                  This test depends on Drools' ability to serialize and de-serialize knowledge packages
+                  with inter-dependencies. Drools 5.3.0.Final does not support this. See this JIRA issue
+                  for details: https://issues.jboss.org/browse/JBRULES-3225
+                -->
                 <exclude>**/CanPerformMultiplePassesTest.class</exclude>
 
                 <!-- vvv depends on drools-fruit-types, which is not yet available as a drools-5.2.0.Final artifact -->
@@ -86,9 +93,6 @@
 
                 <!-- vvv depends on drools-fruit-types, which is not yet available as a drools-5.2.0.Final artifact -->
                 <exclude>**/CanUseExistingDroolsPackageTest.class</exclude>
-
-                <!--<exclude>**/CanUseExistingJavaDependencyTest.class</exclude>-->
-                <!--<exclude>**/CanUseExistingJavaDependencyWithDrools52Test.class</exclude>-->
               </excludes>
             </configuration>
           </execution>
