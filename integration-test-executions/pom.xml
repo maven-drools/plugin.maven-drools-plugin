@@ -43,4 +43,16 @@
     <module>target-drools-5.3.0.Final</module>
   </modules>
 
+  <build>
+    <plugins>
+      <plugin>
+        <artifactId>maven-deploy-plugin</artifactId>
+        <configuration>
+          <skip>true</skip>
+          <!-- don't deploy IT definitions to remote repo -->
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+
 </project>

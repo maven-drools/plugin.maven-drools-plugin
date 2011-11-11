@@ -1,1 +1,0 @@
-package rules.pkg60.test; rule "test rule 60" when then end

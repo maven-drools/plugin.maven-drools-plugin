@@ -203,7 +203,14 @@
             </configuration>
           </execution>
         </executions>
+      </plugin>
 
+      <plugin>
+        <artifactId>maven-deploy-plugin</artifactId>
+        <configuration>
+          <skip>true</skip>
+          <!-- don't deploy IT definitions to remote repo -->
+        </configuration>
       </plugin>
     </plugins>
 

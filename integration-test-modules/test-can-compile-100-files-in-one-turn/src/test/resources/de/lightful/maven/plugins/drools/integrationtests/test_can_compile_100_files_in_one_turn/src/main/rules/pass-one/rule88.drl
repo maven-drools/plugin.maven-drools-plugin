@@ -1,1 +1,0 @@
-package rules.pkg88.test; rule "test rule 88" when then end

@@ -1,1 +1,0 @@
-package rules.pkg64.test; rule "test rule 64" when then end

@@ -1,1 +1,0 @@
-package rules.pkg43.test; rule "test rule 43" when then end

@@ -1,1 +1,0 @@
-package rules.pkg86.test; rule "test rule 86" when then end
