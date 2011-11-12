@@ -28,7 +28,7 @@
 
   <groupId>de.lightful.maven.plugin.integrationtests.execution</groupId>
   <artifactId>common-execution-behaviour</artifactId>
-  <version>0.2.2-SNAPSHOT</version>
+  <version>0.2.2</version>
   <packaging>pom</packaging>
 
   <name>Maven Drools Support :: Plugin :: Integration Testing :: Test Executions :: Common Execution Behaviour</name>
