@@ -282,7 +282,9 @@
     <profile>
       <id>release</id>
       <activation>
-        <property>performRelease</property>
+        <property>
+          <name>performRelease</name>
+        </property>
       </activation>
       <build>
         <plugins>
