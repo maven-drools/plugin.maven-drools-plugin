@@ -35,7 +35,7 @@ import java.net.URL;
 @DefaultSettingsFile
 public class CanDeployArtifactWithClassifierTest extends MavenVerifierTest {
 
-  public static final String EXPECTED_ARTIFACT_NAME = "de/lightful/maven/plugins/plugintest/drools/plugintest.artifact.can_deploy_artifact_with_classifier/1.0.0/plugintest.artifact-1.0.0" + "-MyTestClassifierABC" + "." + WellKnownNames.FILE_EXTENSION_DROOLS_KNOWLEDGE_MODULE;
+  public static final String EXPECTED_ARTIFACT_NAME = "de/lightful/maven/plugins/plugintest/drools/plugintest.artifact.can_deploy_artifact_with_classifier/1.0.0/plugintest.artifact.can_deploy_artifact_with_classifier-1.0.0" + "-MyTestClassifierABC" + "." + WellKnownNames.FILE_EXTENSION_DROOLS_KNOWLEDGE_MODULE;
 
   @Inject
   private Verifier verifier;
