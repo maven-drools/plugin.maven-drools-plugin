@@ -31,11 +31,11 @@ import java.io.File;
 import java.net.URL;
 
 @Test
-@VerifyUsingProject("can_deploy_artifact_to_given_repository")
+@VerifyUsingProject("can_deploy_artifact_with_classifier")
 @DefaultSettingsFile
-public class CanDeployArtifactToGivenRepositoryTest extends MavenVerifierTest {
+public class CanDeployArtifactWithClassifierTest extends MavenVerifierTest {
 
-  public static final String EXPECTED_ARTIFACT_NAME = "de/lightful/maven/plugins/plugintest/drools/plugintest.artifact.can_deploy_artifact_to_given_repository/1.0.0/plugintest.artifact-1.0.0" + "." + WellKnownNames.FILE_EXTENSION_DROOLS_KNOWLEDGE_MODULE;
+  public static final String EXPECTED_ARTIFACT_NAME = "de/lightful/maven/plugins/plugintest/drools/plugintest.artifact.can_deploy_artifact_with_classifier/1.0.0/plugintest.artifact-1.0.0" + "-MyTestClassifierABC" + "." + WellKnownNames.FILE_EXTENSION_DROOLS_KNOWLEDGE_MODULE;
 
   @Inject
   private Verifier verifier;
@@ -43,7 +43,7 @@ public class CanDeployArtifactToGivenRepositoryTest extends MavenVerifierTest {
   @Test
   @Parameters("repository.url.deploymenttest")
   @ExecuteGoals(WellKnownNames.GOAL_CLEAN)
-  public void testFileGetsDeployedToExpectedLocation(String deploymentRepositoryUrl) throws Exception {
+  public void testFileGetsDeployedWithClassifier(String deploymentRepositoryUrl) throws Exception {
     verifier.executeGoal(WellKnownNames.GOAL_DEPLOY);
     verifier.verifyErrorFreeLog();
 

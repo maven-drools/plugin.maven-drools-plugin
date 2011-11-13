@@ -23,6 +23,7 @@ import org.apache.maven.artifact.Artifact;
 import org.apache.maven.model.Build;
 import org.apache.maven.plugin.MojoFailureException;
 import org.apache.maven.project.MavenProject;
+import org.apache.maven.project.MavenProjectHelper;
 import org.drools.core.util.DroolsStreamUtils;
 import org.drools.definition.KnowledgePackage;
 
@@ -43,7 +44,7 @@ public class OutputFileWriter {
 
   private LogStream<?> debug;
 
-  public void writeOutputFile(Collection<KnowledgePackage> knowledgePackages, PluginLogger logger, MavenProject mavenProject) throws MojoFailureException {
+  public void writeOutputFile(Collection<KnowledgePackage> knowledgePackages, PluginLogger logger, MavenProject mavenProject, MavenProjectHelper projectHelper, String classifier) throws MojoFailureException {
     ensureCorrectPackaging(mavenProject);
 
     Build build = mavenProject.getBuild();
@@ -63,12 +64,18 @@ public class OutputFileWriter {
 
     try {
       DroolsStreamUtils.streamOut(new FileOutputStream(outputFile), knowledgePackages, false);
-      info.write(("Setting project artifact to " + outputFile.getAbsolutePath())).nl();
-      final Artifact artifact = mavenProject.getArtifact();
-      artifact.setFile(outputFile);
     }
     catch (IOException e) {
       throw new MojoFailureException("Unable to write compiled knowledge into output file!", e);
+    }
+    if (classifier != null && !"".equals(classifier)) {
+      info.write("Attaching file " + outputFile.getAbsolutePath() + " as artifact with classifier '" + classifier + "'.");
+      projectHelper.attachArtifact(mavenProject, outputFile, classifier);
+    }
+    else {
+      info.write(("Setting project artifact to " + outputFile.getAbsolutePath())).nl();
+      final Artifact artifact = mavenProject.getArtifact();
+      artifact.setFile(outputFile);
     }
   }
 

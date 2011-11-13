@@ -26,7 +26,7 @@
 
   <modelVersion>4.0.0</modelVersion>
   <groupId>de.lightful.maven.plugins.plugintest.drools</groupId>
-  <artifactId>plugintest.artifact.can_deploy_artifact_to_given_repository</artifactId>
+  <artifactId>plugintest.artifact.can_deploy_artifact_with_classifier</artifactId>
   <version>1.0.0</version>
   <packaging>knowledge-module</packaging>
 
@@ -36,6 +36,7 @@
         <groupId>${pluginUnderTest.groupId}</groupId>
         <artifactId>${pluginUnderTest.artifactId}</artifactId>
         <configuration>
+          <classifier>MyTestClassifierABC</classifier>
           <passes>
             <pass>
               <ruleSourceRoot>\${basedir}/src/main/rules/pass-one</ruleSourceRoot>

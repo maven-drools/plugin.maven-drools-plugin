@@ -32,6 +32,7 @@ import org.apache.maven.artifact.handler.manager.ArtifactHandlerManager;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoFailureException;
 import org.apache.maven.project.MavenProject;
+import org.apache.maven.project.MavenProjectHelper;
 import org.codehaus.plexus.util.DirectoryScanner;
 import org.drools.builder.KnowledgeBuilder;
 import org.drools.io.ResourceFactory;
@@ -57,6 +58,15 @@ public class CompileMojo extends AbstractMojo {
       required = true
   )
   private Pass[] passes;
+
+  @MojoParameter(
+      description = "The Maven classifier which should be used to define the Maven coordinates of " +
+                    "the created artifact.",
+      readonly = false,
+      required = false,
+      defaultValue = ""
+  )
+  private String classifier;
 
   @MojoParameter(defaultValue = "${project}")
   private MavenProject project;
@@ -87,6 +97,9 @@ public class CompileMojo extends AbstractMojo {
   @MojoComponent
   private PluginLogger logger;
 
+  @MojoComponent
+  private MavenProjectHelper projectHelper;
+
   @MojoComponent(role = LogStream.ROLE, roleHint = "debug")
   private MavenLogStream<MavenInfoLogStream> debug;
 
@@ -111,7 +124,7 @@ public class CompileMojo extends AbstractMojo {
 
     logger.dumpDroolsRuntimeInfo(KnowledgeBuilder.class);
     runAllPasses();
-    outputFileWriter.writeOutputFile(knowledgeBuilder.getKnowledgePackages(), logger, project);
+    outputFileWriter.writeOutputFile(knowledgeBuilder.getKnowledgePackages(), logger, project, projectHelper, classifier);
   }
 
   private void initializeLogging() {
