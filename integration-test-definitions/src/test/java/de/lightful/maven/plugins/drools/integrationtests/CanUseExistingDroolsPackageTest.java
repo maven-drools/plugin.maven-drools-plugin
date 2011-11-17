@@ -76,12 +76,12 @@ public class CanUseExistingDroolsPackageTest extends MavenVerifierTest {
   @Test
   @DefaultSettingsFile
   @ExecuteGoals("compile")
-  @Parameters(value = {"dependency.drools-fruit-types.version", "dependency.drools-vehicle-types.version"})
-  public void testGeneratedRuleFiresForLightMelon(String fruitTypesVersion, String vehicleTypesVersion) throws ClassNotFoundException, IOException, IllegalAccessException, InstantiationException {
-    final String fruitsModelKnowledgePackage = verifier.getArtifactPath(EXISTING_DROOLS_KNOWLEDGE_MODULES_GROUPID, "drools-fruit-types", fruitTypesVersion, WellKnownNames.FILE_EXTENSION_DROOLS_KNOWLEDGE_MODULE);
+  @Parameters(value = {"dependency.drools-fruit-types.version", "dependency.drools-vehicle-types.version", "drools.runtime.version"})
+  public void testGeneratedRuleFiresForLightMelon(String fruitTypesVersion, String vehicleTypesVersion, String droolsRuntimeVersion) throws ClassNotFoundException, IOException, IllegalAccessException, InstantiationException {
+    final String fruitsModelKnowledgePackage = verifier.getArtifactPath(EXISTING_DROOLS_KNOWLEDGE_MODULES_GROUPID, "drools-fruit-types-" + droolsRuntimeVersion, fruitTypesVersion, WellKnownNames.FILE_EXTENSION_DROOLS_KNOWLEDGE_MODULE);
     KnowledgePackageFile fruitsModelKnowledgeFile = new KnowledgePackageFile(new File(fruitsModelKnowledgePackage));
     final Collection<KnowledgePackage> fruitsModelKnowledgePackages = fruitsModelKnowledgeFile.getKnowledgePackages();
-    final String vehiclesModelKnowledgePackage = verifier.getArtifactPath(EXISTING_DROOLS_KNOWLEDGE_MODULES_GROUPID, "drools-vehicle-types", vehicleTypesVersion, WellKnownNames.FILE_EXTENSION_DROOLS_KNOWLEDGE_MODULE);
+    final String vehiclesModelKnowledgePackage = verifier.getArtifactPath(EXISTING_DROOLS_KNOWLEDGE_MODULES_GROUPID, "drools-vehicle-types-" + droolsRuntimeVersion, vehicleTypesVersion, WellKnownNames.FILE_EXTENSION_DROOLS_KNOWLEDGE_MODULE);
     KnowledgePackageFile vehiclesModelKnowledgeFile = new KnowledgePackageFile(new File(vehiclesModelKnowledgePackage));
     final Collection<KnowledgePackage> vehiclesModelKnowledgePackages = vehiclesModelKnowledgeFile.getKnowledgePackages();
 

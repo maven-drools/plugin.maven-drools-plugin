@@ -12,13 +12,13 @@
     <dependencies>
       <dependency>
         <groupId>de.lightful.maven.drools.plugin.itartifacts</groupId>
-        <artifactId>drools-fruit-types</artifactId>
+        <artifactId>drools-fruit-types-${drools.runtime.version}</artifactId>
         <version>${dependency.drools-fruit-types.version}</version>
         <type>knowledge-module</type>
       </dependency>
       <dependency>
         <groupId>de.lightful.maven.drools.plugin.itartifacts</groupId>
-        <artifactId>drools-vehicle-types</artifactId>
+        <artifactId>drools-vehicle-types-${drools.runtime.version}</artifactId>
         <version>${dependency.drools-vehicle-types.version}</version>
         <type>knowledge-module</type>
       </dependency>

@@ -33,7 +33,7 @@
   <dependencies>
     <dependency>
       <groupId>de.lightful.maven.drools.plugin.itartifacts</groupId>
-      <artifactId>drools-vehicle-types</artifactId>
+      <artifactId>drools-vehicle-types-${drools.runtime.version}</artifactId>
       <type>knowledge-module</type>
     </dependency>
     <dependency>
