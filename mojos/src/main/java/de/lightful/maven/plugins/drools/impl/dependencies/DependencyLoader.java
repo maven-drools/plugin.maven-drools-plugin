@@ -175,7 +175,7 @@ public class DependencyLoader {
     final KnowledgeBase knowledgeBase = KnowledgeBaseFactory.newKnowledgeBase(configuration);
 
     for (Artifact knowledgeModule : knowledgeModules) {
-      addKnowledgeModule(knowledgeBase, knowledgeModule);
+      addKnowledgeModule(knowledgeBase, knowledgeModule, classLoader);
     }
 
     return knowledgeBase;
@@ -197,19 +197,19 @@ public class DependencyLoader {
     info.write("Resolved dependencies of " + collectResult.getRoot().toString() + ".").nl();
   }
 
-  private void addKnowledgeModule(KnowledgeBase knowledgeBase, Artifact compileArtifact) throws MojoFailureException {
-    final Collection<KnowledgePackage> knowledgePackages = loadKnowledgePackages(compileArtifact);
+  private void addKnowledgeModule(KnowledgeBase knowledgeBase, Artifact compileArtifact, URLClassLoader classLoader) throws MojoFailureException {
+    final Collection<KnowledgePackage> knowledgePackages = loadKnowledgePackages(compileArtifact, classLoader);
     knowledgeBase.addKnowledgePackages(knowledgePackages);
     info.write("Loaded drools dependency " + coordinatesOf(compileArtifact)).nl();
     info.write("  Contains packages:").nl();
     KnowledgePackageFormatter.dumpKnowledgePackages(info, knowledgePackages);
   }
 
-  private Collection<KnowledgePackage> loadKnowledgePackages(Artifact compileArtifact) throws MojoFailureException {
+  private Collection<KnowledgePackage> loadKnowledgePackages(Artifact compileArtifact, URLClassLoader classLoader) throws MojoFailureException {
     KnowledgePackageFile knowledgePackageFile = new KnowledgePackageFile(compileArtifact.getFile());
     final Collection<KnowledgePackage> knowledgePackages;
     try {
-      knowledgePackages = knowledgePackageFile.getKnowledgePackages();
+      knowledgePackages = knowledgePackageFile.getKnowledgePackages(classLoader);
     }
     catch (IOException e) {
       throw new MojoFailureException("Unable to load compile-scoped dependency " + coordinatesOf(compileArtifact), e);
@@ -233,13 +233,31 @@ public class DependencyLoader {
     }
     final URL[] urls = classpathUrls.toArray(new URL[classpathUrls.size()]);
     debug.write("Passing URLs to new URLClassLoader instance: ").write(Arrays.format(urls)).nl();
-    URLClassLoader classLoader = new URLClassLoader(urls, ClassLoader.getSystemClassLoader()) {
+    URLClassLoader classLoader = new URLClassLoader(urls) {
+      private ClassLoader systemClassLoader = ClassLoader.getSystemClassLoader();
+      private ClassLoader contextClassLoader = Thread.currentThread().getContextClassLoader();
+
       @Override
       public Class<?> loadClass(String name) throws ClassNotFoundException {
         debug.write("Loading class '" + name + "'").nl();
-        final Class<?> loadedClass = super.loadClass(name);
-        debug.write("Loading class '" + name + "': loaded class [" + loadedClass + "]").nl();
-        return loadedClass;
+
+        try {
+          final Class<?> loadedClass = super.loadClass(name);
+          debug.write("    loaded class [" + loadedClass + "] from JAR dependencies.").nl();
+          return loadedClass;
+        }
+        catch (ClassNotFoundException oe) {
+          if (name.startsWith("org.drools")) {
+            final Class<?> loadedClass = contextClassLoader.loadClass(name);
+            debug.write("    loaded class [" + loadedClass + "] from contextClassLoader (Plugin).").nl();
+            return loadedClass;
+          }
+          else {
+            final Class<?> loadedClass = systemClassLoader.loadClass(name);
+            debug.write("    loaded class [" + loadedClass + "] from systemClassLoader (" + systemClassLoader.toString() + ")").nl();
+            return loadedClass;
+          }
+        }
       }
 
       @Override
