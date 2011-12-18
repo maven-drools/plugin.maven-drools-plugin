@@ -1,0 +1,10 @@
+package test;
+
+dialect "java"
+
+rule "rule ђ CODEPAGE-855"
+  ruleflow-group "ђ CODEPAGE-855"
+  when
+  then
+    insertLogical("RULE FIRED");
+end

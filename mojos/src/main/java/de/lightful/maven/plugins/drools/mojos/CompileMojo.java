@@ -24,9 +24,7 @@ import de.lightful.maven.plugins.drools.impl.WellKnownNames;
 import de.lightful.maven.plugins.drools.impl.config.ConfigurationValidator;
 import de.lightful.maven.plugins.drools.impl.config.Pass;
 import de.lightful.maven.plugins.drools.impl.dependencies.DependencyLoader;
-import de.lightful.maven.plugins.drools.impl.logging.MavenInfoLogStream;
-import de.lightful.maven.plugins.drools.impl.logging.MavenLogStream;
-import de.lightful.maven.plugins.drools.impl.logging.PluginLogger;
+import de.lightful.maven.plugins.drools.impl.logging.*;
 import de.lightful.maven.plugins.drools.knowledgeio.LogStream;
 import org.apache.maven.artifact.handler.manager.ArtifactHandlerManager;
 import org.apache.maven.plugin.AbstractMojo;
@@ -35,6 +33,8 @@ import org.apache.maven.project.MavenProject;
 import org.apache.maven.project.MavenProjectHelper;
 import org.codehaus.plexus.util.DirectoryScanner;
 import org.drools.builder.KnowledgeBuilder;
+import org.drools.builder.ResourceType;
+import org.drools.io.Resource;
 import org.drools.io.ResourceFactory;
 import org.jfrog.maven.annomojo.annotations.MojoComponent;
 import org.jfrog.maven.annomojo.annotations.MojoGoal;
@@ -44,7 +44,7 @@ import org.sonatype.aether.RepositorySystem;
 import org.sonatype.aether.RepositorySystemSession;
 import org.sonatype.aether.repository.RemoteRepository;
 
-import java.io.File;
+import java.io.*;
 import java.util.List;
 
 @MojoGoal(WellKnownNames.GOAL_COMPILE)
@@ -101,22 +101,26 @@ public class CompileMojo extends AbstractMojo {
   private MavenProjectHelper projectHelper;
 
   @MojoComponent(role = LogStream.ROLE, roleHint = "debug")
-  private MavenLogStream<MavenInfoLogStream> debug;
+  private MavenLogStream<MavenDebugLogStream> debug;
 
   @MojoComponent(role = LogStream.ROLE, roleHint = "info")
   private MavenLogStream<MavenInfoLogStream> info;
 
   @MojoComponent(role = LogStream.ROLE, roleHint = "warn")
-  private MavenLogStream<MavenInfoLogStream> warn;
+  private MavenLogStream<MavenWarnLogStream> warn;
 
   @MojoComponent(role = LogStream.ROLE, roleHint = "error")
-  private MavenLogStream<MavenInfoLogStream> error;
+  private MavenLogStream<MavenErrorLogStream> error;
 
   @MojoComponent
   private DependencyLoader dependencyLoader;
 
+  private String sourceEncoding;
+
   public void execute() throws MojoFailureException {
     initializeLogging();
+    sourceEncoding = defineSourceEncoding();
+
     logger.dumpOverallPluginConfiguration(passes, project.getName());
 
     configurationValidator.validateConfiguration(passes);
@@ -125,6 +129,17 @@ public class CompileMojo extends AbstractMojo {
     logger.dumpDroolsRuntimeInfo(KnowledgeBuilder.class);
     runAllPasses();
     outputFileWriter.writeOutputFile(knowledgeBuilder.getKnowledgePackages(), logger, project, projectHelper, classifier);
+  }
+
+  private String defineSourceEncoding() {
+    String sourceEncodingFromProperty = project.getProperties().getProperty("build.sourceEncoding");
+    if ((sourceEncodingFromProperty == null) || (sourceEncodingFromProperty.length() == 0)) {
+      warn.write("No property with name 'project.build.sourceEncoding' found, assuming default source encoding 'UTF-8'.").nl();
+      return "UTF-8";
+    }
+    else {
+      return sourceEncodingFromProperty;
+    }
   }
 
   private void initializeLogging() {
@@ -136,6 +151,7 @@ public class CompileMojo extends AbstractMojo {
 
   private void runAllPasses() throws MojoFailureException {
     knowledgeBuilder = dependencyLoader.createKnowledgeBuilderForRuleCompilation(project, repositorySession, remoteProjectRepositories);
+    info.write("Using source encoding '" + sourceEncoding + "'.").nl();
     for (Pass pass : passes) {
       executePass(pass);
     }
@@ -164,7 +180,19 @@ public class CompileMojo extends AbstractMojo {
   private void compileRuleFile(File ruleSourceRoot, String nameOfFileToCompile) throws MojoFailureException {
     File fileToCompile = new File(ruleSourceRoot, nameOfFileToCompile);
     info.write("  Compiling rule file '" + relativeToBasedir(fileToCompile) + "' ...").nl();
-    knowledgeBuilder.add(ResourceFactory.newFileResource(fileToCompile), resourceTypeDetector.detectTypeOf(fileToCompile));
+    try {
+      Resource resource = ResourceFactory.newReaderResource(
+          new InputStreamReader(new FileInputStream(fileToCompile), sourceEncoding), sourceEncoding
+      );
+      ResourceType type = resourceTypeDetector.detectTypeOf(fileToCompile);
+      knowledgeBuilder.add(resource, type);
+    }
+    catch (FileNotFoundException e) {
+      throw new MojoFailureException("Cannot open file " + fileToCompile.getAbsolutePath() + " for compilation", e);
+    }
+    catch (UnsupportedEncodingException e) {
+      throw new MojoFailureException("Cannot perform character conversion from source encoding '" + sourceEncoding + "' for file " + fileToCompile.getAbsolutePath(), e);
+    }
     logger.reportCompilationErrors(knowledgeBuilder.getErrors(), fileToCompile);
   }
 

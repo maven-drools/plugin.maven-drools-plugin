@@ -47,7 +47,6 @@ public class DoesRespectIncludesAndExcludesTest extends MavenDroolsPluginIntegra
   private Verifier verifier;
 
   @Test
-  @ExecuteGoals("compile")
   public void testPackageFileContainsAllTheExpectedRules() throws Exception {
     verifier.executeGoal(WellKnownNames.GOAL_COMPILE);
     verifier.verifyErrorFreeLog();
