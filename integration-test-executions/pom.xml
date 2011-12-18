@@ -28,7 +28,7 @@
 
   <groupId>de.lightful.maven.plugin.integrationtests.execution</groupId>
   <artifactId>integration-test-executions</artifactId>
-  <version>0.2.4-SNAPSHOT</version>
+  <version>0.2.5-SNAPSHOT</version>
   <packaging>pom</packaging>
 
   <name>Maven Drools Support :: Plugin :: Integration Testing :: Test Executions :: All Runtime Versions</name>
