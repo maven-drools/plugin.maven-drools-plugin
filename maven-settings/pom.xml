@@ -29,7 +29,7 @@
 
   <groupId>de.lightful.maven.drools.plugin.integration-testing</groupId>
   <artifactId>maven-settings</artifactId>
-  <version>0.2.8</version>
+  <version>0.2.9-SNAPSHOT</version>
   <packaging>jar</packaging>
 
   <name>Maven Drools Support :: Plugin :: Integration Testing :: Maven Settings</name>
