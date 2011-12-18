@@ -27,7 +27,7 @@
 
   <groupId>de.lightful.maven.drools.plugin</groupId>
   <artifactId>plugin-project</artifactId>
-  <version>0.2.5</version>
+  <version>0.2.6-SNAPSHOT</version>
   <packaging>pom</packaging>
 
   <name>Maven Drools Support :: Plugin :: Maven Drools Plugin Project</name>

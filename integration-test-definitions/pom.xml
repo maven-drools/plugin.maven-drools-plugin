@@ -27,7 +27,7 @@
 
   <groupId>de.lightful.maven.drools.plugin</groupId>
   <artifactId>integration-test-definitions</artifactId>
-  <version>0.2.5</version>
+  <version>0.2.6-SNAPSHOT</version>
 
   <name>Maven Drools Support :: Plugin :: Integration Testing :: Test Definitions</name>
 
