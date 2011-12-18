@@ -33,7 +33,7 @@
 
   <groupId>de.lightful.maven.plugins</groupId>
   <artifactId>maven-drools-plugin</artifactId>
-  <version>0.2.6-SNAPSHOT</version>
+  <version>0.2.6</version>
   <packaging>maven-plugin</packaging>
 
   <name>Maven Drools Support :: Plugin :: MOJOs</name>
