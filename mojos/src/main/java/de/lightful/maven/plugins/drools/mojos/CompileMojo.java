@@ -181,9 +181,10 @@ public class CompileMojo extends AbstractMojo {
     File fileToCompile = new File(ruleSourceRoot, nameOfFileToCompile);
     info.write("  Compiling rule file '" + relativeToBasedir(fileToCompile) + "' ...").nl();
     try {
-      Resource resource = ResourceFactory.newReaderResource(
-          new InputStreamReader(new FileInputStream(fileToCompile), sourceEncoding), sourceEncoding
-      );
+      FileInputStream fileInputStream = new FileInputStream(fileToCompile);
+      InputStreamReader streamReader = new InputStreamReader(fileInputStream, sourceEncoding);
+      Resource resource = ResourceFactory.newReaderResource(streamReader, "UTF-8");
+
       ResourceType type = resourceTypeDetector.detectTypeOf(fileToCompile);
       knowledgeBuilder.add(resource, type);
     }
