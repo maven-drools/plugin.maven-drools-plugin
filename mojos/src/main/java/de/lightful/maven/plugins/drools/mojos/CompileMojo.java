@@ -142,7 +142,7 @@ public class CompileMojo extends AbstractMojo {
   }
 
   private void executePass(Pass pass) throws MojoFailureException {
-    info.write("Executing compiler pass '" + pass.getName() + "'...").nl();
+    info.write("Executing compiler pass '" + pass.getName() + "' in directory " + relativeToBasedir(pass.getRuleSourceRoot()) + "...").nl();
     final String[] filesToCompile = determineFilesToCompile(pass);
     for (String currentFile : filesToCompile) {
       compileRuleFile(pass.getRuleSourceRoot(), currentFile);
@@ -163,8 +163,19 @@ public class CompileMojo extends AbstractMojo {
 
   private void compileRuleFile(File ruleSourceRoot, String nameOfFileToCompile) throws MojoFailureException {
     File fileToCompile = new File(ruleSourceRoot, nameOfFileToCompile);
-    info.write("  Compiling rule file '" + fileToCompile.getAbsolutePath() + "' ...").nl();
+    info.write("  Compiling rule file '" + relativeToBasedir(fileToCompile) + "' ...").nl();
     knowledgeBuilder.add(ResourceFactory.newFileResource(fileToCompile), resourceTypeDetector.detectTypeOf(fileToCompile));
     logger.reportCompilationErrors(knowledgeBuilder.getErrors(), fileToCompile);
+  }
+
+  private String relativeToBasedir(File fileToCompile) {
+    final String basedir = project.getBasedir().getAbsolutePath();
+    final String filePath = fileToCompile.getAbsolutePath();
+    if (filePath.startsWith(basedir + "/")) {
+      return filePath.substring(basedir.length() + "/".length());
+    }
+    else {
+      return filePath;
+    }
   }
 }
