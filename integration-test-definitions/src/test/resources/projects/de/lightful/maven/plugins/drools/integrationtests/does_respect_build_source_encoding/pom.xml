@@ -31,7 +31,7 @@
   <packaging>knowledge-module</packaging>
 
   <properties>
-    <!--<project.build.sourceEncoding>IBM855</project.build.sourceEncoding>-->
+    <project.build.sourceEncoding>IBM855</project.build.sourceEncoding>
   </properties>
 
   <build>

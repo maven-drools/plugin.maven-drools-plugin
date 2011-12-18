@@ -132,7 +132,7 @@ public class CompileMojo extends AbstractMojo {
   }
 
   private String defineSourceEncoding() {
-    String sourceEncodingFromProperty = project.getProperties().getProperty("build.sourceEncoding");
+    String sourceEncodingFromProperty = project.getProperties().getProperty("project.build.sourceEncoding");
     if ((sourceEncodingFromProperty == null) || (sourceEncodingFromProperty.length() == 0)) {
       warn.write("No property with name 'project.build.sourceEncoding' found, assuming default source encoding 'UTF-8'.").nl();
       return "UTF-8";

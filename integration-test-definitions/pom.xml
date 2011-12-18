@@ -16,7 +16,8 @@
   ~ See the License for the specific language governing permissions and
   ~ limitations under the License.
   -->
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
   <parent>
@@ -81,7 +82,7 @@
         <executions>
           <execution>
             <id>default-test</id>
-            <goals />
+            <goals/>
             <configuration>
               <skip>true</skip>
             </configuration>
@@ -215,12 +216,26 @@
       </plugin>
     </plugins>
 
-    <resources />
+    <resources/>
 
     <testResources>
       <testResource>
         <directory>${project.basedir}/src/test/resources/projects</directory>
+        <excludes>
+          <exclude>**/*.drl</exclude>
+        </excludes>
         <filtering>true</filtering>
+      </testResource>
+      <testResource>
+        <directory>${project.basedir}/src/test/resources/projects</directory>
+        <includes>
+          <include>**/*.drl</include>
+        </includes>
+        <!--
+          Rules MUST NOT be filtered, since some contain rules with non UTF-8 encodings, which IDEA (and resources plugin?)
+          cannot handle properly
+        -->
+        <filtering>false</filtering>
       </testResource>
       <testResource>
         <directory>${project.basedir}/src/test/resources/parent-poms</directory>

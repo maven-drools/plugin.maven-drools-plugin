@@ -2,8 +2,9 @@ package test;
 
 dialect "java"
 
-rule "rule ђ CODEPAGE-855"
-  ruleflow-group "ђ CODEPAGE-855"
+# The character in the next line is 0x80, which is letter "ђ" from the cyrillic alphabet
+# This character is present on codepage IBM-855 and can be transliterated to unicode.
+rule "rule � CODEPAGE-855"
   when
   then
     insertLogical("RULE FIRED");

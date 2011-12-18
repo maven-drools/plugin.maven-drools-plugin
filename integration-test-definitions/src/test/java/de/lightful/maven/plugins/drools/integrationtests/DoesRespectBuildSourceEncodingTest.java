@@ -28,7 +28,7 @@ public class DoesRespectBuildSourceEncodingTest extends MavenDroolsPluginIntegra
 
   @Test
   @ExecuteGoals("compile")
-  public void testPackageFileContainsAllTheExpectedRules() throws Exception {
+  public void testPackagedRuleContainsCorrectName() throws Exception {
     verifier.verifyErrorFreeLog();
     verifier.assertFilePresent(EXPECTED_OUTPUT_FILE);
 
