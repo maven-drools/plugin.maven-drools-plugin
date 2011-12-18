@@ -11,7 +11,7 @@
 
   <groupId>de.lightful.maven.drools.plugin</groupId>
   <artifactId>integration-test-properties</artifactId>
-  <version>0.2.8-SNAPSHOT</version>
+  <version>0.2.8</version>
   <packaging>pom</packaging>
 
   <name>Maven Drools Support :: Plugin :: Integration Testing :: Configuration Properties</name>
