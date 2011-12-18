@@ -19,7 +19,6 @@ package de.lightful.maven.plugins.drools.integrationtests;
 
 import de.lightful.maven.drools.plugin.naming.WellKnownNames;
 import de.lightful.maven.plugins.testing.ExecuteGoals;
-import de.lightful.maven.plugins.testing.MavenVerifierTest;
 import de.lightful.maven.plugins.testing.VerifyUsingProject;
 import org.apache.maven.it.Verifier;
 import org.testng.annotations.Test;
@@ -30,7 +29,7 @@ import javax.inject.Inject;
 @DefaultSettingsFile
 @ExecuteGoals(WellKnownNames.GOAL_CLEAN)
 @VerifyUsingProject("can_resolve_transitive_knowledge_modules")
-public class CanResolveTransitiveKnowledgeModulesTest extends MavenVerifierTest {
+public class CanResolveTransitiveKnowledgeModulesTest extends MavenDroolsPluginIntegrationTest {
 
   private static final String EXPECTED_OUTPUT_FILE = "modules/user_of_a_and_b/target/plugintest.artifact.user_of_a_and_b-1.0.0" + "." + WellKnownNames.FILE_EXTENSION_DROOLS_KNOWLEDGE_MODULE;
 

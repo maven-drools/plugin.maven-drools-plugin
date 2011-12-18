@@ -18,14 +18,16 @@
 package de.lightful.maven.plugins.drools.impl;
 
 import de.lightful.maven.plugins.drools.impl.logging.PluginLogger;
+import de.lightful.maven.plugins.drools.knowledgeio.KnowledgeIoFactory;
+import de.lightful.maven.plugins.drools.knowledgeio.KnowledgeModuleWriter;
 import de.lightful.maven.plugins.drools.knowledgeio.LogStream;
 import org.apache.maven.artifact.Artifact;
 import org.apache.maven.model.Build;
 import org.apache.maven.plugin.MojoFailureException;
 import org.apache.maven.project.MavenProject;
 import org.apache.maven.project.MavenProjectHelper;
-import org.drools.core.util.DroolsStreamUtils;
 import org.drools.definition.KnowledgePackage;
+import org.drools.definitions.impl.KnowledgePackageImp;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -55,15 +57,25 @@ public class OutputFileWriter {
     logger.info().write("Writing " + knowledgePackages.size() + " knowledge packages into output file " + absoluteOutputFileName).nl();
     int counter = 1;
     for (KnowledgePackage knowledgePackage : knowledgePackages) {
-      logger.info().write("  Package #" + counter + ": " + knowledgePackage.getName() + " (" + knowledgePackage.getRules().size() + " rules)").nl();
+      String declaredTypesCount = "(unknown)";
+      if (knowledgePackage instanceof KnowledgePackageImp) {
+        final KnowledgePackageImp packageImp = (KnowledgePackageImp) knowledgePackage;
+        declaredTypesCount = String.valueOf(packageImp.pkg.getTypeDeclarations().size());
+      }
+      logger.info()
+          .write("  Package #" + counter + ": " + knowledgePackage.getName())
+          .write(" (" + knowledgePackage.getRules().size() + " rules, " + declaredTypesCount + " declared types)")
+          .nl();
       counter++;
     }
 
     ensureTargetDirectoryExists(buildDirectory);
     prepareOutputFileForWriting(outputFile, absoluteOutputFileName);
 
+    KnowledgeIoFactory factory = new KnowledgeIoFactory();
     try {
-      DroolsStreamUtils.streamOut(new FileOutputStream(outputFile), knowledgePackages, false);
+      final KnowledgeModuleWriter writer = factory.createKnowledgeModuleWriter(new FileOutputStream(outputFile));
+      writer.writeKnowledgePackages(knowledgePackages);
     }
     catch (IOException e) {
       throw new MojoFailureException("Unable to write compiled knowledge into output file!", e);

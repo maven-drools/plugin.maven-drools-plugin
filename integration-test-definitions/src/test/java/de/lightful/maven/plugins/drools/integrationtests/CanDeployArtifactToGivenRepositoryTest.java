@@ -19,7 +19,6 @@ package de.lightful.maven.plugins.drools.integrationtests;
 
 import de.lightful.maven.drools.plugin.naming.WellKnownNames;
 import de.lightful.maven.plugins.testing.ExecuteGoals;
-import de.lightful.maven.plugins.testing.MavenVerifierTest;
 import de.lightful.maven.plugins.testing.VerifyUsingProject;
 import org.apache.maven.it.Verifier;
 import org.fest.assertions.Assertions;
@@ -33,7 +32,7 @@ import java.net.URL;
 @Test
 @VerifyUsingProject("can_deploy_artifact_to_given_repository")
 @DefaultSettingsFile
-public class CanDeployArtifactToGivenRepositoryTest extends MavenVerifierTest {
+public class CanDeployArtifactToGivenRepositoryTest extends MavenDroolsPluginIntegrationTest {
 
   public static final String EXPECTED_ARTIFACT_NAME = "de/lightful/maven/plugins/plugintest/drools/plugintest.artifact.can_deploy_artifact_to_given_repository/1.0.0/plugintest.artifact.can_deploy_artifact_to_given_repository-1.0.0" + "." + WellKnownNames.FILE_EXTENSION_DROOLS_KNOWLEDGE_MODULE;
 

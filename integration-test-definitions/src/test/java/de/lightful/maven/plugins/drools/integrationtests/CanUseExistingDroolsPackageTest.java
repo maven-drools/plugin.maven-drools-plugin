@@ -18,9 +18,8 @@
 package de.lightful.maven.plugins.drools.integrationtests;
 
 import de.lightful.maven.drools.plugin.naming.WellKnownNames;
-import de.lightful.maven.plugins.drools.knowledgeio.KnowledgePackageFile;
+import de.lightful.maven.plugins.drools.knowledgeio.KnowledgeModuleReader;
 import de.lightful.maven.plugins.testing.ExecuteGoals;
-import de.lightful.maven.plugins.testing.MavenVerifierTest;
 import de.lightful.maven.plugins.testing.VerifyUsingProject;
 import org.apache.maven.it.Verifier;
 import org.drools.KnowledgeBase;
@@ -35,6 +34,7 @@ import org.testng.annotations.Test;
 
 import javax.inject.Inject;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Collection;
 
@@ -43,7 +43,7 @@ import static org.fest.assertions.Assertions.assertThat;
 @Test
 @VerifyUsingProject("can_use_existing_drools_binary")
 @ExecuteGoals("clean")
-public class CanUseExistingDroolsPackageTest extends MavenVerifierTest {
+public class CanUseExistingDroolsPackageTest extends MavenDroolsPluginIntegrationTest {
 
   private static final String EXPECTED_OUTPUT_FILE = "target/plugintest.artifact-1.0.0" + "." + WellKnownNames.FILE_EXTENSION_DROOLS_KNOWLEDGE_MODULE;
   private static final String EXPECTED_RULE_NAME = "Accept only heavy melons";
@@ -60,8 +60,9 @@ public class CanUseExistingDroolsPackageTest extends MavenVerifierTest {
     verifier.verifyErrorFreeLog();
     verifier.assertFilePresent(EXPECTED_OUTPUT_FILE);
 
-    KnowledgePackageFile knowledgePackageFile = new KnowledgePackageFile(expectedOutputFile(verifier, EXPECTED_OUTPUT_FILE));
-    final Iterable<KnowledgePackage> knowledgePackages = knowledgePackageFile.getKnowledgePackages();
+    final File knowledgeFile = expectedOutputFile(verifier, EXPECTED_OUTPUT_FILE);
+    final KnowledgeModuleReader reader = knowledgeIoFactory.createKnowledgeModuleReader(new FileInputStream(knowledgeFile), contextClassLoader());
+    final Iterable<KnowledgePackage> knowledgePackages = reader.readKnowledgePackages();
 
     assertThat(knowledgePackages).as("Knowledge packages").hasSize(1);
     final KnowledgePackage knowledgePackage = knowledgePackages.iterator().next();
@@ -79,14 +80,15 @@ public class CanUseExistingDroolsPackageTest extends MavenVerifierTest {
   @Parameters(value = {"dependency.drools-fruit-types.version", "dependency.drools-vehicle-types.version", "drools.runtime.version"})
   public void testGeneratedRuleFiresForLightMelon(String fruitTypesVersion, String vehicleTypesVersion, String droolsRuntimeVersion) throws ClassNotFoundException, IOException, IllegalAccessException, InstantiationException {
     final String fruitsModelKnowledgePackage = verifier.getArtifactPath(EXISTING_DROOLS_KNOWLEDGE_MODULES_GROUPID, "drools-fruit-types-" + droolsRuntimeVersion, fruitTypesVersion, WellKnownNames.FILE_EXTENSION_DROOLS_KNOWLEDGE_MODULE);
-    KnowledgePackageFile fruitsModelKnowledgeFile = new KnowledgePackageFile(new File(fruitsModelKnowledgePackage));
-    final Collection<KnowledgePackage> fruitsModelKnowledgePackages = fruitsModelKnowledgeFile.getKnowledgePackages();
-    final String vehiclesModelKnowledgePackage = verifier.getArtifactPath(EXISTING_DROOLS_KNOWLEDGE_MODULES_GROUPID, "drools-vehicle-types-" + droolsRuntimeVersion, vehicleTypesVersion, WellKnownNames.FILE_EXTENSION_DROOLS_KNOWLEDGE_MODULE);
-    KnowledgePackageFile vehiclesModelKnowledgeFile = new KnowledgePackageFile(new File(vehiclesModelKnowledgePackage));
-    final Collection<KnowledgePackage> vehiclesModelKnowledgePackages = vehiclesModelKnowledgeFile.getKnowledgePackages();
+    KnowledgeModuleReader fruitsModelKnowledgeReader = knowledgeIoFactory.createKnowledgeModuleReader(new FileInputStream(fruitsModelKnowledgePackage), contextClassLoader());
+    final Collection<KnowledgePackage> fruitsModelKnowledgePackages = fruitsModelKnowledgeReader.readKnowledgePackages();
 
-    KnowledgePackageFile rulesKnowledgeFile = new KnowledgePackageFile(expectedOutputFile(verifier, EXPECTED_OUTPUT_FILE));
-    final Collection<KnowledgePackage> ruleKnowledgePackages = rulesKnowledgeFile.getKnowledgePackages();
+    final String vehiclesModelKnowledgePackage = verifier.getArtifactPath(EXISTING_DROOLS_KNOWLEDGE_MODULES_GROUPID, "drools-vehicle-types-" + droolsRuntimeVersion, vehicleTypesVersion, WellKnownNames.FILE_EXTENSION_DROOLS_KNOWLEDGE_MODULE);
+    KnowledgeModuleReader vehiclesModelKnowledgeReader = knowledgeIoFactory.createKnowledgeModuleReader(new FileInputStream(vehiclesModelKnowledgePackage), contextClassLoader());
+    final Collection<KnowledgePackage> vehiclesModelKnowledgePackages = vehiclesModelKnowledgeReader.readKnowledgePackages();
+
+    KnowledgeModuleReader rulesKnowledgeModuleReader = knowledgeIoFactory.createKnowledgeModuleReader(new FileInputStream(expectedOutputFile(verifier, EXPECTED_OUTPUT_FILE)), contextClassLoader());
+    final Collection<KnowledgePackage> ruleKnowledgePackages = rulesKnowledgeModuleReader.readKnowledgePackages();
 
     final KnowledgeBase knowledgeBase = KnowledgeBaseFactory.newKnowledgeBase();
     knowledgeBase.addKnowledgePackages(fruitsModelKnowledgePackages);   // order of adding packages is crucial!

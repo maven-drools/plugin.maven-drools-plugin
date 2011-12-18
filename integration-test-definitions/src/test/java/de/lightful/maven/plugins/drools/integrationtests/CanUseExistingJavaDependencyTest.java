@@ -18,9 +18,8 @@
 package de.lightful.maven.plugins.drools.integrationtests;
 
 import de.lightful.maven.drools.plugin.naming.WellKnownNames;
-import de.lightful.maven.plugins.drools.knowledgeio.KnowledgePackageFile;
+import de.lightful.maven.plugins.drools.knowledgeio.KnowledgeModuleReader;
 import de.lightful.maven.plugins.testing.ExecuteGoals;
-import de.lightful.maven.plugins.testing.MavenVerifierTest;
 import de.lightful.maven.plugins.testing.SettingsFile;
 import de.lightful.maven.plugins.testing.VerifyUsingProject;
 import org.apache.maven.it.Verifier;
@@ -29,6 +28,7 @@ import org.drools.definition.rule.Rule;
 import org.testng.annotations.Test;
 
 import javax.inject.Inject;
+import java.io.FileInputStream;
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -37,7 +37,7 @@ import static org.fest.assertions.Assertions.assertThat;
 @Test
 @VerifyUsingProject("can_use_existing_java_dependency")
 @ExecuteGoals("clean")
-public class CanUseExistingJavaDependencyTest extends MavenVerifierTest {
+public class CanUseExistingJavaDependencyTest extends MavenDroolsPluginIntegrationTest {
 
   private static final String EXPECTED_OUTPUT_FILE = "target/plugintest.artifact-1.0.0" + "." + WellKnownNames.FILE_EXTENSION_DROOLS_KNOWLEDGE_MODULE;
   private static final String EXPECTED_PACKAGE_NAME = "rules.test";
@@ -60,8 +60,8 @@ public class CanUseExistingJavaDependencyTest extends MavenVerifierTest {
     verifier.verifyErrorFreeLog();
     verifier.assertFilePresent(EXPECTED_OUTPUT_FILE);
 
-    KnowledgePackageFile knowledgePackageFile = new KnowledgePackageFile(expectedOutputFile(verifier, EXPECTED_OUTPUT_FILE));
-    final Iterable<KnowledgePackage> knowledgePackages = knowledgePackageFile.getKnowledgePackages();
+    KnowledgeModuleReader knowledgeModuleReader = knowledgeIoFactory.createKnowledgeModuleReader(new FileInputStream(expectedOutputFile(verifier, EXPECTED_OUTPUT_FILE)), contextClassLoader());
+    final Iterable<KnowledgePackage> knowledgePackages = knowledgeModuleReader.readKnowledgePackages();
 
     assertThat(knowledgePackages).as("Knowledge packages").hasSize(1);
     final KnowledgePackage knowledgePackage = knowledgePackages.iterator().next();

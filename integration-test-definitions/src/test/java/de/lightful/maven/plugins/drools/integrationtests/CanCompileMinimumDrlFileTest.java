@@ -17,14 +17,15 @@
  ******************************************************************************/
 package de.lightful.maven.plugins.drools.integrationtests;
 
-import de.lightful.maven.plugins.drools.knowledgeio.KnowledgePackageFile;
+import de.lightful.maven.plugins.drools.knowledgeio.KnowledgeModuleReader;
 import de.lightful.maven.plugins.testing.ExecuteGoals;
-import de.lightful.maven.plugins.testing.MavenVerifierTest;
 import de.lightful.maven.plugins.testing.VerifyUsingProject;
 import org.apache.maven.it.Verifier;
+import org.drools.definition.KnowledgePackage;
 import org.testng.annotations.Test;
 
 import javax.inject.Inject;
+import java.io.FileInputStream;
 
 import static de.lightful.maven.drools.plugin.naming.WellKnownNames.FILE_EXTENSION_DROOLS_KNOWLEDGE_MODULE;
 import static org.fest.assertions.Assertions.assertThat;
@@ -33,7 +34,7 @@ import static org.fest.assertions.Assertions.assertThat;
 @DefaultSettingsFile
 @VerifyUsingProject("can_compile_single_file")
 @ExecuteGoals("clean")
-public class CanCompileMinimumDrlFileTest extends MavenVerifierTest {
+public class CanCompileMinimumDrlFileTest extends MavenDroolsPluginIntegrationTest {
 
   private static final String EXPECTED_OUTPUT_FILE = "target/plugintest.artifact-1.0.0" + "." + FILE_EXTENSION_DROOLS_KNOWLEDGE_MODULE;
 
@@ -51,8 +52,9 @@ public class CanCompileMinimumDrlFileTest extends MavenVerifierTest {
     verifier.verifyErrorFreeLog();
     verifier.assertFilePresent(EXPECTED_OUTPUT_FILE);
 
-    KnowledgePackageFile knowledgePackageFile = new KnowledgePackageFile(expectedOutputFile(verifier, EXPECTED_OUTPUT_FILE));
-    assertThat(knowledgePackageFile.getFile()).exists();
-    assertThat(knowledgePackageFile.getKnowledgePackages()).as("collection of knowledge packages").hasSize(1);
+    KnowledgeModuleReader knowledgeModuleReader = knowledgeIoFactory.createKnowledgeModuleReader(new FileInputStream(expectedOutputFile(verifier, EXPECTED_OUTPUT_FILE)), contextClassLoader());
+    final Iterable<KnowledgePackage> knowledgePackages = knowledgeModuleReader.readKnowledgePackages();
+
+    assertThat(knowledgePackages).as("Collection<KnowledgePackage>").isNotNull().hasSize(1);
   }
 }

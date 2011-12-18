@@ -16,7 +16,8 @@
   ~ See the License for the specific language governing permissions and
   ~ limitations under the License.
   -->
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
   <modelVersion>4.0.0</modelVersion>
 
@@ -65,6 +66,26 @@
       </plugin>
       <plugin>
         <artifactId>maven-surefire-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>integration-tests</id>
+            <goals>
+              <goal>test</goal>
+              <!-- IDEA needs this, see IDEA-76857 -->
+            </goals>
+            <configuration>
+              <excludes>
+                <exclude>**/*$*</exclude>
+
+                <!-- vvv depends on drools-fruit-types, which is not yet available as a Knowledge-IO 0.1.6 artifact -->
+                <exclude>**/CanResolveTransitiveKnowledgeModulesTest.class</exclude>
+
+                <!-- vvv depends on drools-fruit-types, which is not yet available as a Knowledge-IO 0.1.6 artifact -->
+                <exclude>**/CanUseExistingDroolsPackageTest.class</exclude>
+              </excludes>
+            </configuration>
+          </execution>
+        </executions>
       </plugin>
       <plugin>
         <artifactId>maven-dependency-plugin</artifactId>

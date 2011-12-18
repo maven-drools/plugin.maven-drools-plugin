@@ -18,7 +18,6 @@
 package de.lightful.maven.plugins.drools.integrationtests;
 
 import de.lightful.maven.plugins.testing.ExecuteGoals;
-import de.lightful.maven.plugins.testing.MavenVerifierTest;
 import de.lightful.maven.plugins.testing.VerifyUsingProject;
 import org.apache.maven.it.VerificationException;
 import org.apache.maven.it.Verifier;
@@ -30,7 +29,7 @@ import javax.inject.Inject;
 @VerifyUsingProject("fails_on_simple_syntax_error")
 @DefaultSettingsFile
 @ExecuteGoals("clean")
-public class FailsOnSimpleSyntaxErrorTest extends MavenVerifierTest {
+public class FailsOnSimpleSyntaxErrorTest extends MavenDroolsPluginIntegrationTest {
 
   @Inject
   private Verifier verifier;

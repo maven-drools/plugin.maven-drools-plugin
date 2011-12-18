@@ -19,9 +19,10 @@
 package de.lightful.maven.plugins.drools.impl.dependencies;
 
 import de.lightful.maven.plugins.drools.impl.WellKnownNames;
-import de.lightful.maven.plugins.drools.knowledgeio.KnowledgePackageFile;
-import de.lightful.maven.plugins.drools.knowledgeio.KnowledgePackageFormatter;
+import de.lightful.maven.plugins.drools.knowledgeio.KnowledgeIoFactory;
+import de.lightful.maven.plugins.drools.knowledgeio.KnowledgeModuleReader;
 import de.lightful.maven.plugins.drools.knowledgeio.LogStream;
+import de.lightful.maven.plugins.drools.knowledgeio.metadata.KnowledgePackageFormatter;
 import org.apache.maven.artifact.DependencyResolutionRequiredException;
 import org.apache.maven.artifact.handler.ArtifactHandler;
 import org.apache.maven.artifact.handler.manager.ArtifactHandlerManager;
@@ -54,6 +55,7 @@ import org.sonatype.aether.util.graph.FilteringDependencyVisitor;
 import org.sonatype.aether.util.graph.PostorderNodeListGenerator;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -206,10 +208,11 @@ public class DependencyLoader {
   }
 
   private Collection<KnowledgePackage> loadKnowledgePackages(Artifact compileArtifact, URLClassLoader classLoader) throws MojoFailureException {
-    KnowledgePackageFile knowledgePackageFile = new KnowledgePackageFile(compileArtifact.getFile());
+    final KnowledgeIoFactory factory = new KnowledgeIoFactory();
     final Collection<KnowledgePackage> knowledgePackages;
     try {
-      knowledgePackages = knowledgePackageFile.getKnowledgePackages(classLoader);
+      final KnowledgeModuleReader reader = factory.createKnowledgeModuleReader(new FileInputStream(compileArtifact.getFile()), classLoader);
+      knowledgePackages = reader.readKnowledgePackages();
     }
     catch (IOException e) {
       throw new MojoFailureException("Unable to load compile-scoped dependency " + coordinatesOf(compileArtifact), e);

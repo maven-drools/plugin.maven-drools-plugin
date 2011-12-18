@@ -18,15 +18,15 @@
 package de.lightful.maven.plugins.drools.integrationtests;
 
 import de.lightful.maven.drools.plugin.naming.WellKnownNames;
-import de.lightful.maven.plugins.drools.knowledgeio.KnowledgePackageFile;
+import de.lightful.maven.plugins.drools.knowledgeio.KnowledgeModuleReader;
 import de.lightful.maven.plugins.testing.ExecuteGoals;
-import de.lightful.maven.plugins.testing.MavenVerifierTest;
 import de.lightful.maven.plugins.testing.VerifyUsingProject;
 import org.apache.maven.it.Verifier;
 import org.drools.definition.KnowledgePackage;
 import org.testng.annotations.Test;
 
 import javax.inject.Inject;
+import java.io.FileInputStream;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -38,7 +38,7 @@ import static org.fest.assertions.Assertions.assertThat;
 @DefaultSettingsFile
 @ExecuteGoals("clean")
 @VerifyUsingProject("does_respect_includes_and_excludes_test")
-public class DoesRespectIncludesAndExcludesTest extends MavenVerifierTest {
+public class DoesRespectIncludesAndExcludesTest extends MavenDroolsPluginIntegrationTest {
 
   private static final String EXPECTED_OUTPUT_FILE = "target/plugintest.artifact-1.0.0" + "." + WellKnownNames.FILE_EXTENSION_DROOLS_KNOWLEDGE_MODULE;
   private static final List<String> EXPECTED_PACKAGE_NAMES = Arrays.asList("included_by_default", "included_higher_level", "included_lowest_level");
@@ -53,8 +53,8 @@ public class DoesRespectIncludesAndExcludesTest extends MavenVerifierTest {
     verifier.verifyErrorFreeLog();
     verifier.assertFilePresent(EXPECTED_OUTPUT_FILE);
 
-    KnowledgePackageFile knowledgePackageFile = new KnowledgePackageFile(expectedOutputFile(verifier, EXPECTED_OUTPUT_FILE));
-    final Iterable<KnowledgePackage> knowledgePackages = knowledgePackageFile.getKnowledgePackages();
+    KnowledgeModuleReader knowledgeModuleReader = knowledgeIoFactory.createKnowledgeModuleReader(new FileInputStream(expectedOutputFile(verifier, EXPECTED_OUTPUT_FILE)), contextClassLoader());
+    final Iterable<KnowledgePackage> knowledgePackages = knowledgeModuleReader.readKnowledgePackages();
 
     Map<String, KnowledgePackage> allKnowledgePackagesByName = new HashMap<String, KnowledgePackage>();
     for (KnowledgePackage knowledgePackage : knowledgePackages) {

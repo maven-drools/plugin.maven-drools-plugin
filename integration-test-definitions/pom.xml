@@ -287,7 +287,6 @@
     <dependency>
       <groupId>de.lightful.maven.drools.plugin.test-support</groupId>
       <artifactId>maven-verifier-testng</artifactId>
-      <version>0.1.11-SNAPSHOT</version>
       <scope>test</scope>
     </dependency>
     <dependency>

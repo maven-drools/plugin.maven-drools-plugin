@@ -17,9 +17,8 @@
  ******************************************************************************/
 package de.lightful.maven.plugins.drools.integrationtests;
 
-import de.lightful.maven.plugins.drools.knowledgeio.KnowledgePackageFile;
+import de.lightful.maven.plugins.drools.knowledgeio.KnowledgeModuleReader;
 import de.lightful.maven.plugins.testing.ExecuteGoals;
-import de.lightful.maven.plugins.testing.MavenVerifierTest;
 import de.lightful.maven.plugins.testing.VerifyUsingProject;
 import org.apache.maven.it.Verifier;
 import org.drools.definition.KnowledgePackage;
@@ -27,6 +26,7 @@ import org.drools.definition.rule.Rule;
 import org.testng.annotations.Test;
 
 import javax.inject.Inject;
+import java.io.FileInputStream;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
@@ -38,7 +38,7 @@ import static org.fest.assertions.Assertions.assertThat;
 @DefaultSettingsFile
 @VerifyUsingProject("can_compile_100_files_in_one_go")
 @ExecuteGoals("clean")
-public class CanCompile100FilesInOneGoTest extends MavenVerifierTest {
+public class CanCompile100FilesInOneGoTest extends MavenDroolsPluginIntegrationTest {
 
   private static final String EXPECTED_OUTPUT_FILE = "target/plugintest.artifact-1.0.0" + "." + FILE_EXTENSION_DROOLS_KNOWLEDGE_MODULE;
   private static final int EXPECTED_NUMBER_OF_PACKAGES = 100;
@@ -52,8 +52,8 @@ public class CanCompile100FilesInOneGoTest extends MavenVerifierTest {
     verifier.verifyErrorFreeLog();
     verifier.assertFilePresent(EXPECTED_OUTPUT_FILE);
 
-    KnowledgePackageFile knowledgePackageFile = new KnowledgePackageFile(expectedOutputFile(verifier, EXPECTED_OUTPUT_FILE));
-    final Iterable<KnowledgePackage> knowledgePackages = knowledgePackageFile.getKnowledgePackages();
+    KnowledgeModuleReader knowledgeModuleReader = knowledgeIoFactory.createKnowledgeModuleReader(new FileInputStream(expectedOutputFile(verifier, EXPECTED_OUTPUT_FILE)), contextClassLoader());
+    final Iterable<KnowledgePackage> knowledgePackages = knowledgeModuleReader.readKnowledgePackages();
 
     assertThat(knowledgePackages).as("Knowledge packages").hasSize(EXPECTED_NUMBER_OF_PACKAGES);
     Map<String, KnowledgePackage> allKnowledgePackagesByName = new HashMap<String, KnowledgePackage>();
