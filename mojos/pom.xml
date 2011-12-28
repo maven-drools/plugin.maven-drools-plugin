@@ -49,9 +49,9 @@
         <scope>import</scope>
       </dependency>
       <dependency>
-        <groupId>de.lightful.maven.drools.plugin.poms</groupId>
+        <groupId>de.lightful.maven.drools.plugin.dependency-management</groupId>
         <artifactId>internal-dependencies</artifactId>
-        <version>0.2.7</version>
+        <version>0.2.9</version>
         <type>pom</type>
         <scope>import</scope>
       </dependency>
@@ -80,7 +80,7 @@
     </dependency>
 
     <dependency>
-      <groupId>de.lightful.maven.drools.plugin</groupId>
+      <groupId>de.lightful.maven.drools</groupId>
       <artifactId>knowledge-io</artifactId>
     </dependency>
 
