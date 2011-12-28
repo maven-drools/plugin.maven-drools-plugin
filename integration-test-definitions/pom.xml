@@ -267,7 +267,7 @@
     <dependency>
       <groupId>${pluginUnderTest.groupId}</groupId>
       <artifactId>${pluginUnderTest.artifactId}</artifactId>
-      <version>${pluginUnderTest.version}</version>
+      <version>${project.version}</version>
       <type>maven-plugin</type>
       <scope>test</scope>
     </dependency>
