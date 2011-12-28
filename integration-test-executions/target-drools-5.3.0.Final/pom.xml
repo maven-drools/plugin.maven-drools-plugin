@@ -23,13 +23,13 @@
   <parent>
     <groupId>de.lightful.maven.plugin.integrationtests.execution</groupId>
     <artifactId>common-execution-behaviour</artifactId>
-    <version>0.2.9-SNAPSHOT</version>
+    <version>0.2.9</version>
     <relativePath>../common-execution-behaviour/pom.xml</relativePath>
   </parent>
 
   <groupId>de.lightful.maven.plugin.integrationtests.execution</groupId>
   <artifactId>target-drools-5.3.0.Final</artifactId>
-  <version>0.2.9-SNAPSHOT</version>
+  <version>0.2.9</version>
   <packaging>pom</packaging>
 
   <name>Maven Drools Support :: Plugin :: Integration Testing :: Test Executions :: Drools 5.3.0.Final</name>
