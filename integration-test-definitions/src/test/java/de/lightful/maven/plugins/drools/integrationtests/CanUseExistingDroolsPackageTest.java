@@ -48,7 +48,7 @@ public class CanUseExistingDroolsPackageTest extends MavenDroolsPluginIntegratio
   private static final String EXPECTED_OUTPUT_FILE = "target/plugintest.artifact-1.0.0" + "." + WellKnownNames.FILE_EXTENSION_DROOLS_KNOWLEDGE_MODULE;
   private static final String EXPECTED_RULE_NAME = "Accept only heavy melons";
   private static final String EXPECTED_PACKAGE_NAME = "rules";
-  private static final String EXISTING_DROOLS_KNOWLEDGE_MODULES_GROUPID = "de.lightful.maven.drools.plugin.itartifacts";
+  private static final String EXISTING_DROOLS_KNOWLEDGE_MODULES_GROUPID = "de.lightful.maven.drools.plugin.its.test-artifacts";
 
   @Inject
   private Verifier verifier;

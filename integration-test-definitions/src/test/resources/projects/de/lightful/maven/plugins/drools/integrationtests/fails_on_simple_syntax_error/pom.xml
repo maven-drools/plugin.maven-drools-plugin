@@ -32,7 +32,7 @@
 
   <dependencies>
     <dependency>
-      <groupId>de.lightful.maven.drools.plugin.itartifacts</groupId>
+      <groupId>de.lightful.maven.drools.plugin.its.test-artifacts</groupId>
       <artifactId>person-fact-model</artifactId>
     </dependency>
   </dependencies>

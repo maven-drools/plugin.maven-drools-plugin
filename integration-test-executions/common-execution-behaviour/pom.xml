@@ -24,7 +24,7 @@
   <parent>
     <groupId>de.lightful.poms</groupId>
     <artifactId>standard-plugins</artifactId>
-    <version>29</version>
+    <version>30</version>
   </parent>
 
   <groupId>de.lightful.maven.plugin.integrationtests.execution</groupId>
@@ -36,15 +36,15 @@
 
   <dependencies>
     <dependency>
-      <groupId>de.lightful.maven.drools.plugin.itartifacts</groupId>
+      <groupId>de.lightful.maven.drools.plugin.its.test-artifacts</groupId>
       <artifactId>cities-fact-model</artifactId>
-      <version>0.0.18</version>
+      <version>0.0.19</version>
       <scope>test</scope>
     </dependency>
     <dependency>
-      <groupId>de.lightful.maven.drools.plugin.itartifacts</groupId>
+      <groupId>de.lightful.maven.drools.plugin.its.test-artifacts</groupId>
       <artifactId>person-fact-model</artifactId>
-      <version>0.0.18</version>
+      <version>0.0.19</version>
       <scope>test</scope>
     </dependency>
 

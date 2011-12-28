@@ -11,24 +11,24 @@
   <dependencyManagement>
     <dependencies>
       <dependency>
-        <groupId>de.lightful.maven.drools.plugin.itartifacts</groupId>
+        <groupId>de.lightful.maven.drools.plugin.its.test-artifacts</groupId>
         <artifactId>drools-fruit-types-${drools.runtime.version}</artifactId>
         <version>${dependency.drools-fruit-types.version}</version>
         <type>knowledge-module</type>
       </dependency>
       <dependency>
-        <groupId>de.lightful.maven.drools.plugin.itartifacts</groupId>
+        <groupId>de.lightful.maven.drools.plugin.its.test-artifacts</groupId>
         <artifactId>drools-vehicle-types-${drools.runtime.version}</artifactId>
         <version>${dependency.drools-vehicle-types.version}</version>
         <type>knowledge-module</type>
       </dependency>
       <dependency>
-        <groupId>de.lightful.maven.drools.plugin.itartifacts</groupId>
+        <groupId>de.lightful.maven.drools.plugin.its.test-artifacts</groupId>
         <artifactId>person-fact-model</artifactId>
         <version>${dependency.person-fact-model.version}</version>
       </dependency>
       <dependency>
-        <groupId>de.lightful.maven.drools.plugin.itartifacts</groupId>
+        <groupId>de.lightful.maven.drools.plugin.its.test-artifacts</groupId>
         <artifactId>cities-fact-model</artifactId>
         <version>${dependency.cities-fact-model.version}</version>
       </dependency>

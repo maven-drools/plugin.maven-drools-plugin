@@ -23,7 +23,7 @@
   <parent>
     <groupId>de.lightful.poms</groupId>
     <artifactId>standard-plugins</artifactId>
-    <version>29</version>
+    <version>30</version>
   </parent>
 
   <groupId>de.lightful.maven.drools.plugin</groupId>
@@ -34,11 +34,11 @@
 
   <properties>
     <!-- These two are required for IntelliJ IDEA (so that the internal resource filtering works properly: -->
-    <dependency.drools-fruit-types.version>0.1.3</dependency.drools-fruit-types.version>
-    <dependency.drools-vehicle-types.version>0.1.3</dependency.drools-vehicle-types.version>
+    <dependency.drools-fruit-types.version>0.1.4</dependency.drools-fruit-types.version>
+    <dependency.drools-vehicle-types.version>0.1.4</dependency.drools-vehicle-types.version>
 
-    <dependency.person-fact-model.version>0.0.18</dependency.person-fact-model.version>
-    <dependency.cities-fact-model.version>0.0.18</dependency.cities-fact-model.version>
+    <dependency.person-fact-model.version>0.0.19</dependency.person-fact-model.version>
+    <dependency.cities-fact-model.version>0.0.19</dependency.cities-fact-model.version>
     <pluginUnderTest.groupId>de.lightful.maven.plugins</pluginUnderTest.groupId>
     <pluginUnderTest.artifactId>maven-drools-plugin</pluginUnderTest.artifactId>
     <pluginUnderTest.version>${project.version}</pluginUnderTest.version>
@@ -272,13 +272,13 @@
       <scope>test</scope>
     </dependency>
     <dependency>
-      <groupId>de.lightful.maven.drools.plugin.itartifacts</groupId>
+      <groupId>de.lightful.maven.drools.plugin.its.test-artifacts</groupId>
       <artifactId>cities-fact-model</artifactId>
       <version>${dependency.cities-fact-model.version}</version>
       <scope>test</scope>
     </dependency>
     <dependency>
-      <groupId>de.lightful.maven.drools.plugin.itartifacts</groupId>
+      <groupId>de.lightful.maven.drools.plugin.its.test-artifacts</groupId>
       <artifactId>person-fact-model</artifactId>
       <version>${dependency.person-fact-model.version}</version>
       <scope>test</scope>

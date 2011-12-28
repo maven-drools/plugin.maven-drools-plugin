@@ -23,7 +23,7 @@
   <parent>
     <groupId>de.lightful.poms</groupId>
     <artifactId>standard-plugins</artifactId>
-    <version>29</version>
+    <version>30</version>
   </parent>
 
   <groupId>de.lightful.maven.drools.plugin</groupId>
@@ -32,11 +32,6 @@
   <packaging>pom</packaging>
 
   <name>Maven Drools Support :: Plugin :: Maven Drools Plugin Project</name>
-
-  <properties>
-    <dependency.drools-fruit-types.version>0.0.17</dependency.drools-fruit-types.version>
-    <dependency.drools-vehicle-types.version>0.0.17</dependency.drools-vehicle-types.version>
-  </properties>
 
   <dependencyManagement>
     <dependencies>

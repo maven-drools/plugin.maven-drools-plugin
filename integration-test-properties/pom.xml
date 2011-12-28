@@ -7,7 +7,7 @@
   <parent>
     <groupId>de.lightful.poms</groupId>
     <artifactId>standard-plugins</artifactId>
-    <version>29</version>
+    <version>30</version>
   </parent>
 
   <groupId>de.lightful.maven.drools.plugin</groupId>
@@ -23,10 +23,10 @@
     <pluginUnderTest.groupId>de.lightful.maven.plugins</pluginUnderTest.groupId>
     <pluginUnderTest.artifactId>maven-drools-plugin</pluginUnderTest.artifactId>
     <pluginUnderTest.version>${project.version}</pluginUnderTest.version>
-    <dependency.drools-fruit-types.version>0.1.3</dependency.drools-fruit-types.version>
-    <dependency.drools-vehicle-types.version>0.1.3</dependency.drools-vehicle-types.version>
-    <dependency.person-fact-model.version>0.0.18</dependency.person-fact-model.version>
-    <dependency.cities-fact-model.version>0.0.18</dependency.cities-fact-model.version>
+    <dependency.drools-fruit-types.version>0.1.4</dependency.drools-fruit-types.version>
+    <dependency.drools-vehicle-types.version>0.1.4</dependency.drools-vehicle-types.version>
+    <dependency.person-fact-model.version>0.0.19</dependency.person-fact-model.version>
+    <dependency.cities-fact-model.version>0.0.19</dependency.cities-fact-model.version>
   </properties>
 
   <build>
