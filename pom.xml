@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
-  ~ Copyright (c) 2009-2011 Ansgar Konermann
+  ~ Copyright (c) 2009-2012 Ansgar Konermann
   ~
-  ~ This file is part of the Maven 3 Drools Plugin.
+  ~ This file is part of the "Maven 3 Drools Support" Package.
   ~
   ~ Licensed under the Apache License, Version 2.0 (the "License");
   ~ you may not use this file except in compliance with the License.
@@ -16,13 +16,14 @@
   ~ See the License for the specific language governing permissions and
   ~ limitations under the License.
   -->
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
   <parent>
     <groupId>de.lightful.poms</groupId>
-    <artifactId>standard-plugins</artifactId>
-    <version>30</version>
+    <artifactId>standard-build</artifactId>
+    <version>32</version>
   </parent>
 
   <groupId>de.lightful.maven.drools.plugin</groupId>
@@ -32,12 +33,20 @@
 
   <name>Maven Drools Support :: Plugin :: Maven Drools Plugin Project</name>
 
+  <licenses>
+    <license>
+      <name>Apache License, Version 2.0</name>
+      <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+      <distribution>repo</distribution>
+    </license>
+  </licenses>
+
   <dependencyManagement>
     <dependencies>
       <dependency>
         <groupId>de.lightful.maven.drools.plugin.dependency-management</groupId>
         <artifactId>external-dependencies</artifactId>
-        <version>0.5.3</version>
+        <version>0.5.4</version>
         <type>pom</type>
         <scope>import</scope>
       </dependency>

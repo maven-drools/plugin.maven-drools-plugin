@@ -16,53 +16,62 @@
   ~ See the License for the specific language governing permissions and
   ~ limitations under the License.
   -->
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
   <modelVersion>4.0.0</modelVersion>
 
   <parent>
     <groupId>de.lightful.poms</groupId>
-    <artifactId>standard-plugins</artifactId>
-    <version>30</version>
+    <artifactId>standard-build</artifactId>
+    <version>32</version>
   </parent>
 
-  <groupId>de.lightful.maven.plugin.integrationtests.execution</groupId>
+  <groupId>de.lightful.maven.drools.plugin.its.execution</groupId>
   <artifactId>common-execution-behaviour</artifactId>
   <version>0.2.10-SNAPSHOT</version>
   <packaging>pom</packaging>
 
   <name>Maven Drools Support :: Plugin :: Integration Testing :: Test Executions :: Common Execution Behaviour</name>
 
+  <licenses>
+    <license>
+      <name>Apache License, Version 2.0</name>
+      <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+      <distribution>repo</distribution>
+    </license>
+  </licenses>
+
   <dependencies>
     <dependency>
       <groupId>de.lightful.maven.drools.plugin.its.test-artifacts</groupId>
       <artifactId>cities-fact-model</artifactId>
-      <version>0.0.19</version>
+      <version>0.0.20</version>
       <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>de.lightful.maven.drools.plugin.its.test-artifacts</groupId>
       <artifactId>person-fact-model</artifactId>
-      <version>0.0.19</version>
+      <version>0.0.20</version>
       <scope>test</scope>
     </dependency>
 
     <!-- reused resources, unpacked into target directory: -->
     <dependency>
-      <groupId>de.lightful.maven.drools.plugin</groupId>
+      <groupId>de.lightful.maven.drools.plugin.its</groupId>
       <artifactId>integration-test-properties</artifactId>
       <version>${project.version}</version>
       <classifier>repoconfig</classifier>
       <scope>test</scope>
     </dependency>
     <dependency>
-      <groupId>de.lightful.maven.drools.plugin.integration-testing</groupId>
+      <groupId>de.lightful.maven.drools.plugin.its</groupId>
       <artifactId>maven-settings</artifactId>
       <version>${project.version}</version>
       <scope>test</scope>
     </dependency>
     <dependency>
-      <groupId>de.lightful.maven.drools.plugin</groupId>
+      <groupId>de.lightful.maven.drools.plugin.its</groupId>
       <artifactId>integration-test-definitions</artifactId>
       <version>${project.version}</version>
       <classifier>it-resources</classifier>
@@ -112,14 +121,14 @@
       <dependency>
         <groupId>de.lightful.maven.drools.plugin.dependency-management</groupId>
         <artifactId>external-dependencies</artifactId>
-        <version>0.5.3</version>
+        <version>0.5.4</version>
         <type>pom</type>
         <scope>import</scope>
       </dependency>
       <dependency>
         <groupId>de.lightful.maven.drools.plugin.dependency-management</groupId>
         <artifactId>internal-dependencies</artifactId>
-        <version>0.2.9</version>
+        <version>0.2.11</version>
         <type>pom</type>
         <scope>import</scope>
       </dependency>
@@ -194,7 +203,7 @@
               <configuration>
                 <artifactItems>
                   <artifactItem>
-                    <groupId>de.lightful.maven.drools.plugin</groupId>
+                    <groupId>de.lightful.maven.drools.plugin.its</groupId>
                     <artifactId>integration-test-properties</artifactId>
                     <classifier>repoconfig</classifier>
                   </artifactItem>
@@ -214,12 +223,12 @@
               <configuration>
                 <artifactItems>
                   <artifactItem>
-                    <groupId>de.lightful.maven.drools.plugin.integration-testing</groupId>
+                    <groupId>de.lightful.maven.drools.plugin.its</groupId>
                     <artifactId>maven-settings</artifactId>
                     <outputDirectory>${project.build.testOutputDirectory}</outputDirectory>
                   </artifactItem>
                   <artifactItem>
-                    <groupId>de.lightful.maven.drools.plugin</groupId>
+                    <groupId>de.lightful.maven.drools.plugin.its</groupId>
                     <artifactId>integration-test-definitions</artifactId>
                     <classifier>it-resources</classifier>
                   </artifactItem>

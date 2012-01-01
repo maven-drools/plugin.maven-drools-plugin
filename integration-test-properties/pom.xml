@@ -1,20 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
   <modelVersion>4.0.0</modelVersion>
 
   <parent>
     <groupId>de.lightful.poms</groupId>
-    <artifactId>standard-plugins</artifactId>
-    <version>30</version>
+    <artifactId>standard-build</artifactId>
+    <version>32</version>
   </parent>
 
-  <groupId>de.lightful.maven.drools.plugin</groupId>
+  <groupId>de.lightful.maven.drools.plugin.its</groupId>
   <artifactId>integration-test-properties</artifactId>
   <version>0.2.10-SNAPSHOT</version>
   <packaging>pom</packaging>
 
   <name>Maven Drools Support :: Plugin :: Integration Testing :: Configuration Properties</name>
+
+  <licenses>
+    <license>
+      <name>Apache License, Version 2.0</name>
+      <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+      <distribution>repo</distribution>
+    </license>
+  </licenses>
 
   <properties>
     <repository.location.integrationtest>${project.build.directory}/integration-repository</repository.location.integrationtest>
@@ -22,10 +31,10 @@
     <pluginUnderTest.groupId>de.lightful.maven.plugins</pluginUnderTest.groupId>
     <pluginUnderTest.artifactId>maven-drools-plugin</pluginUnderTest.artifactId>
     <pluginUnderTest.version>${project.version}</pluginUnderTest.version>
-    <dependency.drools-fruit-types.version>0.1.4</dependency.drools-fruit-types.version>
-    <dependency.drools-vehicle-types.version>0.1.4</dependency.drools-vehicle-types.version>
-    <dependency.person-fact-model.version>0.0.19</dependency.person-fact-model.version>
-    <dependency.cities-fact-model.version>0.0.19</dependency.cities-fact-model.version>
+    <dependency.drools-fruit-types.version>0.1.5</dependency.drools-fruit-types.version>
+    <dependency.drools-vehicle-types.version>0.1.5</dependency.drools-vehicle-types.version>
+    <dependency.person-fact-model.version>0.0.20</dependency.person-fact-model.version>
+    <dependency.cities-fact-model.version>0.0.20</dependency.cities-fact-model.version>
   </properties>
 
   <build>

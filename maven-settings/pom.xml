@@ -17,36 +17,45 @@
   ~ You should have received a copy of the GNU General Public License
   ~ along with this program.  If not, see <http://www.gnu.org/licenses />.
   -->
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
   <modelVersion>4.0.0</modelVersion>
 
   <parent>
     <groupId>de.lightful.poms</groupId>
-    <artifactId>standard-plugins</artifactId>
-    <version>30</version>
+    <artifactId>standard-build</artifactId>
+    <version>32</version>
   </parent>
 
-  <groupId>de.lightful.maven.drools.plugin.integration-testing</groupId>
+  <groupId>de.lightful.maven.drools.plugin.its</groupId>
   <artifactId>maven-settings</artifactId>
   <version>0.2.10-SNAPSHOT</version>
   <packaging>jar</packaging>
 
   <name>Maven Drools Support :: Plugin :: Integration Testing :: Maven Settings</name>
 
+  <licenses>
+    <license>
+      <name>Apache License, Version 2.0</name>
+      <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+      <distribution>repo</distribution>
+    </license>
+  </licenses>
+
   <dependencyManagement>
     <dependencies>
       <dependency>
         <groupId>de.lightful.maven.drools.plugin.dependency-management</groupId>
         <artifactId>external-dependencies</artifactId>
-        <version>0.5.3</version>
+        <version>0.5.4</version>
         <type>pom</type>
         <scope>import</scope>
       </dependency>
       <dependency>
         <groupId>de.lightful.maven.drools.plugin.dependency-management</groupId>
         <artifactId>internal-dependencies</artifactId>
-        <version>0.2.9</version>
+        <version>0.2.11</version>
         <type>pom</type>
         <scope>import</scope>
       </dependency>
@@ -59,7 +68,7 @@
       <artifactId>maven-verifier-testng</artifactId>
     </dependency>
     <dependency>
-      <groupId>de.lightful.maven.drools.plugin</groupId>
+      <groupId>de.lightful.maven.drools.plugin.its</groupId>
       <artifactId>integration-test-properties</artifactId>
       <classifier>repoconfig</classifier>
       <version>${project.version}</version>
@@ -90,7 +99,7 @@
             <configuration>
               <artifactItems>
                 <artifactItem>
-                  <groupId>de.lightful.maven.drools.plugin</groupId>
+                  <groupId>de.lightful.maven.drools.plugin.its</groupId>
                   <artifactId>integration-test-properties</artifactId>
                   <classifier>repoconfig</classifier>
                 </artifactItem>
