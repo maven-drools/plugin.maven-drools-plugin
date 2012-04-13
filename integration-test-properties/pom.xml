@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
   <modelVersion>4.0.0</modelVersion>
 
   <parent>
     <groupId>de.lightful.poms</groupId>
-    <artifactId>standard-build</artifactId>
-    <version>32</version>
+    <artifactId>standard-oss-build</artifactId>
+    <version>2</version>
   </parent>
 
   <groupId>de.lightful.maven.drools.plugin.its</groupId>
@@ -30,10 +31,10 @@
     <pluginUnderTest.groupId>de.lightful.maven.plugins</pluginUnderTest.groupId>
     <pluginUnderTest.artifactId>maven-drools-plugin</pluginUnderTest.artifactId>
     <pluginUnderTest.version>${project.version}</pluginUnderTest.version>
-    <dependency.drools-fruit-types.version>0.1.6</dependency.drools-fruit-types.version>
-    <dependency.drools-vehicle-types.version>0.1.6</dependency.drools-vehicle-types.version>
-    <dependency.person-fact-model.version>0.0.20</dependency.person-fact-model.version>
-    <dependency.cities-fact-model.version>0.0.20</dependency.cities-fact-model.version>
+    <dependency.drools-fruit-types.version>0.1.7</dependency.drools-fruit-types.version>
+    <dependency.drools-vehicle-types.version>0.1.7</dependency.drools-vehicle-types.version>
+    <dependency.person-fact-model.version>0.0.21</dependency.person-fact-model.version>
+    <dependency.cities-fact-model.version>0.0.21</dependency.cities-fact-model.version>
   </properties>
 
   <build>
@@ -109,9 +110,9 @@
       </properties>
     </profile>
     <profile>
-      <id>drools.runtime.version=5.4.0.Beta1</id>
+      <id>drools.runtime.version=5.4.0.Final</id>
       <properties>
-        <drools.runtime.version>5.4.0.Beta1</drools.runtime.version>
+        <drools.runtime.version>5.4.0.Final</drools.runtime.version>
       </properties>
     </profile>
   </profiles>

@@ -16,7 +16,8 @@
   ~ See the License for the specific language governing permissions and
   ~ limitations under the License.
   -->
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
   <modelVersion>4.0.0</modelVersion>
 
@@ -43,7 +44,7 @@
   </licenses>
 
   <properties>
-    <drools.runtime.version>5.4.0.Beta1</drools.runtime.version>
+    <drools.runtime.version>5.4.0.Final</drools.runtime.version>
   </properties>
 
   <dependencies>
@@ -88,7 +89,7 @@
 
                 <!--
                   This test depends on Drools' ability to serialize and de-serialize knowledge packages
-                  with inter-dependencies. Drools 5.4.0.Beta1 not support this. See this JIRA issue
+                  with inter-dependencies. Drools 5.4.0.Final not support this. See this JIRA issue
                   for details: https://issues.jboss.org/browse/JBRULES-3225
                 -->
                 <exclude>**/CanPerformMultiplePassesTest.class</exclude>
