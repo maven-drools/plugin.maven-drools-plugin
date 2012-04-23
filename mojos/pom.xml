@@ -98,10 +98,16 @@
       <artifactId>maven-core</artifactId>
       <version>${dependency.maven.version}</version>
     </dependency>
+    <!-- This is not in Maven Central yet, see https://issues.jfrog.org/jira/browse/ANMJ-18 -->
+    <!--<dependency>-->
+    <!--<groupId>org.jfrog.maven.annomojo</groupId>-->
+    <!--<artifactId>maven-plugin-anno</artifactId>-->
+    <!--<version>1.4.0</version>-->
+    <!--</dependency>-->
     <dependency>
-      <groupId>org.jfrog.maven.annomojo</groupId>
-      <artifactId>maven-plugin-anno</artifactId>
-      <version>1.4.0</version>
+      <groupId>br.com.ingenieux.maven.annomojo</groupId>
+      <artifactId>org.jfrog.maven.maven-plugin-anno</artifactId>
+      <version>1.4.1</version>
     </dependency>
     <dependency>
       <groupId>org.sonatype.aether</groupId>
@@ -149,6 +155,45 @@
 
     <plugins>
       <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>build-helper-maven-plugin</artifactId>
+        <version>1.7</version>
+        <executions>
+          <execution>
+            <id>reserve-network-ports</id>
+            <goals>
+              <goal>reserve-network-port</goal>
+            </goals>
+            <phase>validate</phase>
+            <configuration>
+              <portNames>
+                <portName>mockRepositoryPort</portName>
+              </portNames>
+            </configuration>
+            <inherited>false</inherited>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>mrm-maven-plugin</artifactId>
+        <version>1.0-alpha-1</version>
+        <executions>
+          <execution>
+            <id>start-mock-repository</id>
+            <goals>
+              <goal>start</goal>
+            </goals>
+            <phase>prepare-package</phase>
+            <configuration>
+              <propertyName>mockRepositoryUrl</propertyName>
+              <port>${mockRepositoryPort}</port>
+            </configuration>
+            <inherited>false</inherited>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-plugin-plugin</artifactId>
         <version>2.6</version>
@@ -158,10 +203,17 @@
             <artifactId>maven-plugin-tools-api</artifactId>
             <version>2.6</version>
           </dependency>
+          <!-- This dependency is not in Maven Central yet, see https://issues.jfrog.org/jira/browse/ANMJ-18 -->
+          <!--<dependency>-->
+          <!--<groupId>org.jfrog.maven.annomojo</groupId>-->
+          <!--<artifactId>maven-plugin-tools-anno</artifactId>-->
+          <!--<version>1.4.0</version>-->
+          <!--<scope>runtime</scope>-->
+          <!--</dependency>-->
           <dependency>
-            <groupId>org.jfrog.maven.annomojo</groupId>
-            <artifactId>maven-plugin-tools-anno</artifactId>
-            <version>1.4.0</version>
+            <groupId>br.com.ingenieux.maven.annomojo</groupId>
+            <artifactId>org.jfrog.maven.maven-plugin-tools-anno</artifactId>
+            <version>1.4.1</version>
             <scope>runtime</scope>
           </dependency>
         </dependencies>

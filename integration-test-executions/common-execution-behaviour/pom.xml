@@ -96,6 +96,7 @@
     <dependency>
       <groupId>org.testng</groupId>
       <artifactId>testng</artifactId>
+      <version>[6.2]</version>
       <!-- the version here MUST exactly comply to the version used in maven-verifier-testng -->
       <scope>test</scope>
     </dependency>

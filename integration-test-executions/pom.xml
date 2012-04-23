@@ -44,7 +44,7 @@
 
   <modules>
     <module>common-execution-behaviour</module>
-    <module>target-drools-5.1.1</module>
+    <!--<module>target-drools-5.1.1</module>-->
     <module>target-drools-5.2.0.Final</module>
     <module>target-drools-5.3.0.Final</module>
     <!--<module>target-drools-5.4.0.Final</module>-->
