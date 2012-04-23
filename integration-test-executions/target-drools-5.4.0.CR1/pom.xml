@@ -33,7 +33,7 @@
   <version>0.2.12-SNAPSHOT</version>
   <packaging>pom</packaging>
 
-  <name>Maven Drools Support :: Plugin :: Integration Testing :: Test Executions :: Drools 5.4.0.Final</name>
+  <name>Maven Drools Support :: Plugin :: Integration Testing :: Test Executions :: Drools ${drools.runtime.version}</name>
 
   <licenses>
     <license>
