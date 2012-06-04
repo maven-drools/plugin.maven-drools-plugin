@@ -25,6 +25,8 @@ import org.testng.annotations.Test;
 
 import javax.inject.Inject;
 
+import static org.testng.Assert.fail;
+
 @Test
 @VerifyUsingProject("fails_on_simple_syntax_error")
 @DefaultSettingsFile
@@ -34,9 +36,16 @@ public class FailsOnSimpleSyntaxErrorTest extends MavenDroolsPluginIntegrationTe
   @Inject
   private Verifier verifier;
 
-  @Test(expectedExceptions = VerificationException.class)
+  @Test
   public void testFailsOnSimpleSyntaxError() throws Exception {
-    verifier.executeGoal("compile");
-    verifier.verifyErrorFreeLog();
+    try {
+      verifier.executeGoal("compile");
+      fail("Must throw exception");
+    }
+    catch (VerificationException ve) {
+      // expected exception
+    }
+    verifier.verifyTextInLog("[INFO] BUILD FAILURE");
+    verifier.verifyTextInLog("[ERROR] Error(s) occurred while compiling");
   }
 }

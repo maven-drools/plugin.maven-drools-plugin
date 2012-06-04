@@ -16,7 +16,8 @@
   ~ See the License for the specific language governing permissions and
   ~ limitations under the License.
   -->
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
   <parent>
@@ -33,8 +34,8 @@
 
   <properties>
     <!-- These two are required for IntelliJ IDEA (so that the internal resource filtering works properly: -->
-    <dependency.drools-fruit-types.version>0.1.7</dependency.drools-fruit-types.version>
-    <dependency.drools-vehicle-types.version>0.1.7</dependency.drools-vehicle-types.version>
+    <dependency.drools-fruit-types.version>0.1.10</dependency.drools-fruit-types.version>
+    <dependency.drools-vehicle-types.version>0.1.10</dependency.drools-vehicle-types.version>
 
     <dependency.person-fact-model.version>0.0.21</dependency.person-fact-model.version>
     <dependency.cities-fact-model.version>0.0.21</dependency.cities-fact-model.version>
@@ -81,7 +82,7 @@
         <executions>
           <execution>
             <id>default-test</id>
-            <goals />
+            <goals/>
             <configuration>
               <skip>true</skip>
             </configuration>
@@ -215,7 +216,7 @@
       </plugin>
     </plugins>
 
-    <resources />
+    <resources/>
 
     <testResources>
       <testResource>
@@ -248,14 +249,14 @@
       <dependency>
         <groupId>de.lightful.maven.drools.plugin.dependency-management</groupId>
         <artifactId>external-dependencies</artifactId>
-        <version>0.5.6</version>
+        <version>0.6.0</version>
         <type>pom</type>
         <scope>import</scope>
       </dependency>
       <dependency>
         <groupId>de.lightful.maven.drools.plugin.dependency-management</groupId>
         <artifactId>internal-dependencies</artifactId>
-        <version>0.2.16</version>
+        <version>0.3.0</version>
         <type>pom</type>
         <scope>import</scope>
       </dependency>
@@ -334,84 +335,6 @@
   </dependencies>
   <profiles>
     <profile>
-      <id>drools.runtime.version=5.0.1</id>
-      <properties>
-        <drools.runtime.version>5.0.1</drools.runtime.version>
-      </properties>
-      <dependencies>
-        <dependency>
-          <groupId>org.drools</groupId>
-          <artifactId>drools-api</artifactId>
-          <version>[${drools.runtime.version}]</version>
-          <scope>test</scope>
-        </dependency>
-        <dependency>
-          <groupId>org.drools</groupId>
-          <artifactId>drools-core</artifactId>
-          <version>[${drools.runtime.version}]</version>
-          <scope>test</scope>
-        </dependency>
-        <dependency>
-          <groupId>org.drools</groupId>
-          <artifactId>drools-compiler</artifactId>
-          <version>[${drools.runtime.version}]</version>
-          <scope>test</scope>
-        </dependency>
-      </dependencies>
-    </profile>
-    <profile>
-      <id>drools.runtime.version=5.1.1</id>
-      <properties>
-        <drools.runtime.version>5.1.1</drools.runtime.version>
-      </properties>
-      <dependencies>
-        <dependency>
-          <groupId>org.drools</groupId>
-          <artifactId>drools-api</artifactId>
-          <version>[${drools.runtime.version}]</version>
-          <scope>test</scope>
-        </dependency>
-        <dependency>
-          <groupId>org.drools</groupId>
-          <artifactId>drools-core</artifactId>
-          <version>[${drools.runtime.version}]</version>
-          <scope>test</scope>
-        </dependency>
-        <dependency>
-          <groupId>org.drools</groupId>
-          <artifactId>drools-compiler</artifactId>
-          <version>[${drools.runtime.version}]</version>
-          <scope>test</scope>
-        </dependency>
-      </dependencies>
-    </profile>
-    <profile>
-      <id>drools.runtime.version=5.2.0.Final</id>
-      <properties>
-        <drools.runtime.version>5.2.0.Final</drools.runtime.version>
-      </properties>
-      <dependencies>
-        <dependency>
-          <groupId>org.drools</groupId>
-          <artifactId>knowledge-api</artifactId>
-          <version>[${drools.runtime.version}]</version>
-          <scope>test</scope>
-        </dependency>
-        <dependency>
-          <groupId>org.drools</groupId>
-          <artifactId>drools-core</artifactId>
-          <version>[${drools.runtime.version}]</version>
-          <scope>test</scope>
-        </dependency>
-        <dependency>
-          <groupId>org.drools</groupId>
-          <artifactId>drools-compiler</artifactId>
-          <version>[${drools.runtime.version}]</version>
-          <scope>test</scope>
-        </dependency>
-      </dependencies>
-    </profile>
-    <profile>
       <id>drools.runtime.version=5.3.0.Final</id>
       <properties>
         <drools.runtime.version>5.3.0.Final</drools.runtime.version>
@@ -463,7 +386,6 @@
         </dependency>
       </dependencies>
     </profile>
-
   </profiles>
 
   <scm>

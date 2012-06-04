@@ -25,6 +25,8 @@ import org.testng.annotations.Test;
 
 import javax.inject.Inject;
 
+import static org.testng.Assert.fail;
+
 @Test
 @VerifyUsingProject("fails_on_unresolvable_type")
 @DefaultSettingsFile
@@ -34,9 +36,16 @@ public class FailsOnUnresolvableTypeTest extends MavenDroolsPluginIntegrationTes
   @Inject
   private Verifier verifier;
 
-  @Test(expectedExceptions = VerificationException.class)
+  @Test
   public void testFailsOnUnresolvableType() throws Exception {
-    verifier.executeGoal("compile");
-    verifier.verifyErrorFreeLog();
+    try {
+      verifier.executeGoal("compile");
+      fail("Must throw exception");
+    }
+    catch (VerificationException ve) {
+      // expected exception
+    }
+    verifier.verifyTextInLog("[INFO] BUILD FAILURE");
+    verifier.verifyTextInLog("Error #1 [occurred in line(s) 11]: Unable to resolve ObjectType 'LikesToEat'");
   }
 }

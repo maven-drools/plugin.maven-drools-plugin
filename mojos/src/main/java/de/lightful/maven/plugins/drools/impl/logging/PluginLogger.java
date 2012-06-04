@@ -99,7 +99,7 @@ public class PluginLogger {
     for (KnowledgeBuilderError builderError : errors) {
       i++;
       error.write("Error #" + i);
-      final int[] errorLines = builderError.getErrorLines();
+      final int[] errorLines = builderError.getLines();
       if (errorLines.length > 0) {
         error.write(" [occurred in line(s) ");
         for (int errorLineIndex = 0; errorLineIndex < errorLines.length; errorLineIndex++) {

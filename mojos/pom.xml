@@ -16,7 +16,8 @@
   ~ See the License for the specific language governing permissions and
   ~ limitations under the License.
   -->
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
   <parent>
@@ -51,14 +52,14 @@
       <dependency>
         <groupId>de.lightful.maven.drools.plugin.dependency-management</groupId>
         <artifactId>external-dependencies</artifactId>
-        <version>0.5.6</version>
+        <version>0.6.0</version>
         <type>pom</type>
         <scope>import</scope>
       </dependency>
       <dependency>
         <groupId>de.lightful.maven.drools.plugin.dependency-management</groupId>
         <artifactId>internal-dependencies</artifactId>
-        <version>0.2.16</version>
+        <version>0.3.0</version>
         <type>pom</type>
         <scope>import</scope>
       </dependency>
@@ -69,20 +70,20 @@
     <!-- Drools Dependencies: -->
     <dependency>
       <groupId>org.drools</groupId>
-      <artifactId>drools-api</artifactId>
-      <version>5.1.1</version>
+      <artifactId>knowledge-api</artifactId>
+      <version>5.3.0.Final</version>
       <scope>provided</scope>
     </dependency>
     <dependency>
       <groupId>org.drools</groupId>
       <artifactId>drools-core</artifactId>
-      <version>5.1.1</version>
+      <version>5.3.0.Final</version>
       <scope>provided</scope>
     </dependency>
     <dependency>
       <groupId>org.drools</groupId>
       <artifactId>drools-compiler</artifactId>
-      <version>5.1.1</version>
+      <version>5.3.0.Final</version>
       <scope>provided</scope>
     </dependency>
 

@@ -24,12 +24,12 @@
   <parent>
     <groupId>de.lightful.maven.drools.plugin.its.execution</groupId>
     <artifactId>common-execution-behaviour</artifactId>
-    <version>0.2.12-SNAPSHOT</version>
+    <version>0.2.13-SNAPSHOT</version>
     <relativePath>../common-execution-behaviour/pom.xml</relativePath>
   </parent>
 
   <groupId>de.lightful.maven.drools.plugin.its.execution</groupId>
-  <artifactId>target-drools-5.1.1</artifactId>
+  <artifactId>target-drools-5.4.0.Final</artifactId>
   <packaging>pom</packaging>
 
   <name>Maven Drools Support :: Plugin :: Integration Testing :: Test Executions :: Drools ${drools.runtime.version}</name>
@@ -43,13 +43,14 @@
   </licenses>
 
   <properties>
-    <drools.runtime.version>5.1.1</drools.runtime.version>
+    <drools.runtime.version>5.4.0.Final</drools.runtime.version>
   </properties>
 
   <dependencies>
+    <!-- Drools Dependencies: -->
     <dependency>
       <groupId>org.drools</groupId>
-      <artifactId>drools-api</artifactId>
+      <artifactId>knowledge-api</artifactId>
       <version>[${drools.runtime.version}]</version>
       <scope>test</scope>
     </dependency>
@@ -84,6 +85,13 @@
             <configuration>
               <excludes>
                 <exclude>**/*$*</exclude>
+
+                <!--
+                  This test depends on Drools' ability to serialize and de-serialize knowledge packages
+                  with inter-dependencies. Drools 5.4.0.Final does not support this. See this JIRA issue
+                  for details: https://issues.jboss.org/browse/JBRULES-3225
+                -->
+                <!--<exclude>**/CanPerformMultiplePassesTest.class</exclude>-->
 
                 <!-- vvv depends on drools-fruit-types, which is not yet available as a Knowledge-IO 0.1.6 artifact -->
                 <!--<exclude>**/CanResolveTransitiveKnowledgeModulesTest.class</exclude>-->
