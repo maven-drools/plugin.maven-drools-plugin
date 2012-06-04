@@ -91,7 +91,7 @@
                   with inter-dependencies. Drools 5.4.0.Final does not support this. See this JIRA issue
                   for details: https://issues.jboss.org/browse/JBRULES-3225
                 -->
-                <!--<exclude>**/CanPerformMultiplePassesTest.class</exclude>-->
+                <exclude>**/CanPerformMultiplePassesTest.class</exclude>
 
                 <!-- vvv depends on drools-fruit-types, which is not yet available as a Knowledge-IO 0.1.6 artifact -->
                 <!--<exclude>**/CanResolveTransitiveKnowledgeModulesTest.class</exclude>-->
