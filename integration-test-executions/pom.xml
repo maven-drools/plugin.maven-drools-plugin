@@ -29,7 +29,7 @@
 
   <groupId>de.lightful.maven.drools.plugin.its.execution</groupId>
   <artifactId>integration-test-executions</artifactId>
-  <version>0.2.13-SNAPSHOT</version>
+  <version>0.3.0-SNAPSHOT</version>
   <packaging>pom</packaging>
 
   <name>Maven Drools Support :: Plugin :: Integration Testing :: Test Executions :: All Runtime Versions</name>
