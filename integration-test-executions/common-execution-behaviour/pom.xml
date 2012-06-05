@@ -28,7 +28,7 @@
 
   <groupId>de.lightful.maven.drools.plugin.its.execution</groupId>
   <artifactId>common-execution-behaviour</artifactId>
-  <version>0.3.1-SNAPSHOT</version>
+  <version>0.3.1</version>
   <packaging>pom</packaging>
 
   <name>Maven Drools Support :: Plugin :: Integration Testing :: Test Executions :: Common Execution Behaviour</name>

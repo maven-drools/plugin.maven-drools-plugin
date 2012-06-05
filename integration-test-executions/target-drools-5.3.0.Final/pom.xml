@@ -23,7 +23,7 @@
   <parent>
     <groupId>de.lightful.maven.drools.plugin.its.execution</groupId>
     <artifactId>common-execution-behaviour</artifactId>
-    <version>0.3.1-SNAPSHOT</version>
+    <version>0.3.1</version>
     <relativePath>../common-execution-behaviour/pom.xml</relativePath>
   </parent>
 
