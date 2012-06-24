@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
   <modelVersion>4.0.0</modelVersion>
 
@@ -30,10 +31,10 @@
     <pluginUnderTest.groupId>de.lightful.maven.plugins</pluginUnderTest.groupId>
     <pluginUnderTest.artifactId>maven-drools-plugin</pluginUnderTest.artifactId>
     <pluginUnderTest.version>${project.version}</pluginUnderTest.version>
-    <dependency.drools-fruit-types.version>0.1.10</dependency.drools-fruit-types.version>
-    <dependency.drools-vehicle-types.version>0.1.10</dependency.drools-vehicle-types.version>
-    <dependency.person-fact-model.version>0.0.21</dependency.person-fact-model.version>
-    <dependency.cities-fact-model.version>0.0.21</dependency.cities-fact-model.version>
+    <dependency.drools-fruit-types.version>0.1.11</dependency.drools-fruit-types.version>
+    <dependency.drools-vehicle-types.version>0.1.11</dependency.drools-vehicle-types.version>
+    <dependency.person-fact-model.version>0.1.11</dependency.person-fact-model.version>
+    <dependency.cities-fact-model.version>0.1.11</dependency.cities-fact-model.version>
   </properties>
 
   <build>

@@ -86,7 +86,7 @@ public class DependencyLoader {
       info.write("\n\nUsing class loader with these URLs:").nl();
       int i = 1;
       for (URL url : classLoader.getURLs()) {
-        info.write("URL in use (#" + i + "): ").write(url.toString()).nl();
+        info.write("URL in use (#" + i++ + "): ").write(url.toString()).nl();
       }
       KnowledgeBuilderConfiguration configuration = KnowledgeBuilderFactory.newKnowledgeBuilderConfiguration(new Properties(), classLoader);
       KnowledgeBase existingKnowledge = createKnowledgeBaseFromDependencies(classLoader, knowledgeModulesInLoadOrder);
