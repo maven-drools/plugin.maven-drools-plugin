@@ -1,7 +1,7 @@
-/*
- * Copyright (c) 2009-2011 Ansgar Konermann
+/*******************************************************************************
+ * Copyright (c) 2009-2012 Ansgar Konermann
  *
- * This file is part of the Maven 3 Drools Plugin.
+ * This file is part of the "Maven 3 Drools Support" Package.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,7 +14,8 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- */
+ ******************************************************************************/
+
 package de.lightful.maven.plugins.drools.impl.logging;
 
 public class MavenWarnLogStream extends MavenLogStream<MavenWarnLogStream> {

@@ -1,7 +1,7 @@
 /*******************************************************************************
- * Copyright (c) 2009-2011 Ansgar Konermann
+ * Copyright (c) 2009-2012 Ansgar Konermann
  *
- * This file is part of the Maven 3 Drools Plugin.
+ * This file is part of the "Maven 3 Drools Support" Package.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -83,10 +83,10 @@ public class DependencyLoader {
       final List<Artifact> jarArtifactsInLoadOrder = resolveJarArtifacts(collectResult, session, repositories);
 
       URLClassLoader classLoader = createCompileClassLoader(jarArtifactsInLoadOrder);
-      info.write("\n\nUsing class loader with these URLs:").nl();
+      info.nl().nl().write("Using class loader with these URLs:").nl();
       int i = 1;
       for (URL url : classLoader.getURLs()) {
-        info.write("URL in use (#" + i++ + "): ").write(url.toString()).nl();
+        info.write("    #" + i++ + ": ").write(url.toString()).nl();
       }
       KnowledgeBuilderConfiguration configuration = KnowledgeBuilderFactory.newKnowledgeBuilderConfiguration(new Properties(), classLoader);
       KnowledgeBase existingKnowledge = createKnowledgeBaseFromDependencies(classLoader, knowledgeModulesInLoadOrder);

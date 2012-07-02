@@ -1,7 +1,7 @@
 /*******************************************************************************
- * Copyright (c) 2009-2011 Ansgar Konermann
+ * Copyright (c) 2009-2012 Ansgar Konermann
  *
- * This file is part of the Maven 3 Drools Plugin.
+ * This file is part of the "Maven 3 Drools Support" Package.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,6 +18,7 @@
 
 package de.lightful.maven.plugins.drools.mojos;
 
+import de.lightful.maven.plugins.drools.impl.MavenProjectDecorator;
 import de.lightful.maven.plugins.drools.impl.OutputFileWriter;
 import de.lightful.maven.plugins.drools.impl.ResourceTypeDetector;
 import de.lightful.maven.plugins.drools.impl.WellKnownNames;
@@ -71,6 +72,8 @@ public class CompileMojo extends AbstractMojo {
   @MojoParameter(defaultValue = "${project}")
   private MavenProject project;
 
+  private MavenProjectDecorator projectDecorator;
+
   @MojoComponent
   private RepositorySystem repositorySystem;
 
@@ -119,6 +122,7 @@ public class CompileMojo extends AbstractMojo {
 
   public void execute() throws MojoFailureException {
     initializeLogging();
+    projectDecorator = new MavenProjectDecorator(project);
     sourceEncoding = defineSourceEncoding();
 
     logger.dumpOverallPluginConfiguration(passes, project.getName());
@@ -128,13 +132,13 @@ public class CompileMojo extends AbstractMojo {
 
     logger.dumpDroolsRuntimeInfo(KnowledgeBuilder.class);
     runAllPasses();
-    outputFileWriter.writeOutputFile(knowledgeBuilder.getKnowledgePackages(), logger, project, projectHelper, classifier);
+    outputFileWriter.writeOutputFile(knowledgeBuilder.getKnowledgePackages(), logger, projectDecorator, projectHelper, classifier);
   }
 
   private String defineSourceEncoding() {
     String sourceEncodingFromProperty = project.getProperties().getProperty("project.build.sourceEncoding");
     if ((sourceEncodingFromProperty == null) || (sourceEncodingFromProperty.length() == 0)) {
-      warn.write("No property with name 'project.build.sourceEncoding' found, assuming default source encoding 'UTF-8'.").nl();
+      info.write("No property 'project.build.sourceEncoding' found, using plugin's default source encoding 'UTF-8'.").nl();
       return "UTF-8";
     }
     else {
@@ -158,8 +162,9 @@ public class CompileMojo extends AbstractMojo {
   }
 
   private void executePass(Pass pass) throws MojoFailureException {
-    info.write("Executing compiler pass '" + pass.getName() + "' in directory " + relativeToBasedir(pass.getRuleSourceRoot()) + "...").nl();
+    info.write("Executing compiler pass '" + pass.getName() + "' in directory " + projectDecorator.relativeToBasedir(pass.getRuleSourceRoot()) + "...").nl();
     final String[] filesToCompile = determineFilesToCompile(pass);
+    info.write("Compiling " + filesToCompile.length + " rule files ...").nl();
     for (String currentFile : filesToCompile) {
       compileRuleFile(pass.getRuleSourceRoot(), currentFile);
     }
@@ -179,7 +184,7 @@ public class CompileMojo extends AbstractMojo {
 
   private void compileRuleFile(File ruleSourceRoot, String nameOfFileToCompile) throws MojoFailureException {
     File fileToCompile = new File(ruleSourceRoot, nameOfFileToCompile);
-    info.write("  Compiling rule file '" + relativeToBasedir(fileToCompile) + "' ...").nl();
+    info.write("    compiling: '" + projectDecorator.relativeToBasedir(fileToCompile) + "' ...").nl();
     try {
       FileInputStream fileInputStream = new FileInputStream(fileToCompile);
       InputStreamReader inputStreamReader = new InputStreamReader(fileInputStream, sourceEncoding);
@@ -195,16 +200,5 @@ public class CompileMojo extends AbstractMojo {
       throw new MojoFailureException("Cannot perform character conversion from source encoding '" + sourceEncoding + "' for file " + fileToCompile.getAbsolutePath(), e);
     }
     logger.reportCompilationErrors(knowledgeBuilder.getErrors(), fileToCompile);
-  }
-
-  private String relativeToBasedir(File fileToCompile) {
-    final String basedir = project.getBasedir().getAbsolutePath();
-    final String filePath = fileToCompile.getAbsolutePath();
-    if (filePath.startsWith(basedir + "/")) {
-      return filePath.substring(basedir.length() + "/".length());
-    }
-    else {
-      return filePath;
-    }
   }
 }

@@ -1,7 +1,7 @@
-/*
- * Copyright (c) 2009-2011 Ansgar Konermann
+/*******************************************************************************
+ * Copyright (c) 2009-2012 Ansgar Konermann
  *
- * This file is part of the Maven 3 Drools Plugin.
+ * This file is part of the "Maven 3 Drools Support" Package.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,7 +14,8 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- */
+ ******************************************************************************/
+
 package de.lightful.maven.plugins.drools.impl;
 
 import de.lightful.maven.plugins.drools.impl.logging.PluginLogger;
@@ -46,7 +47,8 @@ public class OutputFileWriter {
 
   private LogStream<?> debug;
 
-  public void writeOutputFile(Collection<KnowledgePackage> knowledgePackages, PluginLogger logger, MavenProject mavenProject, MavenProjectHelper projectHelper, String classifier) throws MojoFailureException {
+  public void writeOutputFile(Collection<KnowledgePackage> knowledgePackages, PluginLogger logger, MavenProjectDecorator mavenProjectDecorator, MavenProjectHelper projectHelper, String classifier) throws MojoFailureException {
+    MavenProject mavenProject = mavenProjectDecorator.getProject();
     ensureCorrectPackaging(mavenProject);
 
     Build build = mavenProject.getBuild();
@@ -54,17 +56,21 @@ public class OutputFileWriter {
     File outputFile = new File(buildDirectory, build.getFinalName() + "." + WellKnownNames.FILE_EXTENSION_DROOLS_KNOWLEDGE_MODULE);
 
     final String absoluteOutputFileName = outputFile.getAbsolutePath();
-    logger.info().write("Writing " + knowledgePackages.size() + " knowledge packages into output file " + absoluteOutputFileName).nl();
+    logger.info().write("Writing " + knowledgePackages.size() + " knowledge packages into output file " + mavenProjectDecorator.relativeToBasedir(outputFile)).nl();
     int counter = 1;
     for (KnowledgePackage knowledgePackage : knowledgePackages) {
       String declaredTypesCount = "(unknown)";
+      String globalsCount = "(unknown)";
+      String rulesCount = "(unknown)";
       if (knowledgePackage instanceof KnowledgePackageImp) {
         final KnowledgePackageImp packageImp = (KnowledgePackageImp) knowledgePackage;
+        rulesCount = String.valueOf(knowledgePackage.getRules().size());
         declaredTypesCount = String.valueOf(packageImp.pkg.getTypeDeclarations().size());
+        globalsCount = String.valueOf(packageImp.pkg.getGlobals().size());
       }
       logger.info()
-          .write("  Package #" + counter + ": " + knowledgePackage.getName())
-          .write(" (" + knowledgePackage.getRules().size() + " rules, " + declaredTypesCount + " declared types)")
+          .write("    #" + counter + ": " + knowledgePackage.getName())
+          .write(" (" + rulesCount + " rules, " + declaredTypesCount + " type declarations, " + globalsCount + " globals)")
           .nl();
       counter++;
     }
@@ -81,11 +87,11 @@ public class OutputFileWriter {
       throw new MojoFailureException("Unable to write compiled knowledge into output file!", e);
     }
     if (classifier != null && !"".equals(classifier)) {
-      info.write("Attaching file " + outputFile.getAbsolutePath() + " as artifact with classifier '" + classifier + "'.");
+      debug.write("Attaching file " + outputFile.getAbsolutePath() + " as artifact with classifier '" + classifier + "'.");
       projectHelper.attachArtifact(mavenProject, outputFile, classifier);
     }
     else {
-      info.write(("Setting project artifact to " + outputFile.getAbsolutePath())).nl();
+      debug.write(("Setting project main artifact to " + outputFile.getAbsolutePath())).nl();
       final Artifact artifact = mavenProject.getArtifact();
       artifact.setFile(outputFile);
     }

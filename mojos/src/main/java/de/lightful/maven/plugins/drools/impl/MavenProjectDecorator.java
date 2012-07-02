@@ -16,23 +16,32 @@
  * limitations under the License.
  ******************************************************************************/
 
-package de.lightful.maven.plugins.drools.impl.config;
+package de.lightful.maven.plugins.drools.impl;
 
-public class ConfigurationValidator {
+import org.apache.maven.project.MavenProject;
 
-  public void validateConfiguration(Pass[] passes) {
-    int currentPassNumber = Pass.FIRST_SEQUENCE_NUMBER;
+import java.io.File;
 
-    for (Pass pass : passes) {
-      pass.setSequenceNumber(currentPassNumber);
-      if (pass.getName() == null || "".equals(pass.getName())) {
-        pass.setName("Pass #" + currentPassNumber);
-      }
-      if (pass.getIncludes() == null || pass.getIncludes().length == 0) {
-        pass.setIncludes(new String[] {"**/*.drl"});
-      }
+public class MavenProjectDecorator {
 
-      currentPassNumber++;
+  private MavenProject project;
+
+  public MavenProjectDecorator(MavenProject project) {
+    this.project = project;
+  }
+
+  public MavenProject getProject() {
+    return project;
+  }
+
+  public String relativeToBasedir(File fileToCompile) {
+    final String basedir = project.getBasedir().getAbsolutePath();
+    final String filePath = fileToCompile.getAbsolutePath();
+    if (filePath.startsWith(basedir + "/")) {
+      return filePath.substring(basedir.length() + "/".length());
+    }
+    else {
+      return filePath;
     }
   }
 }
